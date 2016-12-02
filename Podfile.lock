@@ -1,0 +1,211 @@
+PODS:
+  - Alamofire (4.2.0)
+  - CocoaAsyncSocket (7.5.1):
+    - CocoaAsyncSocket/GCD (= 7.5.1)
+  - CocoaAsyncSocket/GCD (7.5.1)
+  - CocoaLumberjack (2.4.0):
+    - CocoaLumberjack/Default (= 2.4.0)
+    - CocoaLumberjack/Extensions (= 2.4.0)
+  - CocoaLumberjack/Core (2.4.0)
+  - CocoaLumberjack/Default (2.4.0):
+    - CocoaLumberjack/Core
+  - CocoaLumberjack/Extensions (2.4.0):
+    - CocoaLumberjack/Default
+  - JSQMessagesViewController (7.3.4):
+    - JSQSystemSoundPlayer (~> 2.0.1)
+  - JSQSystemSoundPlayer (2.0.1)
+  - KissXML (5.1.2):
+    - KissXML/Core (= 5.1.2)
+  - KissXML/Core (5.1.2)
+  - SWXMLHash (3.0.3)
+  - XMPPFramework (3.7.0):
+    - XMPPFramework/All (= 3.7.0)
+  - XMPPFramework/All (3.7.0):
+    - XMPPFramework/BandwidthMonitor
+    - XMPPFramework/Core
+    - XMPPFramework/CoreDataStorage
+    - XMPPFramework/FileTransfer
+    - XMPPFramework/GoogleSharedStatus
+    - XMPPFramework/ProcessOne
+    - XMPPFramework/Reconnect
+    - XMPPFramework/Roster
+    - XMPPFramework/SystemInputActivityMonitor
+    - XMPPFramework/XEP-0009
+    - XMPPFramework/XEP-0012
+    - XMPPFramework/XEP-0016
+    - XMPPFramework/XEP-0045
+    - XMPPFramework/XEP-0054
+    - XMPPFramework/XEP-0059
+    - XMPPFramework/XEP-0060
+    - XMPPFramework/XEP-0065
+    - XMPPFramework/XEP-0066
+    - XMPPFramework/XEP-0077
+    - XMPPFramework/XEP-0082
+    - XMPPFramework/XEP-0085
+    - XMPPFramework/XEP-0092
+    - XMPPFramework/XEP-0100
+    - XMPPFramework/XEP-0106
+    - XMPPFramework/XEP-0115
+    - XMPPFramework/XEP-0136
+    - XMPPFramework/XEP-0147
+    - XMPPFramework/XEP-0153
+    - XMPPFramework/XEP-0172
+    - XMPPFramework/XEP-0184
+    - XMPPFramework/XEP-0191
+    - XMPPFramework/XEP-0198
+    - XMPPFramework/XEP-0199
+    - XMPPFramework/XEP-0202
+    - XMPPFramework/XEP-0203
+    - XMPPFramework/XEP-0223
+    - XMPPFramework/XEP-0224
+    - XMPPFramework/XEP-0280
+    - XMPPFramework/XEP-0297
+    - XMPPFramework/XEP-0308
+    - XMPPFramework/XEP-0313
+    - XMPPFramework/XEP-0333
+    - XMPPFramework/XEP-0334
+    - XMPPFramework/XEP-0335
+    - XMPPFramework/XEP-0352
+    - XMPPFramework/XEP-0357
+    - XMPPFramework/XEP-0363
+    - XMPPFramework/XMPPMUCLight
+  - XMPPFramework/BandwidthMonitor (3.7.0):
+    - XMPPFramework/Core
+  - XMPPFramework/Core (3.7.0):
+    - CocoaAsyncSocket (~> 7.5.0)
+    - CocoaLumberjack (~> 2.0)
+    - KissXML (~> 5.1.2)
+  - XMPPFramework/CoreDataStorage (3.7.0):
+    - XMPPFramework/Core
+  - XMPPFramework/FileTransfer (3.7.0):
+    - XMPPFramework/Core
+  - XMPPFramework/GoogleSharedStatus (3.7.0):
+    - XMPPFramework/Core
+  - XMPPFramework/ProcessOne (3.7.0):
+    - XMPPFramework/Core
+  - XMPPFramework/Reconnect (3.7.0):
+    - XMPPFramework/Core
+  - XMPPFramework/Roster (3.7.0):
+    - XMPPFramework/Core
+    - XMPPFramework/CoreDataStorage
+  - XMPPFramework/XEP-0009 (3.7.0):
+    - XMPPFramework/Core
+  - XMPPFramework/XEP-0012 (3.7.0):
+    - XMPPFramework/Core
+  - XMPPFramework/XEP-0016 (3.7.0):
+    - XMPPFramework/Core
+  - XMPPFramework/XEP-0045 (3.7.0):
+    - XMPPFramework/Core
+    - XMPPFramework/CoreDataStorage
+    - XMPPFramework/XEP-0203
+  - XMPPFramework/XEP-0054 (3.7.0):
+    - XMPPFramework/Core
+    - XMPPFramework/Roster
+  - XMPPFramework/XEP-0059 (3.7.0):
+    - XMPPFramework/Core
+  - XMPPFramework/XEP-0060 (3.7.0):
+    - XMPPFramework/Core
+  - XMPPFramework/XEP-0065 (3.7.0):
+    - XMPPFramework/Core
+  - XMPPFramework/XEP-0066 (3.7.0):
+    - XMPPFramework/Core
+  - XMPPFramework/XEP-0077 (3.7.0):
+    - XMPPFramework/Core
+  - XMPPFramework/XEP-0082 (3.7.0):
+    - XMPPFramework/Core
+  - XMPPFramework/XEP-0085 (3.7.0):
+    - XMPPFramework/Core
+  - XMPPFramework/XEP-0092 (3.7.0):
+    - XMPPFramework/Core
+  - XMPPFramework/XEP-0100 (3.7.0):
+    - XMPPFramework/Core
+  - XMPPFramework/XEP-0106 (3.7.0):
+    - XMPPFramework/Core
+  - XMPPFramework/XEP-0115 (3.7.0):
+    - XMPPFramework/Core
+    - XMPPFramework/CoreDataStorage
+  - XMPPFramework/XEP-0136 (3.7.0):
+    - XMPPFramework/CoreDataStorage
+    - XMPPFramework/XEP-0085
+    - XMPPFramework/XEP-0203
+  - XMPPFramework/XEP-0147 (3.7.0):
+    - XMPPFramework/Core
+  - XMPPFramework/XEP-0153 (3.7.0):
+    - XMPPFramework/Core
+    - XMPPFramework/XEP-0054
+  - XMPPFramework/XEP-0172 (3.7.0):
+    - XMPPFramework/Core
+  - XMPPFramework/XEP-0184 (3.7.0):
+    - XMPPFramework/Core
+  - XMPPFramework/XEP-0191 (3.7.0):
+    - XMPPFramework/Core
+  - XMPPFramework/XEP-0198 (3.7.0):
+    - XMPPFramework/Core
+  - XMPPFramework/XEP-0199 (3.7.0):
+    - XMPPFramework/Core
+  - XMPPFramework/XEP-0202 (3.7.0):
+    - XMPPFramework/Core
+    - XMPPFramework/XEP-0082
+  - XMPPFramework/XEP-0203 (3.7.0):
+    - XMPPFramework/Core
+    - XMPPFramework/XEP-0082
+  - XMPPFramework/XEP-0223 (3.7.0):
+    - XMPPFramework/Core
+  - XMPPFramework/XEP-0224 (3.7.0):
+    - XMPPFramework/Core
+  - XMPPFramework/XEP-0280 (3.7.0):
+    - XMPPFramework/Core
+  - XMPPFramework/XEP-0297 (3.7.0):
+    - XMPPFramework/Core
+    - XMPPFramework/XEP-0203
+  - XMPPFramework/XEP-0308 (3.7.0):
+    - XMPPFramework/Core
+  - XMPPFramework/XEP-0313 (3.7.0):
+    - XMPPFramework/Core
+    - XMPPFramework/XEP-0059
+  - XMPPFramework/XEP-0333 (3.7.0):
+    - XMPPFramework/Core
+  - XMPPFramework/XEP-0334 (3.7.0):
+    - XMPPFramework/Core
+  - XMPPFramework/XEP-0335 (3.7.0):
+    - XMPPFramework/Core
+  - XMPPFramework/XEP-0352 (3.7.0):
+    - XMPPFramework/Core
+  - XMPPFramework/XEP-0357 (3.7.0):
+    - XMPPFramework/Core
+  - XMPPFramework/XEP-0363 (3.7.0):
+    - XMPPFramework/Core
+  - XMPPFramework/XMPPMUCLight (3.7.0):
+    - XMPPFramework/Core
+    - XMPPFramework/CoreDataStorage
+    - XMPPFramework/XEP-0203
+
+DEPENDENCIES:
+  - Alamofire
+  - JSQMessagesViewController
+  - SWXMLHash
+  - XMPPFramework (from `https://github.com/robbiehanson/XMPPFramework.git`, branch `master`)
+
+EXTERNAL SOURCES:
+  XMPPFramework:
+    :branch: master
+    :git: https://github.com/robbiehanson/XMPPFramework.git
+
+CHECKOUT OPTIONS:
+  XMPPFramework:
+    :commit: 917a5b40da013f3c9a6fe80662448d87d67f3341
+    :git: https://github.com/robbiehanson/XMPPFramework.git
+
+SPEC CHECKSUMS:
+  Alamofire: aa2e09d871c9160ac53c90e83c68064a94e3dfbe
+  CocoaAsyncSocket: e0a7e93b2ffa411592ff87e58524fbbc9b95b4fa
+  CocoaLumberjack: aa9dcab71bdf9eaf2a63bbd9ddc87863efe45457
+  JSQMessagesViewController: 39fed975e3c9f8eba7292071e29eeb541d105e66
+  JSQSystemSoundPlayer: c5850e77a4363ffd374cd851154b9af93264ed8d
+  KissXML: 246c842586bb77110e04fb88e19376d96245c856
+  SWXMLHash: 80d2529d74891bb2f15305a0b9e08f2a4f229ee7
+  XMPPFramework: 977eef5d00c20fe9fb19c30d84a89c2d5564252d
+
+PODFILE CHECKSUM: f24b24fff60d62070f4d4eca299bc522fb50500f
+
+COCOAPODS: 1.1.1

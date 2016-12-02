@@ -8,13 +8,29 @@
 
 /* Begin PBXBuildFile section */
 		435E8B381DF029B5003D3F63 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 435E8B371DF029B5003D3F63 /* AppDelegate.swift */; };
-		435E8B3A1DF029B5003D3F63 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 435E8B391DF029B5003D3F63 /* ViewController.swift */; };
+		435E8B3A1DF029B5003D3F63 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 435E8B391DF029B5003D3F63 /* LoginViewController.swift */; };
 		435E8B3D1DF029B5003D3F63 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 435E8B3B1DF029B5003D3F63 /* Main.storyboard */; };
 		435E8B401DF029B5003D3F63 /* Eazespot.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 435E8B3E1DF029B5003D3F63 /* Eazespot.xcdatamodeld */; };
 		435E8B421DF029B5003D3F63 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 435E8B411DF029B5003D3F63 /* Assets.xcassets */; };
 		435E8B451DF029B5003D3F63 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 435E8B431DF029B5003D3F63 /* LaunchScreen.storyboard */; };
 		435E8B501DF029B5003D3F63 /* EazespotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 435E8B4F1DF029B5003D3F63 /* EazespotTests.swift */; };
 		435E8B5B1DF029B5003D3F63 /* EazespotUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 435E8B5A1DF029B5003D3F63 /* EazespotUITests.swift */; };
+		435E8B761DF03238003D3F63 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 435E8B721DF03238003D3F63 /* Network.swift */; };
+		435E8B771DF03238003D3F63 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 435E8B731DF03238003D3F63 /* Reachability.swift */; };
+		435E8B781DF03238003D3F63 /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 435E8B741DF03238003D3F63 /* SwiftyJSON.swift */; };
+		435E8B791DF03238003D3F63 /* Urls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 435E8B751DF03238003D3F63 /* Urls.swift */; };
+		435E8B7C1DF03338003D3F63 /* LoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 435E8B7B1DF03338003D3F63 /* LoginService.swift */; };
+		435E8B891DF04868003D3F63 /* DeviceSizes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 435E8B861DF04868003D3F63 /* DeviceSizes.swift */; };
+		435E8B8D1DF05509003D3F63 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 435E8B8C1DF05509003D3F63 /* Utils.swift */; };
+		435E8B8F1DF055D6003D3F63 /* Toast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 435E8B8E1DF055D6003D3F63 /* Toast.swift */; };
+		435E8B911DF0560B003D3F63 /* ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 435E8B901DF0560B003D3F63 /* ActivityIndicator.swift */; };
+		435E8B941DF057F5003D3F63 /* CAPSPageMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 435E8B931DF057F5003D3F63 /* CAPSPageMenu.swift */; };
+		43E2B81E1DF15F1000F791B5 /* TeamSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43E2B81D1DF15F1000F791B5 /* TeamSelectionViewController.swift */; };
+		43E2B8211DF1607C00F791B5 /* TeamMembersTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43E2B8201DF1607C00F791B5 /* TeamMembersTableViewController.swift */; };
+		43E2B8241DF1872B00F791B5 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43E2B8231DF1872B00F791B5 /* Extensions.swift */; };
+		43E2B8261DF1927700F791B5 /* Company.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43E2B8251DF1927700F791B5 /* Company.swift */; };
+		43E2B8281DF19A1E00F791B5 /* UserChatCredentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43E2B8271DF19A1E00F791B5 /* UserChatCredentials.swift */; };
+		F1222B7B61BF1130AB346C08 /* Pods_Eazespot.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 949A8CB5748D9837E3008E2F /* Pods_Eazespot.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,7 +53,7 @@
 /* Begin PBXFileReference section */
 		435E8B341DF029B5003D3F63 /* Eazespot.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Eazespot.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		435E8B371DF029B5003D3F63 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		435E8B391DF029B5003D3F63 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		435E8B391DF029B5003D3F63 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		435E8B3C1DF029B5003D3F63 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		435E8B3F1DF029B5003D3F63 /* Eazespot.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Eazespot.xcdatamodel; sourceTree = "<group>"; };
 		435E8B411DF029B5003D3F63 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -49,6 +65,26 @@
 		435E8B561DF029B5003D3F63 /* EazespotUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EazespotUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		435E8B5A1DF029B5003D3F63 /* EazespotUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EazespotUITests.swift; sourceTree = "<group>"; };
 		435E8B5C1DF029B5003D3F63 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		435E8B721DF03238003D3F63 /* Network.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Network.swift; path = network/Network.swift; sourceTree = "<group>"; };
+		435E8B731DF03238003D3F63 /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Reachability.swift; path = network/Reachability.swift; sourceTree = "<group>"; };
+		435E8B741DF03238003D3F63 /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SwiftyJSON.swift; path = network/SwiftyJSON.swift; sourceTree = "<group>"; };
+		435E8B751DF03238003D3F63 /* Urls.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Urls.swift; path = network/Urls.swift; sourceTree = "<group>"; };
+		435E8B7B1DF03338003D3F63 /* LoginService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginService.swift; sourceTree = "<group>"; };
+		435E8B861DF04868003D3F63 /* DeviceSizes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceSizes.swift; sourceTree = "<group>"; };
+		435E8B8C1DF05509003D3F63 /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
+		435E8B8E1DF055D6003D3F63 /* Toast.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Toast.swift; sourceTree = "<group>"; };
+		435E8B901DF0560B003D3F63 /* ActivityIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityIndicator.swift; sourceTree = "<group>"; };
+		435E8B931DF057F5003D3F63 /* CAPSPageMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CAPSPageMenu.swift; sourceTree = "<group>"; };
+		43E2B81D1DF15F1000F791B5 /* TeamSelectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TeamSelectionViewController.swift; sourceTree = "<group>"; };
+		43E2B8201DF1607C00F791B5 /* TeamMembersTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TeamMembersTableViewController.swift; sourceTree = "<group>"; };
+		43E2B8231DF1872B00F791B5 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		43E2B8251DF1927700F791B5 /* Company.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Company.swift; sourceTree = "<group>"; };
+		43E2B8271DF19A1E00F791B5 /* UserChatCredentials.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserChatCredentials.swift; sourceTree = "<group>"; };
+		4B6C78EFF868E31505E7641E /* Pods-Eazespot.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Eazespot.release.xcconfig"; path = "Pods/Target Support Files/Pods-Eazespot/Pods-Eazespot.release.xcconfig"; sourceTree = "<group>"; };
+		949A8CB5748D9837E3008E2F /* Pods_Eazespot.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Eazespot.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		DE8A18A85531C075AA3E097E /* Pods-Eazespot.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Eazespot.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Eazespot/Pods-Eazespot.debug.xcconfig"; sourceTree = "<group>"; };
+		F4C39BAB0BFA6E846A2599C3 /* Pods_EazespotTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_EazespotTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FE5583885E655C5EED428759 /* Pods_EazespotUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_EazespotUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +92,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F1222B7B61BF1130AB346C08 /* Pods_Eazespot.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -76,6 +113,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		045F756E195D9CD0DF31FC01 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				DE8A18A85531C075AA3E097E /* Pods-Eazespot.debug.xcconfig */,
+				4B6C78EFF868E31505E7641E /* Pods-Eazespot.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		435E8B2B1DF029B4003D3F63 = {
 			isa = PBXGroup;
 			children = (
@@ -83,6 +129,8 @@
 				435E8B4E1DF029B5003D3F63 /* EazespotTests */,
 				435E8B591DF029B5003D3F63 /* EazespotUITests */,
 				435E8B351DF029B5003D3F63 /* Products */,
+				045F756E195D9CD0DF31FC01 /* Pods */,
+				D74F4520931CD4B7BAA224F9 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -100,11 +148,14 @@
 			isa = PBXGroup;
 			children = (
 				435E8B371DF029B5003D3F63 /* AppDelegate.swift */,
-				435E8B391DF029B5003D3F63 /* ViewController.swift */,
-				435E8B3B1DF029B5003D3F63 /* Main.storyboard */,
-				435E8B411DF029B5003D3F63 /* Assets.xcassets */,
-				435E8B431DF029B5003D3F63 /* LaunchScreen.storyboard */,
+				435E8B7A1DF0331B003D3F63 /* Services */,
+				435E8B681DF02AF8003D3F63 /* Views */,
+				435E8B6A1DF02B26003D3F63 /* Modals */,
+				435E8B691DF02B0E003D3F63 /* Controllers */,
+				435E8B701DF02B9C003D3F63 /* Newtork */,
+				435E8B811DF047BE003D3F63 /* Utilities */,
 				435E8B461DF029B5003D3F63 /* Info.plist */,
+				435E8B411DF029B5003D3F63 /* Assets.xcassets */,
 				435E8B3E1DF029B5003D3F63 /* Eazespot.xcdatamodeld */,
 			);
 			path = Eazespot;
@@ -128,6 +179,132 @@
 			path = EazespotUITests;
 			sourceTree = "<group>";
 		};
+		435E8B681DF02AF8003D3F63 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				435E8B3B1DF029B5003D3F63 /* Main.storyboard */,
+				435E8B431DF029B5003D3F63 /* LaunchScreen.storyboard */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		435E8B691DF02B0E003D3F63 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				43E2B81F1DF1602B00F791B5 /* TeamTableViews */,
+				435E8B8B1DF054BD003D3F63 /* LoginAndSignUp */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		435E8B6A1DF02B26003D3F63 /* Modals */ = {
+			isa = PBXGroup;
+			children = (
+				43E2B8251DF1927700F791B5 /* Company.swift */,
+				43E2B8271DF19A1E00F791B5 /* UserChatCredentials.swift */,
+			);
+			name = Modals;
+			sourceTree = "<group>";
+		};
+		435E8B701DF02B9C003D3F63 /* Newtork */ = {
+			isa = PBXGroup;
+			children = (
+				435E8B721DF03238003D3F63 /* Network.swift */,
+				435E8B731DF03238003D3F63 /* Reachability.swift */,
+				435E8B741DF03238003D3F63 /* SwiftyJSON.swift */,
+				435E8B751DF03238003D3F63 /* Urls.swift */,
+			);
+			name = Newtork;
+			sourceTree = "<group>";
+		};
+		435E8B7A1DF0331B003D3F63 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				435E8B7D1DF033ED003D3F63 /* LogiAndSignUp */,
+			);
+			name = Services;
+			sourceTree = "<group>";
+		};
+		435E8B7D1DF033ED003D3F63 /* LogiAndSignUp */ = {
+			isa = PBXGroup;
+			children = (
+				435E8B7B1DF03338003D3F63 /* LoginService.swift */,
+			);
+			name = LogiAndSignUp;
+			sourceTree = "<group>";
+		};
+		435E8B801DF0479E003D3F63 /* ActivityIndicator */ = {
+			isa = PBXGroup;
+			children = (
+				435E8B901DF0560B003D3F63 /* ActivityIndicator.swift */,
+			);
+			name = ActivityIndicator;
+			sourceTree = "<group>";
+		};
+		435E8B811DF047BE003D3F63 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				43E2B8221DF1871C00F791B5 /* Extensions */,
+				435E8B921DF057D3003D3F63 /* PageMenu */,
+				435E8B861DF04868003D3F63 /* DeviceSizes.swift */,
+				435E8B841DF04800003D3F63 /* Toast */,
+				435E8B801DF0479E003D3F63 /* ActivityIndicator */,
+				435E8B8C1DF05509003D3F63 /* Utils.swift */,
+			);
+			name = Utilities;
+			sourceTree = "<group>";
+		};
+		435E8B841DF04800003D3F63 /* Toast */ = {
+			isa = PBXGroup;
+			children = (
+				435E8B8E1DF055D6003D3F63 /* Toast.swift */,
+			);
+			name = Toast;
+			sourceTree = "<group>";
+		};
+		435E8B8B1DF054BD003D3F63 /* LoginAndSignUp */ = {
+			isa = PBXGroup;
+			children = (
+				43E2B81D1DF15F1000F791B5 /* TeamSelectionViewController.swift */,
+				435E8B391DF029B5003D3F63 /* LoginViewController.swift */,
+			);
+			name = LoginAndSignUp;
+			sourceTree = "<group>";
+		};
+		435E8B921DF057D3003D3F63 /* PageMenu */ = {
+			isa = PBXGroup;
+			children = (
+				435E8B931DF057F5003D3F63 /* CAPSPageMenu.swift */,
+			);
+			name = PageMenu;
+			sourceTree = "<group>";
+		};
+		43E2B81F1DF1602B00F791B5 /* TeamTableViews */ = {
+			isa = PBXGroup;
+			children = (
+				43E2B8201DF1607C00F791B5 /* TeamMembersTableViewController.swift */,
+			);
+			name = TeamTableViews;
+			sourceTree = "<group>";
+		};
+		43E2B8221DF1871C00F791B5 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				43E2B8231DF1872B00F791B5 /* Extensions.swift */,
+			);
+			name = Extensions;
+			sourceTree = "<group>";
+		};
+		D74F4520931CD4B7BAA224F9 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				949A8CB5748D9837E3008E2F /* Pods_Eazespot.framework */,
+				F4C39BAB0BFA6E846A2599C3 /* Pods_EazespotTests.framework */,
+				FE5583885E655C5EED428759 /* Pods_EazespotUITests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -135,9 +312,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 435E8B5F1DF029B5003D3F63 /* Build configuration list for PBXNativeTarget "Eazespot" */;
 			buildPhases = (
+				83137C10E63B8C180B7477B7 /* [CP] Check Pods Manifest.lock */,
 				435E8B301DF029B4003D3F63 /* Sources */,
 				435E8B311DF029B4003D3F63 /* Frameworks */,
 				435E8B321DF029B4003D3F63 /* Resources */,
+				95148FB594414A47ED781A2E /* [CP] Embed Pods Frameworks */,
+				1F3320622EA87F23CE92DFCA /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -196,7 +376,7 @@
 				TargetAttributes = {
 					435E8B331DF029B4003D3F63 = {
 						CreatedOnToolsVersion = 8.1;
-						DevelopmentTeam = JTK792GD3V;
+						DevelopmentTeam = 5QZ222B64W;
 						ProvisioningStyle = Automatic;
 					};
 					435E8B4A1DF029B5003D3F63 = {
@@ -260,14 +440,77 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		1F3320622EA87F23CE92DFCA /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Eazespot/Pods-Eazespot-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		83137C10E63B8C180B7477B7 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		95148FB594414A47ED781A2E /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Eazespot/Pods-Eazespot-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		435E8B301DF029B4003D3F63 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				435E8B3A1DF029B5003D3F63 /* ViewController.swift in Sources */,
+				435E8B761DF03238003D3F63 /* Network.swift in Sources */,
+				435E8B3A1DF029B5003D3F63 /* LoginViewController.swift in Sources */,
+				43E2B81E1DF15F1000F791B5 /* TeamSelectionViewController.swift in Sources */,
+				435E8B891DF04868003D3F63 /* DeviceSizes.swift in Sources */,
+				435E8B771DF03238003D3F63 /* Reachability.swift in Sources */,
+				43E2B8281DF19A1E00F791B5 /* UserChatCredentials.swift in Sources */,
+				43E2B8211DF1607C00F791B5 /* TeamMembersTableViewController.swift in Sources */,
+				435E8B911DF0560B003D3F63 /* ActivityIndicator.swift in Sources */,
+				435E8B791DF03238003D3F63 /* Urls.swift in Sources */,
+				435E8B8D1DF05509003D3F63 /* Utils.swift in Sources */,
 				435E8B401DF029B5003D3F63 /* Eazespot.xcdatamodeld in Sources */,
+				435E8B941DF057F5003D3F63 /* CAPSPageMenu.swift in Sources */,
+				43E2B8241DF1872B00F791B5 /* Extensions.swift in Sources */,
+				43E2B8261DF1927700F791B5 /* Company.swift in Sources */,
 				435E8B381DF029B5003D3F63 /* AppDelegate.swift in Sources */,
+				435E8B8F1DF055D6003D3F63 /* Toast.swift in Sources */,
+				435E8B781DF03238003D3F63 /* SwiftyJSON.swift in Sources */,
+				435E8B7C1DF03338003D3F63 /* LoginService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -417,12 +660,15 @@
 		};
 		435E8B601DF029B5003D3F63 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = DE8A18A85531C075AA3E097E /* Pods-Eazespot.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = JTK792GD3V;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Abhishek Negi (42R8X8NT5P)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = 5QZ222B64W;
 				INFOPLIST_FILE = Eazespot/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.ios.Eazespot;
+				PRODUCT_BUNDLE_IDENTIFIER = com.eazespot.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
@@ -430,12 +676,15 @@
 		};
 		435E8B611DF029B5003D3F63 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4B6C78EFF868E31505E7641E /* Pods-Eazespot.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = JTK792GD3V;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Abhishek Negi (42R8X8NT5P)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = 5QZ222B64W;
 				INFOPLIST_FILE = Eazespot/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.ios.Eazespot;
+				PRODUCT_BUNDLE_IDENTIFIER = com.eazespot.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
@@ -518,6 +767,7 @@
 				435E8B611DF029B5003D3F63 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		435E8B621DF029B5003D3F63 /* Build configuration list for PBXNativeTarget "EazespotTests" */ = {
 			isa = XCConfigurationList;
@@ -526,6 +776,7 @@
 				435E8B641DF029B5003D3F63 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		435E8B651DF029B5003D3F63 /* Build configuration list for PBXNativeTarget "EazespotUITests" */ = {
 			isa = XCConfigurationList;
@@ -534,6 +785,7 @@
 				435E8B671DF029B5003D3F63 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
