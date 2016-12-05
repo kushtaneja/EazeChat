@@ -62,10 +62,10 @@ class LoginViewController: UIViewController{
         let params: [String:Any] = ["username": email as! String,"password": password as! String]
         LoginService().loginCall(self.view, params: params, onSuccess: {(data: JSON) in
             if (data["login"] == false) {
+                self.companyArray = []
                 for company in data["company"].arrayValue {
                     let companyName = company["company_name"].stringValue
                     var companyId = company["company"].intValue
-                    print("companyId = \(companyId)")
                     var currentCompany = Company(company_Name:companyName,company_Id: companyId)
                     
                     self.companyArray.append(currentCompany)

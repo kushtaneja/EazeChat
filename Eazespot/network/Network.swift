@@ -15,7 +15,6 @@ class Network {
             switch response.result {
             case .success:
                 let parsedJSON = JSON(response.result.value!)
-                debugPrint("**postCall success** \(url) ** \(parsedJSON)")
                 completion(parsedJSON)
             case .failure(let error):
                 

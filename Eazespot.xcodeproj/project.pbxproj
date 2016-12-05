@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4320D1A31DF5A203002EDC2C /* ChatFriendListPageMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4320D1A21DF5A203002EDC2C /* ChatFriendListPageMenuViewController.swift */; };
+		4320D1A61DF5A342002EDC2C /* ColorCodeExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4320D1A41DF5A342002EDC2C /* ColorCodeExtensions.swift */; };
+		4320D1A71DF5A342002EDC2C /* ColorCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4320D1A51DF5A342002EDC2C /* ColorCode.swift */; };
 		435E8B381DF029B5003D3F63 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 435E8B371DF029B5003D3F63 /* AppDelegate.swift */; };
 		435E8B3A1DF029B5003D3F63 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 435E8B391DF029B5003D3F63 /* LoginViewController.swift */; };
 		435E8B3D1DF029B5003D3F63 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 435E8B3B1DF029B5003D3F63 /* Main.storyboard */; };
@@ -26,7 +29,6 @@
 		435E8B911DF0560B003D3F63 /* ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 435E8B901DF0560B003D3F63 /* ActivityIndicator.swift */; };
 		435E8B941DF057F5003D3F63 /* CAPSPageMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 435E8B931DF057F5003D3F63 /* CAPSPageMenu.swift */; };
 		43E2B81E1DF15F1000F791B5 /* TeamSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43E2B81D1DF15F1000F791B5 /* TeamSelectionViewController.swift */; };
-		43E2B8211DF1607C00F791B5 /* TeamMembersTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43E2B8201DF1607C00F791B5 /* TeamMembersTableViewController.swift */; };
 		43E2B8241DF1872B00F791B5 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43E2B8231DF1872B00F791B5 /* Extensions.swift */; };
 		43E2B8261DF1927700F791B5 /* Company.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43E2B8251DF1927700F791B5 /* Company.swift */; };
 		43E2B8281DF19A1E00F791B5 /* UserChatCredentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43E2B8271DF19A1E00F791B5 /* UserChatCredentials.swift */; };
@@ -51,6 +53,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4320D1A21DF5A203002EDC2C /* ChatFriendListPageMenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatFriendListPageMenuViewController.swift; sourceTree = "<group>"; };
+		4320D1A41DF5A342002EDC2C /* ColorCodeExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorCodeExtensions.swift; sourceTree = "<group>"; };
+		4320D1A51DF5A342002EDC2C /* ColorCode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorCode.swift; sourceTree = "<group>"; };
 		435E8B341DF029B5003D3F63 /* Eazespot.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Eazespot.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		435E8B371DF029B5003D3F63 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		435E8B391DF029B5003D3F63 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -76,7 +81,6 @@
 		435E8B901DF0560B003D3F63 /* ActivityIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityIndicator.swift; sourceTree = "<group>"; };
 		435E8B931DF057F5003D3F63 /* CAPSPageMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CAPSPageMenu.swift; sourceTree = "<group>"; };
 		43E2B81D1DF15F1000F791B5 /* TeamSelectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TeamSelectionViewController.swift; sourceTree = "<group>"; };
-		43E2B8201DF1607C00F791B5 /* TeamMembersTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TeamMembersTableViewController.swift; sourceTree = "<group>"; };
 		43E2B8231DF1872B00F791B5 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		43E2B8251DF1927700F791B5 /* Company.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Company.swift; sourceTree = "<group>"; };
 		43E2B8271DF19A1E00F791B5 /* UserChatCredentials.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserChatCredentials.swift; sourceTree = "<group>"; };
@@ -120,6 +124,22 @@
 				4B6C78EFF868E31505E7641E /* Pods-Eazespot.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		4320D19F1DF56690002EDC2C /* Chat */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Chat;
+			sourceTree = "<group>";
+		};
+		4320D1A81DF5A34A002EDC2C /* ColorCode */ = {
+			isa = PBXGroup;
+			children = (
+				4320D1A51DF5A342002EDC2C /* ColorCode.swift */,
+				4320D1A41DF5A342002EDC2C /* ColorCodeExtensions.swift */,
+			);
+			name = ColorCode;
 			sourceTree = "<group>";
 		};
 		435E8B2B1DF029B4003D3F63 = {
@@ -191,7 +211,7 @@
 		435E8B691DF02B0E003D3F63 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				43E2B81F1DF1602B00F791B5 /* TeamTableViews */,
+				43E2B81F1DF1602B00F791B5 /* Chat */,
 				435E8B8B1DF054BD003D3F63 /* LoginAndSignUp */,
 			);
 			name = Controllers;
@@ -220,6 +240,7 @@
 		435E8B7A1DF0331B003D3F63 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				4320D19F1DF56690002EDC2C /* Chat */,
 				435E8B7D1DF033ED003D3F63 /* LogiAndSignUp */,
 			);
 			name = Services;
@@ -244,6 +265,7 @@
 		435E8B811DF047BE003D3F63 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				4320D1A81DF5A34A002EDC2C /* ColorCode */,
 				43E2B8221DF1871C00F791B5 /* Extensions */,
 				435E8B921DF057D3003D3F63 /* PageMenu */,
 				435E8B861DF04868003D3F63 /* DeviceSizes.swift */,
@@ -279,12 +301,12 @@
 			name = PageMenu;
 			sourceTree = "<group>";
 		};
-		43E2B81F1DF1602B00F791B5 /* TeamTableViews */ = {
+		43E2B81F1DF1602B00F791B5 /* Chat */ = {
 			isa = PBXGroup;
 			children = (
-				43E2B8201DF1607C00F791B5 /* TeamMembersTableViewController.swift */,
+				4320D1A21DF5A203002EDC2C /* ChatFriendListPageMenuViewController.swift */,
 			);
-			name = TeamTableViews;
+			name = Chat;
 			sourceTree = "<group>";
 		};
 		43E2B8221DF1871C00F791B5 /* Extensions */ = {
@@ -497,15 +519,17 @@
 				435E8B3A1DF029B5003D3F63 /* LoginViewController.swift in Sources */,
 				43E2B81E1DF15F1000F791B5 /* TeamSelectionViewController.swift in Sources */,
 				435E8B891DF04868003D3F63 /* DeviceSizes.swift in Sources */,
+				4320D1A71DF5A342002EDC2C /* ColorCode.swift in Sources */,
 				435E8B771DF03238003D3F63 /* Reachability.swift in Sources */,
 				43E2B8281DF19A1E00F791B5 /* UserChatCredentials.swift in Sources */,
-				43E2B8211DF1607C00F791B5 /* TeamMembersTableViewController.swift in Sources */,
 				435E8B911DF0560B003D3F63 /* ActivityIndicator.swift in Sources */,
 				435E8B791DF03238003D3F63 /* Urls.swift in Sources */,
+				4320D1A61DF5A342002EDC2C /* ColorCodeExtensions.swift in Sources */,
 				435E8B8D1DF05509003D3F63 /* Utils.swift in Sources */,
 				435E8B401DF029B5003D3F63 /* Eazespot.xcdatamodeld in Sources */,
 				435E8B941DF057F5003D3F63 /* CAPSPageMenu.swift in Sources */,
 				43E2B8241DF1872B00F791B5 /* Extensions.swift in Sources */,
+				4320D1A31DF5A203002EDC2C /* ChatFriendListPageMenuViewController.swift in Sources */,
 				43E2B8261DF1927700F791B5 /* Company.swift in Sources */,
 				435E8B381DF029B5003D3F63 /* AppDelegate.swift in Sources */,
 				435E8B8F1DF055D6003D3F63 /* Toast.swift in Sources */,

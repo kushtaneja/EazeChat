@@ -8,21 +8,46 @@
 
 import UIKit
 import CoreData
+import XMPPFramework
+import SWXMLHash
+
+protocol ChatDelegate {
+        func buddyWentOnline()
+        func buddyWentOffline()
+        func didDisconnect()
+}
+
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, XMPPRosterDelegate, XMPPStreamDelegate {
 
     var window: UIWindow?
+    // for chat
+    var delegate:ChatDelegate! = nil
+    let xmppStream = XMPPStream()
+    let xmppRosterStorage = XMPPRosterCoreDataStorage()
+    var xmppRoster: XMPPRoster
+    
+    override init() {
+        xmppRoster = XMPPRoster(rosterStorage: xmppRosterStorage)
+    }
 
+    
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        
+        
+        setupStream()
+        
         return true
     }
 
     func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.
+        
+        disconnect()
     }
 
     func applicationDidEnterBackground(_ application: UIApplication) {
@@ -36,6 +61,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationDidBecomeActive(_ application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+        
+        connect()
     }
 
     func applicationWillTerminate(_ application: UIApplication) {
@@ -43,6 +70,128 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Saves changes in the application's managed object context before the application terminates.
         self.saveContext()
     }
+    
+    
+    
+    
+    
+    
+    // MARK: - Chat
+    
+    func setupStream() {
+        //xmppRoster = XMPPRoster(rosterStorage: xmppRosterStorage)
+        xmppRoster.activate(xmppStream)
+        xmppStream?.addDelegate(self, delegateQueue: DispatchQueue.main)
+        xmppRoster.addDelegate(self, delegateQueue: DispatchQueue.main)
+    }
+    func goOnline() {
+        let presence = XMPPPresence()
+        let domain = xmppStream?.myJID.domain
+        
+        //if domain == "gmail.com" || domain == "gtalk.com" || domain == "talk.google.com" {
+        let priority = DDXMLElement.element(withName: "priority", stringValue: "24") as! DDXMLElement
+        presence?.addChild(priority)
+        //}
+        xmppStream?.send(presence)
+    }
+    
+    func goOffline() {
+        let presence = XMPPPresence(type: "unavailable")
+        xmppStream?.send(presence)
+    }
+    
+    func connect() -> Bool {
+    
+        if !(xmppStream?.isConnected())! {
+            let jabberID = UserDefaults.standard.string(forKey: "chatUserID")
+            let myPassword = UserDefaults.standard.string(forKey: "chatUserPassword")
+            
+            if !(xmppStream?.isDisconnected())! {
+                return true
+            }
+            if jabberID == nil && myPassword == nil {
+                return false
+            }
+            
+            xmppStream?.myJID = XMPPJID(string: jabberID)
+            
+            print("AA : \(jabberID)")
+            print("AAA : \(xmppStream?.myJID)")
+            print("AAAA : \(myPassword)")
+            
+            
+            do {
+                try xmppStream?.connect(withTimeout: XMPPStreamTimeoutNone)
+                print("Connection success")
+                return true
+            } catch {
+                print("Something went wrong!")
+                return false
+            }
+        } else {
+            return true
+        }
+        
+    }
+    
+    func disconnect() {
+        goOffline()
+        xmppStream?.disconnect()
+        
+        print("CHAT disconnected")
+        
+    }
+    
+    
+    //MARK: XMPP Delegates
+    func xmppStreamDidConnect(_ sender: XMPPStream!) {
+        do {
+            try xmppStream?.authenticate(withPassword: UserDefaults.standard.string(forKey: "chatUserPassword"))
+        } catch {
+            print("Could not authenticate")
+        }
+    }
+    
+    func xmppStreamDidAuthenticate(_ sender: XMPPStream!) {
+        goOnline()
+    }
+    
+    
+
+    private func xmppRoster(_ sender: XMPPRoster!, didReceiveRosterPush iq: XMPPIQ!) -> Bool {
+        print("Did receive IQ")
+        return false
+    }
+    
+    func xmppStream(_ sender: XMPPStream!, didReceive message: XMPPMessage!) {
+        print("Did receive message \(message)")
+    }
+    
+    func xmppStream(_ sender: XMPPStream!, didSend message: XMPPMessage!) {
+        print("Did send message \(message)")
+    }
+    
+    func xmppStream(_ sender: XMPPStream!, didReceive presence: XMPPPresence!) {
+        let presenceType = presence.type()
+        let myUsername = sender.myJID.user
+        let presenceFromUser = presence.from().user
+        
+        if presenceFromUser != myUsername {
+            print("Did receive presence from \(presenceFromUser)")
+            if presenceType == "available" {
+//                delegate.buddyWentOnline(name: "\(presenceFromUser)@gmail.com")
+            } else if presenceType == "unavailable" {
+//                delegate.buddyWentOffline(name: "\(presenceFromUser)@gmail.com")
+            }
+        }
+    }
+    
+    func xmppRoster(_ sender: XMPPRoster!, didReceiveRosterItem item: DDXMLElement!) {
+        print("Did receive Roster item : \(item)")
+    }
+
+    
+
 
     // MARK: - Core Data stack
 
@@ -108,5 +257,7 @@ extension UIApplication {
         return base
     }
 }
+
+
 
 

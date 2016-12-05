@@ -17,6 +17,10 @@ extension UIStoryboard {
     class func teamSelectionScreen() -> UINavigationController {
         return (eazeSpotMainStoryboard().instantiateViewController(withIdentifier: "TeamSelectionNavigationController") as? UINavigationController)!
     }
+    
+    class func ChatSelectionScreen() -> UINavigationController {
+        return (eazeSpotMainStoryboard().instantiateViewController(withIdentifier: "ChatFriendListPageMenuNavigationController") as? UINavigationController)!
+    }
 
 }
 
