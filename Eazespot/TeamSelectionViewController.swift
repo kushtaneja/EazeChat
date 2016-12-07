@@ -10,7 +10,7 @@ import UIKit
 import XMPPFramework
 
 
-class TeamSelectionViewController: UIViewController,UIPickerViewDelegate,UIPickerViewDataSource, ChatDelegate, XMPPRosterMemoryStorageDelegate{
+class TeamSelectionViewController: UIViewController,UIPickerViewDelegate,UIPickerViewDataSource, ChatDelegate, XMPPRosterMemoryStorageDelegate,NSFetchedResultsControllerDelegate {
     
     @IBOutlet weak var companyListPickerViewController: UIPickerView!
     var companysArray = [Company]()
@@ -19,7 +19,9 @@ class TeamSelectionViewController: UIViewController,UIPickerViewDelegate,UIPicke
     var userChatPassword = String()
     var loginPassword = String()
     var loginUsername = String()
+    var xmppUserCoreDataStorageObject = XMPPRosterCoreDataStorage()
     var onlineBuddies = NSMutableArray()
+    let managedObjectContext = NSManagedObjectContext()
     
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
 
@@ -81,9 +83,8 @@ class TeamSelectionViewController: UIViewController,UIPickerViewDelegate,UIPicke
             self.userChatPassword = (data["cip"].stringValue).fromBase64()
             
             
-            
-            UserDefaults.standard.set(self.userChatId + "@chat.eazehub.com", forKey: "chatUserID")
-            UserDefaults.standard.set(self.userChatPassword, forKey: "chatUserPassword")
+            self.setValue(value: self.userChatId + "@chat.eazehub.com", forKey: "chatUserID")
+            self.setValue(value: self.userChatId + "@chat.eazehub.com", forKey: "chatUserID")
             
             
             print("*** \(self.userChatId) -- \(self.userChatPassword)")
@@ -94,11 +95,30 @@ class TeamSelectionViewController: UIViewController,UIPickerViewDelegate,UIPicke
             
             if self.appDelegate.connect() {
                 self.view.makeToast(message: "You are connected")
-                
-                Utils().delay(5.0, closure: {
-                    self.appDelegate.xmppRoster.fetch()
-                    debugPrint("buddies = \(self.appDelegate.xmppRoster.fetch())")
-                })
+                self.getUserFromXMPPCoreDataObject(jidStr: self.userChatId + "@chat.eazehub.com")
+                let objects = self.fetchedResultsController()!.fetchedObjects
+                    for object in objects! {
+                       let object = object as! XMPPUserCoreDataStorageObject
+                        let name = object.displayName
+                        let jid = object.jid
+                        let subscription = object.subscription
+                        print("NAME:::  \(name) \n JID:: \(jid) \n SUBSCRIPTION: \(subscription)")
+
+                    
+                    
+                    
+                    }
+              
+                    
+                    
+
+            
+//                    self.appDelegate.xmppRoster.fetch()
+//                    let user = self.xmppUserCoreDataStorageObject.myUser(for: self.appDelegate.xmppStream, managedObjectContext: self.managedObjectContext)
+//                
+//                    print("USER DETAILS: \(user?.jidStr)")
+//                    debugPrint("buddies = \(self.appDelegate.xmppRoster.fetch())")
+//              
                 
                 
                 
@@ -133,18 +153,104 @@ class TeamSelectionViewController: UIViewController,UIPickerViewDelegate,UIPicke
     
         }
     
-            
-            
-            
-            
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    // Mark: Private function
+    
+    private func setValue(value: String, forKey key: String) {
+        if value.characters.count > 0 {
+            UserDefaults.standard.set(value, forKey: key)
+        } else {
+            UserDefaults.standard.removeObject(forKey: key)
+        }
     }
-    */
+    func getUserFromXMPPCoreDataObject(jidStr: String) {
+        let moc = managedObjectContext_roster() as NSManagedObjectContext?
+        let entity = NSEntityDescription.entity(forEntityName: "XMPPUserCoreDataStorageObject", in: moc!)
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>()
+        
+        fetchRequest.entity = entity
+        
+        var predicate: NSPredicate
+        
+        if self.appDelegate.xmppStream == nil {
+            predicate = NSPredicate(format: "jidStr == %@", jidStr)
+        } else {
+            predicate = NSPredicate(format: "jidStr == %@ AND streamBareJidStr == %@", jidStr, UserDefaults.standard.string(forKey: "chatUserID")!)
+        }
+        
+        fetchRequest.predicate = predicate
+        fetchRequest.fetchLimit = 1
+        do {
+           let result =  try moc?.fetch(fetchRequest)
+            
+            let a = result as! [NSManagedObject]
+            
+            for aaaa in result! {
+                print("\(aaaa)")
+            }
+            
+            var element: DDXMLElement!
+            /*do {
+                element = //try DDXMLElement(xmlString: String(describing: result))
+            } catch _ {
+                element = nil
+            }*/
+            print("HOOO00 \(result)")
+            
+        
+        }
+        catch {
+        
+        
+        }
 
+    }
+    func fetchedResultsController() -> NSFetchedResultsController<NSFetchRequestResult>? {
+        let moc = managedObjectContext_roster() as NSManagedObjectContext?
+        var fetchedResultsControllerVar: NSFetchedResultsController<NSFetchRequestResult>?
+        if fetchedResultsControllerVar == nil {
+            
+            let entity = NSEntityDescription.entity(forEntityName: "XMPPUserCoreDataStorageObject", in: moc!)
+            let sd1 = NSSortDescriptor(key: "sectionNum", ascending: true)
+            let sd2 = NSSortDescriptor(key: "displayName", ascending: true)
+            let sortDescriptors = [sd1, sd2]
+            let fetchRequest = NSFetchRequest<NSFetchRequestResult>()
+            
+            fetchRequest.entity = entity
+            fetchRequest.sortDescriptors = sortDescriptors
+            fetchRequest.fetchBatchSize = 10
+            
+            fetchedResultsControllerVar = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: moc!, sectionNameKeyPath: "sectionNum", cacheName: nil)
+            fetchedResultsControllerVar?.delegate = self
+            
+            do {
+                try fetchedResultsControllerVar!.performFetch()
+            } catch let error as NSError {
+                print("Error: \(error.localizedDescription)")
+                abort()
+            }
+            
+        }
+        
+        return fetchedResultsControllerVar!
+        
+    }
+   
+    
+
+    
+    // MARK: - Core Data stack
+    func managedObjectContext_roster() -> NSManagedObjectContext {
+        return self.appDelegate.xmppRosterStorage.mainThreadManagedObjectContext
+    }
+    
+    func userFromRosterForJID(jid: String) -> XMPPUserCoreDataStorageObject? {
+        let userJID = XMPPJID(string: jid)
+        
+        if let user = self.appDelegate.xmppRosterStorage.user(for: userJID, xmppStream: self.appDelegate.xmppStream, managedObjectContext:managedObjectContext_roster()) {
+            return user
+        } else {
+            return nil
+        }
+    }
+    
 }

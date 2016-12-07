@@ -176,7 +176,6 @@
 				435E8B811DF047BE003D3F63 /* Utilities */,
 				435E8B461DF029B5003D3F63 /* Info.plist */,
 				435E8B411DF029B5003D3F63 /* Assets.xcassets */,
-				435E8B3E1DF029B5003D3F63 /* Eazespot.xcdatamodeld */,
 			);
 			path = Eazespot;
 			sourceTree = "<group>";
@@ -220,6 +219,7 @@
 		435E8B6A1DF02B26003D3F63 /* Modals */ = {
 			isa = PBXGroup;
 			children = (
+				435E8B3E1DF029B5003D3F63 /* Eazespot.xcdatamodeld */,
 				43E2B8251DF1927700F791B5 /* Company.swift */,
 				43E2B8271DF19A1E00F791B5 /* UserChatCredentials.swift */,
 			);

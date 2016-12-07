@@ -5,7 +5,7 @@
 //  Created by Kush Taneja on 01/12/16.
 //  Copyright © 2016 Kush Taneja. All rights reserved.
 //
-
+import Foundation
 import UIKit
 import CoreData
 import XMPPFramework
@@ -19,7 +19,7 @@ protocol ChatDelegate {
 
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate, XMPPRosterDelegate, XMPPStreamDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, XMPPRosterDelegate, XMPPStreamDelegate,NSFetchedResultsControllerDelegate {
 
     var window: UIWindow?
     // for chat
@@ -27,7 +27,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, XMPPRosterDelegate, XMPPS
     let xmppStream = XMPPStream()
     let xmppRosterStorage = XMPPRosterCoreDataStorage()
     var xmppRoster: XMPPRoster
-    
+    var xmppUserCoreDataStorageObject = XMPPUserCoreDataStorageObject()
+    var xmppRoasterCoreDataStorageObject = XMPPRosterCoreDataStorage()
+   
+
     override init() {
         xmppRoster = XMPPRoster(rosterStorage: xmppRosterStorage)
     }
@@ -81,6 +84,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, XMPPRosterDelegate, XMPPS
     func setupStream() {
         //xmppRoster = XMPPRoster(rosterStorage: xmppRosterStorage)
         xmppRoster.activate(xmppStream)
+        xmppRoster.autoFetchRoster = true
+        xmppRoster.autoAcceptKnownPresenceSubscriptionRequests = true
         xmppStream?.addDelegate(self, delegateQueue: DispatchQueue.main)
         xmppRoster.addDelegate(self, delegateQueue: DispatchQueue.main)
     }
@@ -187,14 +192,46 @@ class AppDelegate: UIResponder, UIApplicationDelegate, XMPPRosterDelegate, XMPPS
     }
     
     func xmppRoster(_ sender: XMPPRoster!, didReceiveRosterItem item: DDXMLElement!) {
-        print("Did receive Roster item : \(item)")
+            print("Did receive Roster item : \(item)")
+            let rosterItem = item!
+            let dataString = String(describing: rosterItem)
+            
+            let xml = SWXMLHash.config { // the xml variable is our XMLIndexer
+                config in
+                config.shouldProcessLazily = false
+                }.parse(dataString)
+            
+            
+            let name = xml["item"].element?.attribute(by: "name")?.text
+            let jid = xml["item"].element?.attribute(by: "jid")?.text
+            let subscription = xml["item"].element?.attribute(by: "subscription")?.text
+       
+            if (subscription == "both") {
+//                //xmppUserCoreDataStorageObject.update(withItem: rosterItem)
+//                
+//                
+////                XMPPUserCoreDataStorageObject.insert(in: managedObjectContext, with: XMPPJID(string: jid), streamBareJidStr: XMPPJID(string: jid).bare())
+//                let context = persistentContainer.viewContext
+//                XMPPUserCoreDataStorageObject.insert(in: context, withItem: rosterItem, streamBareJidStr: XMPPJID(string: jid).bare())
+//                
+//                
+//               let user = xmppRoasterCoreDataStorageObject.user(for: XMPPJID(string: jid), xmppStream: xmppStream , managedObjectContext: xmppRosterStorage.mainThreadManagedObjectContext)
+//                print("USER DETAILS: \(user?.jidStr)")
+        
     }
-
     
-
-
+    }
+    
+//    func xmppRosterDidEndPopulating(sender: XMPPRoster?){
+//            var jidList = xmppRosterStorage!.jidsForXMPPStream(xmppStreams)
+//            fetchedResultsControllerVar!.fetchedObjects
+//    
+//            print("List=\(jidList)")
+//    
+//        }
+    
     // MARK: - Core Data stack
-
+    
     lazy var persistentContainer: NSPersistentContainer = {
         /*
          The persistent container for the application. This implementation
@@ -237,6 +274,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, XMPPRosterDelegate, XMPPS
             }
         }
     }
+ 
+    
 
 }
 
