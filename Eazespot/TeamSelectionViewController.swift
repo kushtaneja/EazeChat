@@ -8,6 +8,7 @@
 
 import UIKit
 import XMPPFramework
+import SWXMLHash
 
 
 class TeamSelectionViewController: UIViewController,UIPickerViewDelegate,UIPickerViewDataSource, ChatDelegate, XMPPRosterMemoryStorageDelegate,NSFetchedResultsControllerDelegate {
@@ -103,8 +104,26 @@ class TeamSelectionViewController: UIViewController,UIPickerViewDelegate,UIPicke
                         let jid = object.jid
                         let subscription = object.subscription
                         print("NAME:::  \(name) \n JID:: \(jid) \n SUBSCRIPTION: \(subscription)")
+                        if object.photo != nil {
+                            print("Photo in Roster found")
+                        } else {
 
-                    
+                        let data = self.appDelegate.xmppvCardAvatarModule?.photoData(for: jid!)
+                            print("\(data)")
+                            let dataString = String(describing: data)
+                            let xml = SWXMLHash.config { // the xml variable is our XMLIndexer
+                                config in
+                                config.shouldProcessLazily = false
+                                }.parse(dataString)
+                            
+                            
+                            let name1 = xml
+                            print("yyy : \(name1)")
+                        }
+                        
+                        
+                        
+                     
                     
                     
                     }

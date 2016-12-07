@@ -29,6 +29,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, XMPPRosterDelegate, XMPPS
     var xmppRoster: XMPPRoster
     var xmppUserCoreDataStorageObject = XMPPUserCoreDataStorageObject()
     var xmppRoasterCoreDataStorageObject = XMPPRosterCoreDataStorage()
+    var xmppvCardStorage: XMPPvCardCoreDataStorage?
+    var xmppvCardTempModule: XMPPvCardTempModule?
+    public var xmppvCardAvatarModule: XMPPvCardAvatarModule?
    
 
     override init() {
@@ -86,6 +89,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, XMPPRosterDelegate, XMPPS
         xmppRoster.activate(xmppStream)
         xmppRoster.autoFetchRoster = true
         xmppRoster.autoAcceptKnownPresenceSubscriptionRequests = true
+        xmppvCardStorage = XMPPvCardCoreDataStorage.sharedInstance()
+        xmppvCardTempModule = XMPPvCardTempModule(vCardStorage: xmppvCardStorage)
+        xmppvCardAvatarModule = XMPPvCardAvatarModule(vCardTempModule: xmppvCardTempModule)
+        xmppvCardTempModule!.activate(xmppStream)
+        xmppvCardAvatarModule!.activate(xmppStream)
         xmppStream?.addDelegate(self, delegateQueue: DispatchQueue.main)
         xmppRoster.addDelegate(self, delegateQueue: DispatchQueue.main)
     }
