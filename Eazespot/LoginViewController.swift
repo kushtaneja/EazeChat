@@ -9,11 +9,13 @@
 import UIKit
 import Alamofire
 
-class LoginViewController: UIViewController{
+class LoginViewController: UIViewController,UITextFieldDelegate, UIScrollViewDelegate{
 
     @IBOutlet var passwordTextField: UITextField!
     @IBOutlet var emailTextField: UITextField!
     
+    @IBOutlet weak var passwordErrorLabel: UILabel!
+    @IBOutlet weak var usernameErrorLabel: UILabel!
     @IBOutlet weak var scrollView: UIScrollView!
     var activeField: UITextField?
     var companyArray = [Company]()
@@ -21,6 +23,18 @@ class LoginViewController: UIViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        passwordErrorLabel.text = ""
+        usernameErrorLabel.text = ""
+        passwordTextField.layer.borderWidth = CGFloat(integerLiteral: 1)
+        passwordTextField.layer.borderColor = ColorCode().appThemeColor.cgColor
+        passwordTextField.tintColor = ColorCode().appThemeColor
+        emailTextField.layer.borderWidth = CGFloat(integerLiteral: 1)
+        emailTextField.tintColor = ColorCode().appThemeColor
+        emailTextField.layer.borderColor = ColorCode().appThemeColor.cgColor
+        
+
+
+        
         // Do any additional setup after loading the view, typically from a nib.
     }
 
@@ -29,30 +43,80 @@ class LoginViewController: UIViewController{
         // Dispose of any resources that can be recreated.
     }
     
-   var errorExists = false
+    
+    
+    override func viewWillAppear(_ animated:Bool) {
+        super.viewWillAppear(animated)
+        startNotification()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        stopNotification()
+    }
+    
+    func startNotification(){
+        NotificationCenter.default.addObserver(self, selector: #selector(LoginViewController.keyboardWillBeHidden(_:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(LoginViewController.keyboardWillShow(_:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+    }
+    
+    func stopNotification(){
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+    }
+    
+    func keyboardWillShow(_ aNotification: Notification) {
+        if (activeField != nil){
+            var info: [AnyHashable: Any] = aNotification.userInfo!
+            let kbSize: CGSize = (((info[UIKeyboardFrameEndUserInfoKey])! as AnyObject).cgRectValue.size)
+            let contentInsets: UIEdgeInsets = UIEdgeInsetsMake(0.0, 0.0, kbSize.height, 0.0)
+            scrollView.contentInset = contentInsets
+            scrollView.scrollIndicatorInsets = contentInsets
+            var aRect: CGRect = self.view.frame
+            aRect.size.height -= kbSize.height
+            if !aRect.contains(activeField!.frame.origin) {
+                self.scrollView.scrollRectToVisible(activeField!.frame, animated: true)
+            }
+        }
+    }
+    
+    func keyboardWillBeHidden(_ aNotification: Notification) {
+        let contentInsets: UIEdgeInsets = UIEdgeInsetsMake(0.0, 0.0, 0.0, 0.0)
+        self.scrollView.contentInset = contentInsets
+        self.scrollView.scrollIndicatorInsets = contentInsets
+        scrollView.setContentOffset(CGPoint(x: 0.0, y: 0.0), animated: true)
+    }
+    
+    
+    
+
     
     @IBAction func loginButtonTapped(_ sender: UIButton) {
          disableTextFieldEditing()
-        errorExists = false
-        if emailTextField.text!.trimmingCharacters(in: whitespaceSet as CharacterSet) == "" {
-            showErrorMessage(emailTextField.placeholder!)
-            errorExists = true
-        }
-        else {
-            removeErrorMessage(passwordTextField.text!)
-            errorExists = false
+
+      if (!wrongPasswordField() && !wrongUsernameField()) {
+            self.usernameErrorLabel.text = ""
+            self.passwordErrorLabel.text = ""
+            loginCall(email: emailTextField.text!.trimmingCharacters(in: whitespaceSet as CharacterSet), password: passwordTextField.text!)
         
         }
-        if passwordTextField.text!.isEmpty {
+      else {
+        switch wrongUsernameField() {
+        case true:
+            showErrorMessage(emailTextField.placeholder!)
+        case false:
+            removeErrorMessage(emailTextField.placeholder!)
+        default:
+            showErrorMessage(emailTextField.placeholder!)
+        }
+        switch wrongPasswordField() {
+        case true:
             showErrorMessage(passwordTextField.placeholder!)
-            errorExists = true
+        case false:
+            removeErrorMessage(passwordTextField.placeholder!)
+        default:
+            showErrorMessage(passwordTextField.placeholder!)
         }
-        else if Utils().isValidPassword(passwordTextField.text!) {
-        removeErrorMessage(passwordTextField.text!)
-         errorExists = false
-        }
-        if !errorExists {
-            loginCall(email: emailTextField.text!.trimmingCharacters(in: whitespaceSet as CharacterSet), password: passwordTextField.text!)
         
         }
 
@@ -76,9 +140,6 @@ class LoginViewController: UIViewController{
                 teamSelectionScreen.companysArray = self.companyArray
                 teamSelectionScreen.loginUsername = self.emailTextField.text!
                 teamSelectionScreen.loginPassword = self.passwordTextField.text!
-                
-                
-                
                 UIApplication.topViewController()?.present(teamSelectionNavigationScreen, animated: true, completion: nil)
                 
             } else if (data["login"] == true) {
@@ -103,14 +164,48 @@ class LoginViewController: UIViewController{
         textField.resignFirstResponder()
         return true
     }
+
+    
+    
+    func wrongUsernameField()->Bool{
+        var errorExists = true
+        if emailTextField.text!.trimmingCharacters(in: whitespaceSet as CharacterSet) == "" {
+            errorExists = true
+        }
+        else {
+            errorExists = false
+        }
+         return errorExists
+    
+    }
+    func wrongPasswordField()->Bool{
+        var errorExists = true
+        if passwordTextField.text!.isEmpty {
+            
+            showErrorMessage(passwordTextField.placeholder!)
+            
+            errorExists = true
+        }
+ //        else if Utils().isValidPassword(passwordTextField.text!) {
+        else {
+            
+            removeErrorMessage(passwordTextField.placeholder!)
+            
+            errorExists = false
+        }
+        return errorExists
+    }
+    
     
     func showErrorMessage(_ placeholder: String){
         switch placeholder {
             case "Email or Username":
-            emailTextField.layer.borderColor = UIColor.red.cgColor
+            emailTextField.layer.borderColor = ColorCode().redColor.cgColor
+            self.usernameErrorLabel.text = "Invalid Username"
             self.view.makeToast(message: "Invalid Username or Email")
             case "Password":
-            passwordTextField.layer.borderColor = UIColor.red.cgColor
+            passwordTextField.layer.borderColor = ColorCode().redColor.cgColor
+            self.passwordErrorLabel.text = "Invalid Password"
             self.view.makeToast(message: "Invalid Password")
         default:
             break
@@ -121,11 +216,11 @@ class LoginViewController: UIViewController{
     func removeErrorMessage(_ placeholder: String) {
         switch placeholder {
         case "Email or Username" :
-            emailTextField.text = ""
-            emailTextField.layer.borderColor = UIColor.white as! CGColor
+            self.usernameErrorLabel.text = ""
+            emailTextField.layer.borderColor = ColorCode().appThemeColor.cgColor
         case "Password" :
-            passwordTextField.text = ""
-            passwordTextField.layer.borderColor = UIColor.white as! CGColor
+            self.passwordErrorLabel.text = ""
+            passwordTextField.layer.borderColor = ColorCode().appThemeColor.cgColor
         default:
             break
         }

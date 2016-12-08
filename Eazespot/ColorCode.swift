@@ -13,9 +13,9 @@ open class ColorCode{
     
     var loginSignUpTextFieldHighlightColor: UIColor = UIColor(red: 252/255.0, green: 204/255.0, blue: 47/255.0, alpha: 1)
     
-    var appThemeGreenColor: UIColor = UIColor(red: 160/255.0, green: 200/255.0, blue: 148/255.0, alpha: 1)
+    var appThemeColor: UIColor = UIColor(red: 29/255.0, green: 155/255.0, blue: 255/255.0, alpha: 1)
     
-    var navBarPurpleColor: UIColor = UIColor(red: 86/255.0, green: 84/255.0, blue: 108/255.0, alpha: 1)
+    var redColor: UIColor = UIColor(red: 255.0/255.0, green: 0.0/255.0, blue: 0.0/255.0, alpha: 1)
     
     var navBarBlueColor: UIColor = UIColor(rgb: 0x313466)//UIColor(red: 38/255.0, green: 68/255.0, blue: 109/255.0, alpha: 1)
     

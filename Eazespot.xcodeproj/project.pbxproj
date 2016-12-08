@@ -28,6 +28,8 @@
 		435E8B8F1DF055D6003D3F63 /* Toast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 435E8B8E1DF055D6003D3F63 /* Toast.swift */; };
 		435E8B911DF0560B003D3F63 /* ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 435E8B901DF0560B003D3F63 /* ActivityIndicator.swift */; };
 		435E8B941DF057F5003D3F63 /* CAPSPageMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 435E8B931DF057F5003D3F63 /* CAPSPageMenu.swift */; };
+		43D549871DF9466200138473 /* PrivateChatTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43D549861DF9466200138473 /* PrivateChatTableViewCell.swift */; };
+		43D549891DF9468600138473 /* PrivateChatTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43D549881DF9468600138473 /* PrivateChatTableViewController.swift */; };
 		43E2B81E1DF15F1000F791B5 /* TeamSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43E2B81D1DF15F1000F791B5 /* TeamSelectionViewController.swift */; };
 		43E2B8241DF1872B00F791B5 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43E2B8231DF1872B00F791B5 /* Extensions.swift */; };
 		43E2B8261DF1927700F791B5 /* Company.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43E2B8251DF1927700F791B5 /* Company.swift */; };
@@ -80,6 +82,8 @@
 		435E8B8E1DF055D6003D3F63 /* Toast.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Toast.swift; sourceTree = "<group>"; };
 		435E8B901DF0560B003D3F63 /* ActivityIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityIndicator.swift; sourceTree = "<group>"; };
 		435E8B931DF057F5003D3F63 /* CAPSPageMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CAPSPageMenu.swift; sourceTree = "<group>"; };
+		43D549861DF9466200138473 /* PrivateChatTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrivateChatTableViewCell.swift; sourceTree = "<group>"; };
+		43D549881DF9468600138473 /* PrivateChatTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrivateChatTableViewController.swift; sourceTree = "<group>"; };
 		43E2B81D1DF15F1000F791B5 /* TeamSelectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TeamSelectionViewController.swift; sourceTree = "<group>"; };
 		43E2B8231DF1872B00F791B5 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		43E2B8251DF1927700F791B5 /* Company.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Company.swift; sourceTree = "<group>"; };
@@ -305,6 +309,8 @@
 			isa = PBXGroup;
 			children = (
 				4320D1A21DF5A203002EDC2C /* ChatFriendListPageMenuViewController.swift */,
+				43D549881DF9468600138473 /* PrivateChatTableViewController.swift */,
+				43D549861DF9466200138473 /* PrivateChatTableViewCell.swift */,
 			);
 			name = Chat;
 			sourceTree = "<group>";
@@ -518,6 +524,7 @@
 				435E8B761DF03238003D3F63 /* Network.swift in Sources */,
 				435E8B3A1DF029B5003D3F63 /* LoginViewController.swift in Sources */,
 				43E2B81E1DF15F1000F791B5 /* TeamSelectionViewController.swift in Sources */,
+				43D549891DF9468600138473 /* PrivateChatTableViewController.swift in Sources */,
 				435E8B891DF04868003D3F63 /* DeviceSizes.swift in Sources */,
 				4320D1A71DF5A342002EDC2C /* ColorCode.swift in Sources */,
 				435E8B771DF03238003D3F63 /* Reachability.swift in Sources */,
@@ -534,6 +541,7 @@
 				435E8B381DF029B5003D3F63 /* AppDelegate.swift in Sources */,
 				435E8B8F1DF055D6003D3F63 /* Toast.swift in Sources */,
 				435E8B781DF03238003D3F63 /* SwiftyJSON.swift in Sources */,
+				43D549871DF9466200138473 /* PrivateChatTableViewCell.swift in Sources */,
 				435E8B7C1DF03338003D3F63 /* LoginService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

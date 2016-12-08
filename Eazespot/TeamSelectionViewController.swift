@@ -11,7 +11,7 @@ import XMPPFramework
 import SWXMLHash
 
 
-class TeamSelectionViewController: UIViewController,UIPickerViewDelegate,UIPickerViewDataSource, ChatDelegate, XMPPRosterMemoryStorageDelegate,NSFetchedResultsControllerDelegate {
+class TeamSelectionViewController: UIViewController,UIPickerViewDelegate,UIPickerViewDataSource, ChatDelegate {
     
     @IBOutlet weak var companyListPickerViewController: UIPickerView!
     var companysArray = [Company]()
@@ -20,10 +20,6 @@ class TeamSelectionViewController: UIViewController,UIPickerViewDelegate,UIPicke
     var userChatPassword = String()
     var loginPassword = String()
     var loginUsername = String()
-    var xmppUserCoreDataStorageObject = XMPPRosterCoreDataStorage()
-    var onlineBuddies = NSMutableArray()
-    let managedObjectContext = NSManagedObjectContext()
-    
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
 
     
@@ -83,95 +79,23 @@ class TeamSelectionViewController: UIViewController,UIPickerViewDelegate,UIPicke
             self.userChatId = (data["cid"].stringValue).fromBase64()
             self.userChatPassword = (data["cip"].stringValue).fromBase64()
             
-            
-            self.setValue(value: self.userChatId + "@chat.eazehub.com", forKey: "chatUserID")
-            self.setValue(value: self.userChatId + "@chat.eazehub.com", forKey: "chatUserID")
-            
-            
-            print("*** \(self.userChatId) -- \(self.userChatPassword)")
-            
-            
-            print("***@@@ \(UserDefaults.standard.object(forKey: "chatUserID")) -- \(UserDefaults.standard.object(forKey: "chatUserPassword"))")
-            
-            
+            self.setValue(value: self.userChatId + "@chat.eazespot.com", forKey: "chatUserID")
+            self.setValue(value: self.userChatId + "@chat.eazespot.com", forKey: "chatUserID")
             if self.appDelegate.connect() {
                 self.view.makeToast(message: "You are connected")
                 self.getUserFromXMPPCoreDataObject(jidStr: self.userChatId + "@chat.eazehub.com")
-                let objects = self.fetchedResultsController()!.fetchedObjects
-                    for object in objects! {
-                       let object = object as! XMPPUserCoreDataStorageObject
-                        let name = object.displayName
-                        let jid = object.jid
-                        let subscription = object.subscription
-                        print("NAME:::  \(name) \n JID:: \(jid) \n SUBSCRIPTION: \(subscription)")
-                        if object.photo != nil {
-                            print("Photo in Roster found")
-                        } else {
-
-                        let data = self.appDelegate.xmppvCardAvatarModule?.photoData(for: jid!)
-                            print("\(data)")
-                            let dataString = String(describing: data)
-                            let xml = SWXMLHash.config { // the xml variable is our XMLIndexer
-                                config in
-                                config.shouldProcessLazily = false
-                                }.parse(dataString)
-                            
-                            
-                            let name1 = xml
-                            print("yyy : \(name1)")
-                        }
-                        
-                        
-                        
-                     
-                    
-                    
-                    }
-              
-                    
-                    
-
-            
-//                    self.appDelegate.xmppRoster.fetch()
-//                    let user = self.xmppUserCoreDataStorageObject.myUser(for: self.appDelegate.xmppStream, managedObjectContext: self.managedObjectContext)
-//                
-//                    print("USER DETAILS: \(user?.jidStr)")
-//                    debugPrint("buddies = \(self.appDelegate.xmppRoster.fetch())")
-//              
-                
-                
-                
             }
             else{
               self.view.makeToast(message: "Unable to connect")
-            
             }
-            debugPrint("USER id = \(UserDefaults.standard.object(forKey: "chatUserID"))")
             ActivityIndicator.shared.hideProgressView()
-            
             },failed: {(errorCode: Int) in debugPrint("TeamLoginError")})
         
         }
     
     
     
-        func buddyWentOnline() {
-//        if !onlineBuddies.contains(name) {
-//            onlineBuddies.add(name)
-//        
-//            }
-        }
-    
-        func buddyWentOffline() {
-//            onlineBuddies.remove(name)
-
-        }
-    
-        func didDisconnect() {
-            onlineBuddies.removeAllObjects()
-    
-        }
-    
+     
     // Mark: Private function
     
     private func setValue(value: String, forKey key: String) {
@@ -223,7 +147,7 @@ class TeamSelectionViewController: UIViewController,UIPickerViewDelegate,UIPicke
         }
 
     }
-    func fetchedResultsController() -> NSFetchedResultsController<NSFetchRequestResult>? {
+   /* func fetchedResultsController() -> NSFetchedResultsController<NSFetchRequestResult>? {
         let moc = managedObjectContext_roster() as NSManagedObjectContext?
         var fetchedResultsControllerVar: NSFetchedResultsController<NSFetchRequestResult>?
         if fetchedResultsControllerVar == nil {
@@ -236,7 +160,7 @@ class TeamSelectionViewController: UIViewController,UIPickerViewDelegate,UIPicke
             
             fetchRequest.entity = entity
             fetchRequest.sortDescriptors = sortDescriptors
-            fetchRequest.fetchBatchSize = 10
+            fetchRequest.fetchBatchSize = 20
             
             fetchedResultsControllerVar = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: moc!, sectionNameKeyPath: "sectionNum", cacheName: nil)
             fetchedResultsControllerVar?.delegate = self
@@ -255,6 +179,25 @@ class TeamSelectionViewController: UIViewController,UIPickerViewDelegate,UIPicke
     }
    
     
+*/
+    // MARK: - ChatDelegate Methods
+    
+    func buddyWentOnline() {
+        //        if !onlineBuddies.contains(name) {
+        //            onlineBuddies.add(name)
+        //
+        //            }
+    }
+    
+    func buddyWentOffline() {
+        //            onlineBuddies.remove(name)
+        
+    }
+    
+    func didDisconnect() {
+//        onlineBuddies.removeAllObjects()
+        
+    }
 
     
     // MARK: - Core Data stack
