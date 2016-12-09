@@ -22,6 +22,8 @@ class PrivateChatTableViewCell: UITableViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
+        statusView.layer.cornerRadius = (statusView.frame.width)/2
+        statusView.layer.backgroundColor = UIColor.red.cgColor
         // Initialization code
     }
 

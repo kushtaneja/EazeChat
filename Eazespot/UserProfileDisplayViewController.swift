@@ -29,7 +29,7 @@ class UserProfileDisplayViewController: UIViewController {
         nameTextLabel.text = loggedinUser.firstName.capitalized + " " + loggedinUser.lastName.capitalized
         usernameTextLabel.text = loggedinUser.email
         companyTextLabel.text = loggedinUser.company
-        profilePictureView.sd_setImage(with: (NSURL(string: loggedinUser.profilePicUrl) as! URL), placeholderImage: UIImage(named: "defaultPerson"))
+        profilePictureView.sd_setImage(with: (NSURL(string: loggedinUser.profilePicUrl) as! URL), placeholderImage: UIImage(named: "person"))
         
         
         // Do any additional setup after loading the view.

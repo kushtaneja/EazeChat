@@ -2,60 +2,16 @@
 //  PrivateChatTableViewController.swift
 //  Eazespot
 //
-//  Created by Kush Taneja on 08/12/16.
+//  Created by Kush Taneja on 10/12/16.
 //  Copyright © 2016 Kush Taneja. All rights reserved.
 //
 
 import UIKit
-import XMPPFramework
-import SWXMLHash
 
-class PrivateChatTableViewController: UITableViewController, ChatDelegate, XMPPRosterMemoryStorageDelegate,NSFetchedResultsControllerDelegate {
-    
-    var onlineBuddies = NSMutableArray()
-    var xmppUserCoreDataStorageObject = XMPPRosterCoreDataStorage()
-    let managedObjectContext = NSManagedObjectContext()
-    var chatList = NSArray()
-    let appDelegate = UIApplication.shared.delegate as! AppDelegate
-    
-    class var sharedInstance : PrivateChatTableViewController {
-        struct OneChatsSingleton {
-            static let instance = PrivateChatTableViewController()
-        }
-        return OneChatsSingleton.instance
-    }
-    
+class PrivateChatTableViewController: UITableViewController {
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.rowHeight = 65
-        
-        let objects = self.fetchedResultsController()!.fetchedObjects
-        for object in objects! {
-            let object = object as! XMPPUserCoreDataStorageObject
-            let name = object.displayName
-            let jid = object.jid
-            let subscription = object.subscription
-            print("NAME:::  \(name) \n JID:: \(jid) \n SUBSCRIPTION: \(subscription)")
-            if object.photo != nil {
-                print("Photo in Roster found")
-            } else {
-                
-                let data = self.appDelegate.xmppvCardAvatarModule?.photoData(for: jid!)
-                print("\(data)")
-                let dataString = String(describing: data)
-                let xml = SWXMLHash.config { // the xml variable is our XMLIndexer
-                    config in
-                    config.shouldProcessLazily = false
-                    }.parse(dataString)
-                
-                
-                let name1 = xml
-                print("yyy : \(name1)")
-            }}
-  
-    
-        
-
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -73,36 +29,18 @@ class PrivateChatTableViewController: UITableViewController, ChatDelegate, XMPPR
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 1
+        return 0
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-//        return (self.getChatsList()).count
         return 0
     }
 
-   /*
+    /*
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
- let cell: UITableViewCell? = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath)
- let user = OneChats.getChatsList().objectAtIndex(indexPath.row) as! XMPPUserCoreDataStorageObject
- 
- cell!.textLabel!.text = user.displayName
- cell!.detailTextLabel?.hidden = true
- 
- OneChat.sharedInstance.configurePhotoForCell(cell!, user: user)
- 
- cell?.imageView?.layer.cornerRadius = 24
- cell?.imageView?.clipsToBounds = true
- 
- return cell!
-        let cell = tableView.dequeueReusableCell(withIdentifier: "PrivateChatTableViewCell", for: indexPath) as! PrivateChatTableViewCell
-        let user = self.getChatsList().object(at: indexPath.row) as! XMPPUserCoreDataStorageObject
-        cell.userNameLabel.text = user.displayName
-        configurePhotoForCell(cell: cell, user: user)
-        cell.avatorThumbnail.layer.cornerRadius = 24
-        cell.avatorThumbnail.clipsToBounds = true
+        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
+
         // Configure the cell...
 
         return cell
@@ -141,236 +79,6 @@ class PrivateChatTableViewController: UITableViewController, ChatDelegate, XMPPR
     override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
         // Return false if you do not want the item to be re-orderable.
         return true
-    }
-    */
-    
-    // MARK: NSFetchedResultsController Delegate Methods
-    private func controllerDidChangeContent(controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        self.tableView.reloadData()
-    }
-    // TableViewCell Helpers
-    func configurePhotoForCell(cell: PrivateChatTableViewCell, user: XMPPUserCoreDataStorageObject) {
-        // Our xmppRosterStorage will cache photos as they arrive from the xmppvCardAvatarModule.
-        // We only need to ask the avatar module for a photo, if the roster doesn't have it.
-        if user.photo != nil {
-            cell.imageView!.image = user.photo!;
-        } else {
-            let photoData = self.appDelegate.xmppvCardAvatarModule?.photoData(for: user.jid)
-            
-            if let photoData = photoData {
-                cell.avatorThumbnail.image = UIImage(data: photoData)
-            } else {
-                 cell.avatorThumbnail.image = UIImage(named: "defaultPerson")
-            }
-        }
-    }
-
-
-
-    func getChatsList() -> NSArray {
-        if chatList.count == 0  {
-            if let chatList: NSMutableArray = getActiveUsersFromCoreDataStorage() as? NSMutableArray {//NSUserDefaults.standardUserDefaults().objectForKey("openChatList")
-                chatList.enumerateObjects({ (jidStr, index, finished) -> Void in
-                    getUserFromXMPPCoreDataObject(jidStr: jidStr as! String)
-                    
-                    if let user = userFromRosterForJID(jid: jidStr as! String) {
-                       chatList.add(user)
-                    }
-                })
-            }
-        }
-        return chatList
-    }
-
-    // Mark: OneRoster Delegates
-    
-    func oneRosterContentChanged(controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        //Will reload the tableView to reflet roster's changes
-        tableView.reloadData()
-    }
-    
-    
-    // MARK: - ChatDelegate Methods
-    
-    func buddyWentOnline() {
-        //        if !onlineBuddies.contains(name) {
-        //            onlineBuddies.add(name)
-        //
-        //            }
-    }
-    
-    func buddyWentOffline() {
-        //            onlineBuddies.remove(name)
-        
-    }
-    
-    func didDisconnect() {
-        onlineBuddies.removeAllObjects()
-        
-    }
-    
-    // MARK: - Core Data Stack
-    
-    func managedObjectContext_roster() -> NSManagedObjectContext {
-        return self.appDelegate.xmppRosterStorage.mainThreadManagedObjectContext
-    }
-    
-    func userFromRosterForJID(jid: String) -> XMPPUserCoreDataStorageObject? {
-        let userJID = XMPPJID(string: jid)
-        
-        if let user = self.appDelegate.xmppRosterStorage.user(for: userJID, xmppStream: self.appDelegate.xmppStream, managedObjectContext:managedObjectContext_roster()) {
-            return user
-        } else {
-            return nil
-        }
-    }
-    
-    func userFromRosterAtIndexPath(indexPath indexPath:IndexPath) -> XMPPUserCoreDataStorageObject {
-        return fetchedResultsController()!.object(at: indexPath) as! XMPPUserCoreDataStorageObject
-    }
-    
-    func removeUserFromRosterAtIndexPath(indexPath indexPath: IndexPath) {
-        let user = userFromRosterAtIndexPath(indexPath: indexPath)
-        fetchedResultsController()?.managedObjectContext.delete(user)
-    }
-    
-
-
-    func fetchedResultsController() -> NSFetchedResultsController<NSFetchRequestResult>? {
-        let moc = managedObjectContext_roster() as NSManagedObjectContext?
-        var fetchedResultsControllerVar: NSFetchedResultsController<NSFetchRequestResult>?
-        if fetchedResultsControllerVar == nil {
-            
-            let entity = NSEntityDescription.entity(forEntityName: "XMPPUserCoreDataStorageObject", in: moc!)
-            let sd1 = NSSortDescriptor(key: "sectionNum", ascending: true)
-            let sd2 = NSSortDescriptor(key: "displayName", ascending: true)
-            let sortDescriptors = [sd1, sd2]
-            let fetchRequest = NSFetchRequest<NSFetchRequestResult>()
-            
-            fetchRequest.entity = entity
-            fetchRequest.sortDescriptors = sortDescriptors
-            fetchRequest.fetchBatchSize = 20
-            
-            fetchedResultsControllerVar = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: moc!, sectionNameKeyPath: "sectionNum", cacheName: nil)
-            fetchedResultsControllerVar?.delegate = self
-            
-            do {
-                try fetchedResultsControllerVar!.performFetch()
-            } catch let error as NSError {
-                print("Error: \(error.localizedDescription)")
-                abort()
-            }
-            
-        }
-        
-        return fetchedResultsControllerVar!
-        
-    }
-    func getActiveUsersFromCoreDataStorage() -> NSArray? {
-        let moc = managedObjectContext_roster() as NSManagedObjectContext?
-        let entityDescription = NSEntityDescription.entity(forEntityName: "XMPPMessageArchiving_Message_CoreDataObject", in: moc!)
-        let request = NSFetchRequest<NSFetchRequestResult>()
-        let predicateFormat = "streamBareJidStr like %@ "
-        
-        if let predicateString = UserDefaults.standard.string(forKey: "chatUserID") {
-            let predicate = NSPredicate(format: predicateFormat, predicateString)
-            request.predicate = predicate
-            request.entity = entityDescription
-            
-            do {
-                let results = try moc?.fetch(request)
-                var _: XMPPMessageArchiving_Message_CoreDataObject
-                let archivedMessage = NSMutableArray()
-                
-                for message in results! {
-                    var element: DDXMLElement!
-                    do {
-                        element = try DDXMLElement(xmlString: (message as AnyObject).messageStr)
-                    } catch _ {
-                        element = nil
-                    }
-                    let sender: String
-                    
-                    if element.attributeStringValue(forName: "to") != UserDefaults.standard.string(forKey: "chatUserID")! && !(element.attributeStringValue(forName: "to") as NSString).contains(UserDefaults.standard.string(forKey: "chatUserID")!) {
-                        sender = element.attributeStringValue(forName: "to")
-                        if !archivedMessage.contains(sender) {
-                            archivedMessage.add(sender)
-                        }
-                    }
-                }
-                return archivedMessage
-            } catch _ {
-            }
-        }
-        return nil
-    }
-    
-
-    private func setValue(value: String, forKey key: String) {
-        if value.characters.count > 0 {
-            UserDefaults.standard.set(value, forKey: key)
-        } else {
-            UserDefaults.standard.removeObject(forKey: key)
-        }
-    }
-    func getUserFromXMPPCoreDataObject(jidStr: String) {
-        let moc = managedObjectContext_roster() as NSManagedObjectContext?
-        let entity = NSEntityDescription.entity(forEntityName: "XMPPUserCoreDataStorageObject", in: moc!)
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>()
-        
-        fetchRequest.entity = entity
-        
-        var predicate: NSPredicate
-        
-        if self.appDelegate.xmppStream == nil {
-            predicate = NSPredicate(format: "jidStr == %@", jidStr)
-        } else {
-            predicate = NSPredicate(format: "jidStr == %@ AND streamBareJidStr == %@", jidStr, UserDefaults.standard.string(forKey: "chatUserID")!)
-        }
-        
-        fetchRequest.predicate = predicate
-        fetchRequest.fetchLimit = 1
-        do {
-            let result =  try moc?.fetch(fetchRequest)
-            
-            let a = result as! [NSManagedObject]
-            
-            for aaaa in result! {
-                print("\(aaaa)")
-            }
-            
-            var element: DDXMLElement!
-            /*do {
-             element = //try DDXMLElement(xmlString: String(describing: result))
-             } catch _ {
-             element = nil
-             }*/
-            print("HOOO00 \(result)")
-            
-            
-        }
-        catch {
-            
-            
-        }
-        
-    }
-
-    
-   /*
-    public class func knownUserForJid(jidStr jidStr: String) -> Bool {
-        if sharedInstance.chatList.containsObject(userFromRosterForJID(jid: jidStr)!) {
-            return true
-        } else {
-            return false
-        }
-    }
-    
-    public class func addUserToChatList(jidStr jidStr: String) {
-        if !knownUserForJid(jidStr: jidStr) {
-            sharedInstance.chatList.addObject(userFromRosterForJID(jid: jidStr)!)
-            sharedInstance.chatListBare.addObject(jidStr)
-        }
     }
     */
 
