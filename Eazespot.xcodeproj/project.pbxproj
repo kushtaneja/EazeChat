@@ -37,6 +37,7 @@
 		43AA9E2B1DFAAEBA00C1876E /* EazeRoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43AA9E2A1DFAAEBA00C1876E /* EazeRoom.swift */; };
 		43AA9E2D1DFAB04900C1876E /* kXMPP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43AA9E2C1DFAB04900C1876E /* kXMPP.swift */; };
 		43AA9E2F1DFB53D100C1876E /* PrivateChatTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43AA9E2E1DFB53D100C1876E /* PrivateChatTableViewController.swift */; };
+		43AA9E311DFB5C5900C1876E /* ChatRoomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43AA9E301DFB5C5900C1876E /* ChatRoomViewController.swift */; };
 		43D549871DF9466200138473 /* PrivateChatTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43D549861DF9466200138473 /* PrivateChatTableViewCell.swift */; };
 		43D549891DF9468600138473 /* NewPrivateChatTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43D549881DF9468600138473 /* NewPrivateChatTableViewController.swift */; };
 		43D5498B1DF98B6F00138473 /* UserProfileDisplayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43D5498A1DF98B6F00138473 /* UserProfileDisplayViewController.swift */; };
@@ -103,6 +104,7 @@
 		43AA9E2A1DFAAEBA00C1876E /* EazeRoom.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EazeRoom.swift; sourceTree = "<group>"; };
 		43AA9E2C1DFAB04900C1876E /* kXMPP.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = kXMPP.swift; sourceTree = "<group>"; };
 		43AA9E2E1DFB53D100C1876E /* PrivateChatTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrivateChatTableViewController.swift; sourceTree = "<group>"; };
+		43AA9E301DFB5C5900C1876E /* ChatRoomViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatRoomViewController.swift; sourceTree = "<group>"; };
 		43D549861DF9466200138473 /* PrivateChatTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrivateChatTableViewCell.swift; sourceTree = "<group>"; };
 		43D549881DF9468600138473 /* NewPrivateChatTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewPrivateChatTableViewController.swift; sourceTree = "<group>"; };
 		43D5498A1DF98B6F00138473 /* UserProfileDisplayViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserProfileDisplayViewController.swift; sourceTree = "<group>"; };
@@ -152,13 +154,6 @@
 				4B6C78EFF868E31505E7641E /* Pods-Eazespot.release.xcconfig */,
 			);
 			name = Pods;
-			sourceTree = "<group>";
-		};
-		4320D19F1DF56690002EDC2C /* Chat */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Chat;
 			sourceTree = "<group>";
 		};
 		4320D1A81DF5A34A002EDC2C /* ColorCode */ = {
@@ -268,7 +263,6 @@
 			children = (
 				43AA9E1D1DFAAD6400C1876E /* XMPPServices */,
 				43AA9E1C1DFAAD4C00C1876E /* Classes */,
-				4320D19F1DF56690002EDC2C /* Chat */,
 				435E8B7D1DF033ED003D3F63 /* LogiAndSignUp */,
 			);
 			name = Services;
@@ -363,6 +357,7 @@
 				43D549881DF9468600138473 /* NewPrivateChatTableViewController.swift */,
 				43AA9E2E1DFB53D100C1876E /* PrivateChatTableViewController.swift */,
 				43D549861DF9466200138473 /* PrivateChatTableViewCell.swift */,
+				43AA9E301DFB5C5900C1876E /* ChatRoomViewController.swift */,
 			);
 			name = Chat;
 			sourceTree = "<group>";
@@ -580,6 +575,7 @@
 				43D549891DF9468600138473 /* NewPrivateChatTableViewController.swift in Sources */,
 				435E8B891DF04868003D3F63 /* DeviceSizes.swift in Sources */,
 				43AA9E291DFAAEA200C1876E /* EazeMessage.swift in Sources */,
+				43AA9E311DFB5C5900C1876E /* ChatRoomViewController.swift in Sources */,
 				4320D1A71DF5A342002EDC2C /* ColorCode.swift in Sources */,
 				435E8B771DF03238003D3F63 /* Reachability.swift in Sources */,
 				43AA9E1F1DFAADC500C1876E /* EazeChat.swift in Sources */,

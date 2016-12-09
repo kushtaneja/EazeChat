@@ -442,6 +442,7 @@
                                     <outlet property="lastMessageTimeLabel" destination="jq1-wh-Aws" id="K81-jF-aoD"/>
                                     <outlet property="statusView" destination="0Rn-LM-LKe" id="xsj-Bk-O7G"/>
                                     <outlet property="userNameLabel" destination="A7o-kq-XhH" id="FB4-Ue-hIX"/>
+                                    <segue destination="O3y-JM-pzc" kind="push" identifier="initiatingChatRoom" id="J1C-JK-qwn"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -593,6 +594,25 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xfM-UG-Vtf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="6529" y="-563"/>
+        </scene>
+        <!--Chat Room View Controller-->
+        <scene sceneID="0qx-5T-wQe">
+            <objects>
+                <viewController storyboardIdentifier="ChatRoomViewController" id="O3y-JM-pzc" customClass="ChatRoomViewController" customModule="Eazespot" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="GbS-DH-mV4"/>
+                        <viewControllerLayoutGuide type="bottom" id="le0-Mc-ZBw"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="By2-Le-0dT">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="Rti-SJ-9ho"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="3xe-K0-Xsb" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="8055" y="124"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="1ds-hC-rn7">

@@ -60,6 +60,7 @@ public class EazeMessage: NSObject {
         completeMessage.addAttribute(withName: "id", stringValue: messageID!)
         completeMessage.addAttribute(withName: "type", stringValue: "chat")
         completeMessage.addAttribute(withName: "to", stringValue: receiver)
+        
         completeMessage.addChild(body)
         
         sharedInstance.didSendMessageCompletionBlock = completion
@@ -189,6 +190,7 @@ extension EazeMessage: XMPPStreamDelegate {
     }
     
     public func xmppStream(_ sender: XMPPStream!, didReceive message: XMPPMessage!) {
+        
         let user = EazeChat.sharedInstance.xmppRosterStorage.user(for: message.from(), xmppStream: EazeChat.sharedInstance.xmppStream, managedObjectContext: EazeRoster.sharedInstance.managedObjectContext_roster())
         
         if let user = user {

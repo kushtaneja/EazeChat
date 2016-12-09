@@ -131,7 +131,17 @@ class NewPrivateChatTableViewController: UITableViewController,EazeRosterDelegat
     @IBAction func cancelButtonTapped(_ sender: UIBarButtonItem) {
         self.dismiss(animated: true, completion: nil)
     }
-  
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "initiatingChatRoom" {
+            if let controller = segue.destination as? ChatRoomViewController {
+                if let cell: UITableViewCell = sender as? UITableViewCell {
+                    let user = chatList[tableView.indexPath(for: cell)!.row] as! XMPPUserCoreDataStorageObject
+                    controller.recipient = user
+                }
+            }
+        }
+    }
+
     /*
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
