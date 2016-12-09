@@ -32,6 +32,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, XMPPRosterDelegate, XMPPS
     var xmppvCardStorage: XMPPvCardCoreDataStorage?
     var xmppvCardTempModule: XMPPvCardTempModule?
     public var xmppvCardAvatarModule: XMPPvCardAvatarModule?
+    public var xmppMessageStorage: XMPPMessageArchivingCoreDataStorage?
+    var xmppMessageArchiving: XMPPMessageArchiving?
    
 
     override init() {
@@ -45,6 +47,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, XMPPRosterDelegate, XMPPS
         
         
         setupStream()
+        setupArchiving()
         
         return true
     }
@@ -83,6 +86,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate, XMPPRosterDelegate, XMPPS
     
     
     // MARK: - Chat
+    func setupArchiving() {
+        xmppMessageStorage = XMPPMessageArchivingCoreDataStorage.sharedInstance()
+        xmppMessageArchiving = XMPPMessageArchiving(messageArchivingStorage: xmppMessageStorage)
+        
+        xmppMessageArchiving?.clientSideMessageArchivingOnly = true
+        xmppMessageArchiving?.activate(xmppStream)
+        xmppMessageArchiving?.addDelegate(self, delegateQueue: DispatchQueue.main)
+    }
+
     
     func setupStream() {
         //xmppRoster = XMPPRoster(rosterStorage: xmppRosterStorage)
@@ -178,6 +190,38 @@ class AppDelegate: UIResponder, UIApplicationDelegate, XMPPRosterDelegate, XMPPS
     
     func xmppStream(_ sender: XMPPStream!, didReceive message: XMPPMessage!) {
         print("Did receive message \(message)")
+        
+        let user = xmppRosterStorage.user(for: message.from(), xmppStream: xmppStream, managedObjectContext: xmppRosterStorage.mainThreadManagedObjectContext)
+ /*
+        if !PrivateChatTableViewController.knownUserForJid(jidStr: (user?.jidStr)!) {
+            PrivateChatTableViewController.addUserToChatList(jidStr: (user?.jidStr)!)
+        }
+        */
+       /* if message.isChatMessageWithBody() {
+           
+                //let displayName = user.displayName
+//                
+//                JSQSystemSoundPlayer.jsq_playMessageReceivedSound()
+            
+                if let msg: String = message.forName("body")?.stringValue {
+                    if let from: String = message.attribute(forName: "from")?.stringValue {
+                    
+                        let message = JSQMessage(senderId: from, senderDisplayName: from, date: NSDate(), text: msg)
+                        messages.addObject(message)
+                        
+                        self.finishReceivingMessageAnimated(true)
+                    }
+                }
+            
+
+        } else {
+            //was composing
+            if let _ = message.elementForName("composing") {
+                OneMessage.sharedInstance.delegate?.oneStream(sender, userIsComposing: user)
+            }
+        }
+    }
+*/
     }
     
     func xmppStream(_ sender: XMPPStream!, didSend message: XMPPMessage!) {

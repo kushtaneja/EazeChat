@@ -30,6 +30,9 @@
 		435E8B941DF057F5003D3F63 /* CAPSPageMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 435E8B931DF057F5003D3F63 /* CAPSPageMenu.swift */; };
 		43D549871DF9466200138473 /* PrivateChatTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43D549861DF9466200138473 /* PrivateChatTableViewCell.swift */; };
 		43D549891DF9468600138473 /* PrivateChatTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43D549881DF9468600138473 /* PrivateChatTableViewController.swift */; };
+		43D5498B1DF98B6F00138473 /* UserProfileDisplayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43D5498A1DF98B6F00138473 /* UserProfileDisplayViewController.swift */; };
+		43D5498D1DF9949100138473 /* ProfileService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43D5498C1DF9949100138473 /* ProfileService.swift */; };
+		43D5498F1DF99A2E00138473 /* LoggedinUserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43D5498E1DF99A2E00138473 /* LoggedinUserProfile.swift */; };
 		43E2B81E1DF15F1000F791B5 /* TeamSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43E2B81D1DF15F1000F791B5 /* TeamSelectionViewController.swift */; };
 		43E2B8241DF1872B00F791B5 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43E2B8231DF1872B00F791B5 /* Extensions.swift */; };
 		43E2B8261DF1927700F791B5 /* Company.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43E2B8251DF1927700F791B5 /* Company.swift */; };
@@ -84,6 +87,9 @@
 		435E8B931DF057F5003D3F63 /* CAPSPageMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CAPSPageMenu.swift; sourceTree = "<group>"; };
 		43D549861DF9466200138473 /* PrivateChatTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrivateChatTableViewCell.swift; sourceTree = "<group>"; };
 		43D549881DF9468600138473 /* PrivateChatTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrivateChatTableViewController.swift; sourceTree = "<group>"; };
+		43D5498A1DF98B6F00138473 /* UserProfileDisplayViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserProfileDisplayViewController.swift; sourceTree = "<group>"; };
+		43D5498C1DF9949100138473 /* ProfileService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileService.swift; sourceTree = "<group>"; };
+		43D5498E1DF99A2E00138473 /* LoggedinUserProfile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoggedinUserProfile.swift; sourceTree = "<group>"; };
 		43E2B81D1DF15F1000F791B5 /* TeamSelectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TeamSelectionViewController.swift; sourceTree = "<group>"; };
 		43E2B8231DF1872B00F791B5 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		43E2B8251DF1927700F791B5 /* Company.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Company.swift; sourceTree = "<group>"; };
@@ -216,6 +222,7 @@
 			children = (
 				43E2B81F1DF1602B00F791B5 /* Chat */,
 				435E8B8B1DF054BD003D3F63 /* LoginAndSignUp */,
+				43D5498A1DF98B6F00138473 /* UserProfileDisplayViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -224,8 +231,6 @@
 			isa = PBXGroup;
 			children = (
 				435E8B3E1DF029B5003D3F63 /* Eazespot.xcdatamodeld */,
-				43E2B8251DF1927700F791B5 /* Company.swift */,
-				43E2B8271DF19A1E00F791B5 /* UserChatCredentials.swift */,
 			);
 			name = Modals;
 			sourceTree = "<group>";
@@ -244,6 +249,9 @@
 		435E8B7A1DF0331B003D3F63 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				43E2B8251DF1927700F791B5 /* Company.swift */,
+				43D5498E1DF99A2E00138473 /* LoggedinUserProfile.swift */,
+				43E2B8271DF19A1E00F791B5 /* UserChatCredentials.swift */,
 				4320D19F1DF56690002EDC2C /* Chat */,
 				435E8B7D1DF033ED003D3F63 /* LogiAndSignUp */,
 			);
@@ -254,6 +262,7 @@
 			isa = PBXGroup;
 			children = (
 				435E8B7B1DF03338003D3F63 /* LoginService.swift */,
+				43D5498C1DF9949100138473 /* ProfileService.swift */,
 			);
 			name = LogiAndSignUp;
 			sourceTree = "<group>";
@@ -521,6 +530,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				43D5498B1DF98B6F00138473 /* UserProfileDisplayViewController.swift in Sources */,
 				435E8B761DF03238003D3F63 /* Network.swift in Sources */,
 				435E8B3A1DF029B5003D3F63 /* LoginViewController.swift in Sources */,
 				43E2B81E1DF15F1000F791B5 /* TeamSelectionViewController.swift in Sources */,
@@ -535,8 +545,10 @@
 				435E8B8D1DF05509003D3F63 /* Utils.swift in Sources */,
 				435E8B401DF029B5003D3F63 /* Eazespot.xcdatamodeld in Sources */,
 				435E8B941DF057F5003D3F63 /* CAPSPageMenu.swift in Sources */,
+				43D5498F1DF99A2E00138473 /* LoggedinUserProfile.swift in Sources */,
 				43E2B8241DF1872B00F791B5 /* Extensions.swift in Sources */,
 				4320D1A31DF5A203002EDC2C /* ChatFriendListPageMenuViewController.swift in Sources */,
+				43D5498D1DF9949100138473 /* ProfileService.swift in Sources */,
 				43E2B8261DF1927700F791B5 /* Company.swift in Sources */,
 				435E8B381DF029B5003D3F63 /* AppDelegate.swift in Sources */,
 				435E8B8F1DF055D6003D3F63 /* Toast.swift in Sources */,

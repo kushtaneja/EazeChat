@@ -7,17 +7,16 @@
 //
 
 import UIKit
+import SDWebImage
+
 
 class ChatFriendListPageMenuViewController: UIViewController,CAPSPageMenuDelegate{
     var pageMenu : CAPSPageMenu?
     let storyBoard: UIStoryboard =  UIStoryboard(name: "Main", bundle: nil)
     var controllerArray : [UIViewController] = []
     var pageMenuCurrentIndex = 0
-
     override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        
+            super.viewDidLoad()
         // Making Page View Controllers
         var controller : UIViewController = UIViewController()
         

@@ -7,5 +7,5 @@ target 'Eazespot' do
   pod 'XMPPFramework', :git => "https://github.com/robbiehanson/XMPPFramework.git", :branch => 'master'
   pod 'JSQMessagesViewController'
   pod 'SWXMLHash'
-
+  pod 'SDWebImage', '~>3.8'					
 end

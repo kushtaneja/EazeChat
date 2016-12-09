@@ -17,6 +17,9 @@ PODS:
   - KissXML (5.1.2):
     - KissXML/Core (= 5.1.2)
   - KissXML/Core (5.1.2)
+  - SDWebImage (3.8.2):
+    - SDWebImage/Core (= 3.8.2)
+  - SDWebImage/Core (3.8.2)
   - SWXMLHash (3.0.3)
   - XMPPFramework (3.7.0):
     - XMPPFramework/All (= 3.7.0)
@@ -183,6 +186,7 @@ PODS:
 DEPENDENCIES:
   - Alamofire
   - JSQMessagesViewController
+  - SDWebImage (~> 3.8)
   - SWXMLHash
   - XMPPFramework (from `https://github.com/robbiehanson/XMPPFramework.git`, branch `master`)
 
@@ -203,9 +207,10 @@ SPEC CHECKSUMS:
   JSQMessagesViewController: 39fed975e3c9f8eba7292071e29eeb541d105e66
   JSQSystemSoundPlayer: c5850e77a4363ffd374cd851154b9af93264ed8d
   KissXML: 246c842586bb77110e04fb88e19376d96245c856
+  SDWebImage: 098e97e6176540799c27e804c96653ee0833d13c
   SWXMLHash: 80d2529d74891bb2f15305a0b9e08f2a4f229ee7
   XMPPFramework: 977eef5d00c20fe9fb19c30d84a89c2d5564252d
 
-PODFILE CHECKSUM: f24b24fff60d62070f4d4eca299bc522fb50500f
+PODFILE CHECKSUM: ae8d6ca539e73ed25413ec24fa20bee92838fa21
 
 COCOAPODS: 1.1.1

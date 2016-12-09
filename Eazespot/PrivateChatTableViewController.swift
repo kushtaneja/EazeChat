@@ -18,11 +18,17 @@ class PrivateChatTableViewController: UITableViewController, ChatDelegate, XMPPR
     var chatList = NSArray()
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     
-
+    class var sharedInstance : PrivateChatTableViewController {
+        struct OneChatsSingleton {
+            static let instance = PrivateChatTableViewController()
+        }
+        return OneChatsSingleton.instance
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.rowHeight = 65
+        
         let objects = self.fetchedResultsController()!.fetchedObjects
         for object in objects! {
             let object = object as! XMPPUserCoreDataStorageObject
@@ -45,15 +51,9 @@ class PrivateChatTableViewController: UITableViewController, ChatDelegate, XMPPR
                 
                 let name1 = xml
                 print("yyy : \(name1)")
-            }
-            
-            
-            
-            
-            
-            
-        }
-        
+            }}
+  
+    
         
 
 
@@ -78,13 +78,31 @@ class PrivateChatTableViewController: UITableViewController, ChatDelegate, XMPPR
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
+//        return (self.getChatsList()).count
         return 0
     }
 
-    /*
+   /*
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-
+        
+ let cell: UITableViewCell? = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath)
+ let user = OneChats.getChatsList().objectAtIndex(indexPath.row) as! XMPPUserCoreDataStorageObject
+ 
+ cell!.textLabel!.text = user.displayName
+ cell!.detailTextLabel?.hidden = true
+ 
+ OneChat.sharedInstance.configurePhotoForCell(cell!, user: user)
+ 
+ cell?.imageView?.layer.cornerRadius = 24
+ cell?.imageView?.clipsToBounds = true
+ 
+ return cell!
+        let cell = tableView.dequeueReusableCell(withIdentifier: "PrivateChatTableViewCell", for: indexPath) as! PrivateChatTableViewCell
+        let user = self.getChatsList().object(at: indexPath.row) as! XMPPUserCoreDataStorageObject
+        cell.userNameLabel.text = user.displayName
+        configurePhotoForCell(cell: cell, user: user)
+        cell.avatorThumbnail.layer.cornerRadius = 24
+        cell.avatorThumbnail.clipsToBounds = true
         // Configure the cell...
 
         return cell
@@ -126,7 +144,29 @@ class PrivateChatTableViewController: UITableViewController, ChatDelegate, XMPPR
     }
     */
     
-    
+    // MARK: NSFetchedResultsController Delegate Methods
+    private func controllerDidChangeContent(controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        self.tableView.reloadData()
+    }
+    // TableViewCell Helpers
+    func configurePhotoForCell(cell: PrivateChatTableViewCell, user: XMPPUserCoreDataStorageObject) {
+        // Our xmppRosterStorage will cache photos as they arrive from the xmppvCardAvatarModule.
+        // We only need to ask the avatar module for a photo, if the roster doesn't have it.
+        if user.photo != nil {
+            cell.imageView!.image = user.photo!;
+        } else {
+            let photoData = self.appDelegate.xmppvCardAvatarModule?.photoData(for: user.jid)
+            
+            if let photoData = photoData {
+                cell.avatorThumbnail.image = UIImage(data: photoData)
+            } else {
+                 cell.avatorThumbnail.image = UIImage(named: "defaultPerson")
+            }
+        }
+    }
+
+
+
     func getChatsList() -> NSArray {
         if chatList.count == 0  {
             if let chatList: NSMutableArray = getActiveUsersFromCoreDataStorage() as? NSMutableArray {//NSUserDefaults.standardUserDefaults().objectForKey("openChatList")
@@ -317,9 +357,22 @@ class PrivateChatTableViewController: UITableViewController, ChatDelegate, XMPPR
     }
 
     
+   /*
+    public class func knownUserForJid(jidStr jidStr: String) -> Bool {
+        if sharedInstance.chatList.containsObject(userFromRosterForJID(jid: jidStr)!) {
+            return true
+        } else {
+            return false
+        }
+    }
     
-
-    
+    public class func addUserToChatList(jidStr jidStr: String) {
+        if !knownUserForJid(jidStr: jidStr) {
+            sharedInstance.chatList.addObject(userFromRosterForJID(jid: jidStr)!)
+            sharedInstance.chatListBare.addObject(jidStr)
+        }
+    }
+    */
 
     /*
     // MARK: - Navigation

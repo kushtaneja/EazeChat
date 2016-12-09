@@ -129,8 +129,8 @@ class LoginViewController: UIViewController,UITextFieldDelegate, UIScrollViewDel
                 self.companyArray = []
                 for company in data["company"].arrayValue {
                     let companyName = company["company_name"].stringValue
-                    var companyId = company["company"].intValue
-                    var currentCompany = Company(company_Name:companyName,company_Id: companyId)
+                    let companyId = company["company"].intValue
+                    let currentCompany = Company(company_Name:companyName,company_Id: companyId)
                     
                     self.companyArray.append(currentCompany)
                 }
@@ -143,13 +143,40 @@ class LoginViewController: UIViewController,UITextFieldDelegate, UIScrollViewDel
                 UIApplication.topViewController()?.present(teamSelectionNavigationScreen, animated: true, completion: nil)
                 
             } else if (data["login"] == true) {
-              self.view.makeToast(message: "Successfully Logged in with Single Team")
-            }
             
+                let company_id = data["company_id"].intValue
+                let user_id = data["user_id"].stringValue
+                let company_name = data["company_name"].stringValue
+                let jwt_token = data["key"].stringValue
+                let profUrl = "https://api.eazespot.com/v1/company/\(company_id)/user/\(user_id)/"
+                self.setValue(value: jwt_token, forKey: "JWT_key")
+                self.setValue(value: profUrl, forKey: "profileURL")
+                
+                ProfileService().profCall(self.view, params: [:], onSuccess: {(profdata: JSON) in
+                    
+                    let firstname = profdata["user"]["first_name"].stringValue
+                    let lastname = profdata["user"]["last_name"].stringValue
+                    let email = profdata["user"]["email"].stringValue
+                    let profilePicUrl =  profdata["profile_pic"]["L"].stringValue
+                    print("**ID:: \(profdata["id"])** ***FirstName::: \(firstname)")
+                    
+                    let user = LoggedinUserProfile(userFirstName: firstname, userLastName: lastname, userEmail: email,userPicUrl: profilePicUrl,companyName: company_name)
+                    let ProfDisplayNavigationScreen = UIStoryboard.ProfDisplayNavigationScreen()
+                    let ProfDisplayScreen = ProfDisplayNavigationScreen.topViewController as!UserProfileDisplayViewController
+                    ProfDisplayScreen.loggedinUser = user
+                    
+                    debugPrint("*COMPANY:\(company_name)\n *NAME:\(user.firstName + " " + user.lastName) \n *EMAIL: \(user.email)")
+                    
+                    UIApplication.topViewController()?.present(ProfDisplayNavigationScreen, animated: true, completion: nil)
+                    self.view.makeToast(message: "Successfully Logged in with Single Team")
+
+                    
+                }, failed: {(errorCode: Int) in debugPrint("loginError")})
             
-            
-            
-            ActivityIndicator.shared.hideProgressView()
+                
+                
+                            }
+        ActivityIndicator.shared.hideProgressView()
             }, failed: {(errorCode: Int) in debugPrint("loginError")})
     }
     func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?)
@@ -233,6 +260,15 @@ class LoginViewController: UIViewController,UITextFieldDelegate, UIScrollViewDel
     func textFieldDidEndEditing(_ textField: UITextField) {
         activeField = nil
     }
+    
+    private func setValue(value: String, forKey key: String) {
+        if value.characters.count > 0 {
+            UserDefaults.standard.set(value, forKey: key)
+        } else {
+            UserDefaults.standard.removeObject(forKey: key)
+        }
+    }
+
     
 
 }
