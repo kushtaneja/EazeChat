@@ -404,4 +404,7 @@ extension EazeChat: XMPPStreamDelegate {
     public func xmppStreamDidDisconnect(_ sender: XMPPStream!, withError error: Error!) {
         delegate?.EazeStreamDidDisconnect(sender: sender, withError: error)
     }
+    
+    
+    
 }

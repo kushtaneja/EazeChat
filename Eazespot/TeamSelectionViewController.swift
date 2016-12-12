@@ -27,6 +27,7 @@ class TeamSelectionViewController: UIViewController,UIPickerViewDelegate,UIPicke
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        selectedTeamId = companysArray[0].company_id
         // Do any additional setup after loading the view.
     }
 

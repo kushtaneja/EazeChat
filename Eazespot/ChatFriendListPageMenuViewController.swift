@@ -11,14 +11,21 @@ import SDWebImage
 
 
 class ChatFriendListPageMenuViewController: UIViewController,CAPSPageMenuDelegate{
+    
+    
     var pageMenu : CAPSPageMenu?
     let storyBoard: UIStoryboard =  UIStoryboard(name: "Main", bundle: nil)
     var controllerArray : [UIViewController] = []
     var pageMenuCurrentIndex = 0
     override func viewDidLoad() {
             super.viewDidLoad()
+        
+        
+        
         // Making Page View Controllers
         var controller : UIViewController = UIViewController()
+        
+        
         
         controller = storyBoard.instantiateViewController(withIdentifier: "PrivateChatTableViewController")
         controller.title = "Private"
@@ -26,9 +33,8 @@ class ChatFriendListPageMenuViewController: UIViewController,CAPSPageMenuDelegat
         //controller = storyBoard.instantiateViewControllerWithIdentifier("LookUpViewController")
         controller = storyBoard.instantiateViewController(withIdentifier: "GroupChatTableViewController")
         controller.title = "Group"
-        
-        
         controllerArray.append(controller)
+    EazeMessage.sharedInstance.getMessagesFromServer()
         
         
         let parameters: [CAPSPageMenuOption] = [
@@ -96,6 +102,11 @@ class ChatFriendListPageMenuViewController: UIViewController,CAPSPageMenuDelegat
         }
     }
 
+    @IBAction func newChatButtonTapped(_ sender: Any) {
+        let newChatNavigationScreen = UIStoryboard.NewChatNavigationScreen()
+        present(newChatNavigationScreen, animated: true, completion: nil)
+        
+    }
     
 
     /*

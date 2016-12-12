@@ -10,7 +10,7 @@ import UIKit
 import XMPPFramework
 import JSQMessagesViewController
 
-class ChatRoomViewController: JSQMessagesViewController,EazeMessageDelegate {
+class ChatRoomViewController: JSQMessagesViewController,EazeMessageDelegate,ContactPickerDelegate {
     
     let appDelegate = UIApplication.shared.delegate as? AppDelegate
     var messages = NSMutableArray()
@@ -83,7 +83,7 @@ class ChatRoomViewController: JSQMessagesViewController,EazeMessageDelegate {
         self.present(navController!, animated: true, completion: nil)
     }
  
-    
+    */
     func didSelectContact(recipient: XMPPUserCoreDataStorageObject) {
         self.recipient = recipient
         if userDetails == nil {
@@ -94,11 +94,11 @@ class ChatRoomViewController: JSQMessagesViewController,EazeMessageDelegate {
             EazeChats.addUserToChatList(jidStr: recipient.jidStr)
         } else {
             messages = EazeMessage.sharedInstance.loadArchivedMessagesFrom(jid: recipient.jidStr)
-            finishReceivingMessageAnimated(true)
+            finishReceivingMessage(animated: true)
         }
     }
          
-    */
+   
     // Mark: JSQMessagesViewController method overrides
     
     var isComposing = false
@@ -132,13 +132,13 @@ class ChatRoomViewController: JSQMessagesViewController,EazeMessageDelegate {
         }
     }
     
-    override func didPressSend(_ button: UIButton, withMessageText text: String, senderId: String, senderDisplayName: String, date: Date){
+    override func didPressSend(_ button: UIButton!, withMessageText text: String!, senderId: String!, senderDisplayName: String!, date: Date!){
         
-        let fullMessage = JSQMessage(senderId: EazeChat.sharedInstance.xmppStream?.myJID.bare(), senderDisplayName: EazeChat.sharedInstance.xmppStream?.myJID.bare(), date: NSDate() as Date!, text: text)
+        let fullMessage = JSQMessage(senderId: EazeChat.sharedInstance.xmppStream?.myJID.bare(), senderDisplayName: EazeChat.sharedInstance.xmppStream?.myJID.bare(), date: Date(), text: text)
         messages.add(fullMessage!)
-        
         if let recipient = recipient {
             EazeMessage.sendMessage(message: text, to: recipient.jidStr, completionHandler: { (stream, message) -> Void in
+                
                 JSQSystemSoundPlayer.jsq_playMessageSentSound()
                 self.finishSendingMessage(animated: true)
             })
@@ -279,13 +279,13 @@ class ChatRoomViewController: JSQMessagesViewController,EazeMessageDelegate {
     // Mark: Chat message Delegates
     func EazeStream(sender: XMPPStream, didReceiveMessage message: XMPPMessage, from user: XMPPUserCoreDataStorageObject) {
             if message.isChatMessageWithBody() {
-                //let displayName = user.displayName
+                let displayName = user.displayName
                 
                 JSQSystemSoundPlayer.jsq_playMessageReceivedSound()
                 
                 if let msg: String = message.forName("body")?.stringValue {
                     if let from: String = message.attribute(forName: "from")?.stringValue {
-                        let message = JSQMessage(senderId: from, senderDisplayName: from, date: NSDate() as Date!, text: msg)
+                        let message = JSQMessage(senderId: from, senderDisplayName: displayName, date: NSDate() as Date!, text: msg)
                         messages.add(message!)
                         
                         self.finishReceivingMessage(animated: true)

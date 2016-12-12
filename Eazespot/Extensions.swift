@@ -21,6 +21,18 @@ extension UIStoryboard {
     class func ProfDisplayNavigationScreen() -> UINavigationController {
         return (eazeSpotMainStoryboard().instantiateViewController(withIdentifier: "ProfDisplayNavigationController") as? UINavigationController)!
     }
+    
+    class func ChatFriendListPageMenuNavigationScreen() -> UINavigationController {
+        return (eazeSpotMainStoryboard().instantiateViewController(withIdentifier: "ChatFriendListPageMenuNavigationController") as? UINavigationController)!
+    }
+    class func ChatRoomNavigationScreen() -> UINavigationController {
+        return (eazeSpotMainStoryboard().instantiateViewController(withIdentifier: "ChatRoomNavigationController") as? UINavigationController)!
+    }
+    
+    class func NewChatNavigationScreen() -> UINavigationController {
+        return (eazeSpotMainStoryboard().instantiateViewController(withIdentifier: "NewChatNavigationViewController") as? UINavigationController)!
+    }
+
 
 }
 

@@ -1,29 +1,22 @@
 //
-//  PrivateChatTableViewCell.swift
+//  ContactTableViewCell.swift
 //  Eazespot
 //
-//  Created by Kush Taneja on 08/12/16.
+//  Created by Kush Taneja on 11/12/16.
 //  Copyright © 2016 Kush Taneja. All rights reserved.
 //
 
 import UIKit
 
-class PrivateChatTableViewCell: UITableViewCell {
-    
-    @IBOutlet weak var avatorThumbnail: UIImageView!
-    
-    @IBOutlet weak var userNameLabel: UILabel!
-    
-    @IBOutlet weak var lastMessageLabel: UILabel!
-    
+class ContactTableViewCell: UITableViewCell {
     @IBOutlet weak var statusView: UIView!
-    
-    @IBOutlet weak var lastMessageTimeLabel: UILabel!
 
+    @IBOutlet weak var titleLabel: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         statusView.layer.cornerRadius = (statusView.frame.width)/2
-        
+
         // Initialization code
     }
 
@@ -32,6 +25,5 @@ class PrivateChatTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
-    
-    
+
 }

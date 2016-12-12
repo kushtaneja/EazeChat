@@ -25,6 +25,10 @@ open class ColorCode{
     
     var appThemeLightGreenColor: UIColor = UIColor(red: 146/255.0, green: 191/255.0, blue: 126/255.0, alpha: 0.7)
     
+    var statusOfflineBorderColor: UIColor = UIColor(red: 76/255.0, green: 175/255.0, blue: 80/255.0, alpha: 1)
+
+    var statusOnlineGreenColor: UIColor = UIColor(red: 0/255.0, green: 200/255.0, blue: 83/255.0, alpha: 1)
+
     var glassWaterColor: UIColor = UIColor(red: 0/255.0, green: 191/255.0, blue: 255/255.0, alpha: 0.7)
 
     var indicatorColor: UIColor = UIColor(red: 192/255.0, green: 192/255.0, blue: 192/255.0, alpha: 0.7)

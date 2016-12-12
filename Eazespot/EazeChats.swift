@@ -12,6 +12,7 @@ import XMPPFramework
 public class EazeChats: NSObject, NSFetchedResultsControllerDelegate {
     
     var chatList = NSMutableArray()
+    var list = [XMPPUserCoreDataStorageObject]()
     var chatListBare = NSMutableArray()
     
     // MARK: Class function
@@ -22,24 +23,63 @@ public class EazeChats: NSObject, NSFetchedResultsControllerDelegate {
         return EazeChatsSingleton.instance
     }
     
-    public class func getChatsList() -> NSArray {
-        if sharedInstance.chatList.count == 0  {
-            if let chatList: NSMutableArray = sharedInstance.getActiveUsersFromCoreDataStorage() as? NSMutableArray
-            
-            {   sharedInstance.chatList = chatList
-                sharedInstance.chatList.enumerateObjects({ (jidStr, index, finished) -> Void in
-                    
-                    
-                  //  if let user = EazeRoster.userFromRosterForJID(jid: jidStr as! String) 
-                   if let user = sharedInstance.getUserFromXMPPCoreDataObject(jidStr: jidStr as! String) {
-                        sharedInstance.chatList.add(user)
-                    }
-                })
-            }
+    public class func getChatsList() ->[XMPPUserCoreDataStorageObject] {
+        
+        var jid = ""
+        let objects = sharedInstance.getChatUsersFromCoreDataStorage()?.fetchedObjects
+        for object in objects!{
+            let o = object as! XMPPMessageArchiving_Message_CoreDataObject
+            jid = o.bareJidStr
         }
-        return sharedInstance.chatList
+       let m = EazeRoster.sharedInstance.fetchedResultsController()?.fetchedObjects
+        for n in m! {
+            let r  = n as! XMPPUserCoreDataStorageObject
+            if (jid == r.jidStr){
+                if (!sharedInstance.list.contains(r)){
+                sharedInstance.list.append(r)
+                }
+            }
+            
+        
+        
+        }
+        return sharedInstance.list
     }
     
+    private func getChatUsersFromCoreDataStorage() -> NSFetchedResultsController<NSFetchRequestResult>? {
+        let moc = EazeMessage.sharedInstance.xmppMessageStorage?.mainThreadManagedObjectContext as NSManagedObjectContext?
+        var fetchedResultsControllerVar: NSFetchedResultsController<NSFetchRequestResult>?
+        if fetchedResultsControllerVar == nil {
+            
+            let entity = NSEntityDescription.entity(forEntityName: "XMPPMessageArchiving_Message_CoreDataObject", in: moc!)
+            let sd1 = NSSortDescriptor(key: "timestamp", ascending: true)
+            let sd2 = NSSortDescriptor(key: "streamBareJidStr", ascending: true)
+            let sortDescriptors = [sd1, sd2]
+            let fetchRequest = NSFetchRequest<NSFetchRequestResult>()
+            
+            fetchRequest.entity = entity
+            fetchRequest.sortDescriptors = sortDescriptors
+            fetchRequest.fetchBatchSize = 20
+            
+            fetchedResultsControllerVar =
+                NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: moc!, sectionNameKeyPath: nil, cacheName: nil)
+            fetchedResultsControllerVar?.delegate = self
+            
+            do {
+                try fetchedResultsControllerVar!.performFetch()
+            } catch let error as NSError {
+                print("Error: \(error.localizedDescription)")
+                abort()
+            }
+            
+            
+        }
+        return fetchedResultsControllerVar!
+
+
+    }
+
+
     private func getActiveUsersFromCoreDataStorage() -> NSArray? {
         let moc = EazeMessage.sharedInstance.xmppMessageStorage?.mainThreadManagedObjectContext as NSManagedObjectContext?
         let entityDescription = NSEntityDescription.entity(forEntityName: "XMPPMessageArchiving_Message_CoreDataObject", in: moc!)
@@ -79,6 +119,7 @@ public class EazeChats: NSObject, NSFetchedResultsControllerDelegate {
         }
         return nil
     }
+    
     
     private func getUserFromXMPPCoreDataObject(jidStr: String)-> XMPPUserCoreDataStorageObject? {
         let moc = EazeRoster.sharedInstance.managedObjectContext_roster() as NSManagedObjectContext?
@@ -130,7 +171,7 @@ public class EazeChats: NSObject, NSFetchedResultsControllerDelegate {
     }
 
     public class func removeUserAtIndexPath(indexPath: NSIndexPath) {
-        let user = EazeChats.getChatsList().object(at: indexPath.row) as! XMPPUserCoreDataStorageObject
+        let user = EazeChats.getChatsList()[indexPath.row]
         
         sharedInstance.removeMyUserActivityFromCoreDataStorageWith(user: user)
         sharedInstance.removeUserActivityFromCoreDataStorage(user: user)

@@ -87,7 +87,7 @@ public class EazeRoster: NSObject, NSFetchedResultsControllerDelegate {
     public class func userFromRosterForJID(jid: String) -> XMPPUserCoreDataStorageObject? {
         let userJID = XMPPJID(string: jid)
         
-        if let user = EazeChat.sharedInstance.xmppRosterStorage.user(for: userJID, xmppStream: EazeChat.sharedInstance.xmppStream, managedObjectContext:sharedInstance.managedObjectContext_roster()) {
+        if let user = EazeChat.sharedInstance.xmppRosterStorage.user(for: userJID, xmppStream: EazeChat.sharedInstance.xmppStream, managedObjectContext:sharedInstance.managedObjectContext_roster()) { debugPrint("user From Roster Added")
             return user
         } else {
             return nil
@@ -107,16 +107,16 @@ extension EazeRoster: XMPPRosterDelegate {
         
         print("**didReceivePresenceSubscriptionRequest of \(a)")
     }
-    /*
+    
     public func xmppRoster(_ sender: XMPPRoster, didReceiveBuddyRequest presence:XMPPPresence!) {
         //was let user
         _ = EazeChat.sharedInstance.xmppRosterStorage.user(for: presence.from(), xmppStream: EazeChat.sharedInstance.xmppStream, managedObjectContext: managedObjectContext_roster())
     }
- */
+ 
     
     public func xmppRosterDidEndPopulating(_ sender: XMPPRoster!){
         let jidList = EazeChat.sharedInstance.xmppRosterStorage.jids(for: EazeChat.sharedInstance.xmppStream)
-        print("List=\(jidList)")
+        print("xmppRoster  End Populating  with List =\(jidList)")
         
     }
 }
@@ -129,6 +129,7 @@ extension EazeRoster: XMPPStreamDelegate {
         
         if let msg = iq.attribute(forName: "from") {
             if msg.stringValue == "conference.process-Eaze.net"  {
+                
                 
             }
         }

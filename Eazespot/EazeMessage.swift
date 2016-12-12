@@ -42,7 +42,10 @@ public class EazeMessage: NSObject {
         xmppMessageStorage = XMPPMessageArchivingCoreDataStorage.sharedInstance()
         xmppMessageArchiving = XMPPMessageArchiving(messageArchivingStorage: xmppMessageStorage)
         
-        xmppMessageArchiving?.clientSideMessageArchivingOnly = true
+        xmppMessageArchiving?.clientSideMessageArchivingOnly = false
+        
+     
+        
         xmppMessageArchiving?.activate(EazeChat.sharedInstance.xmppStream)
         xmppMessageArchiving?.addDelegate(self, delegateQueue: DispatchQueue.main)
     }
@@ -50,11 +53,13 @@ public class EazeMessage: NSObject {
     // MARK: public methods
     
     public class func sendMessage(message: String, to receiver: String, completionHandler completion:@escaping EazeChatMessageCompletionHandler) {
+        
         let body = DDXMLElement.element(withName: "body") as! DDXMLElement
         let messageID = EazeChat.sharedInstance.xmppStream?.generateUUID()
-        body.setXmlns(message)
         
-        
+//        body.setXmlns(message)
+        body.stringValue = message
+    
         let completeMessage = DDXMLElement.element(withName: "message") as! DDXMLElement
         
         completeMessage.addAttribute(withName: "id", stringValue: messageID!)
@@ -62,6 +67,9 @@ public class EazeMessage: NSObject {
         completeMessage.addAttribute(withName: "to", stringValue: receiver)
         
         completeMessage.addChild(body)
+        let active = DDXMLElement.element(withName: "active", stringValue:
+            "http://jabber.org/protocol/chatstates") as! DDXMLElement
+        completeMessage.addChild(active)
         
         sharedInstance.didSendMessageCompletionBlock = completion
         EazeChat.sharedInstance.xmppStream?.send(completeMessage)
@@ -122,14 +130,13 @@ public class EazeMessage: NSObject {
                 let sender: String
                 let date: Date
                 
-                date = ((message as AnyObject).timestamp) as Date
+                date = message.timestamp
                 
-                if (message as AnyObject).body() != nil {
-                    body = (message as AnyObject).body()
+                if message.body != nil {
+                    body = message.body
                 } else {
                     body = ""
                 }
-                
                 if element.attributeStringValue(forName: "to") == jid {
                     let displayName = EazeChat.sharedInstance.xmppStream?.myJID
                     sender = displayName!.bare()
@@ -183,7 +190,10 @@ public class EazeMessage: NSObject {
 extension EazeMessage: XMPPStreamDelegate {
     
     public func xmppStream(_ sender: XMPPStream!, didSend message: XMPPMessage!) {
+        
+        
         if let completion = EazeMessage.sharedInstance.didSendMessageCompletionBlock {
+            debugPrint("Message was sent")
             completion(sender, message)
         }
         //EazeMessage.sharedInstance.didSendMessageCompletionBlock!(stream: sender, message: message)
@@ -208,4 +218,19 @@ extension EazeMessage: XMPPStreamDelegate {
         }
     }
 }
+    
+    func getMessagesFromServer() {
+        let iQ = DDXMLElement.element(withName: "iq") as! DDXMLElement
+        iQ.addAttribute(withName: "type", stringValue: "get")
+        iQ.addAttribute(withName: "id", stringValue: "pk1")
+        let list = DDXMLElement(name: "query", xmlns: "urn:xmpp:mam:tmp")
+        let with = DDXMLElement.element(withName: "with") as! DDXMLElement
+        with.stringValue = "ankit@tagbin.in"
+
+        list?.addChild(with)
+        iQ.addChild(list!)
+
+        EazeChat.sharedInstance.xmppStream?.send(iQ)
+        debugPrint("**IQ \(iQ) SENT")
+    }
 }
