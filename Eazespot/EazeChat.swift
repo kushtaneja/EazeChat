@@ -257,6 +257,7 @@ public class EazeChat: NSObject {
             }
          do {
             try xmppStream?.connect(withTimeout: XMPPStreamTimeoutNone)
+        
             debugPrint("Connection success")
          } catch {
             debugPrint("Something went wrong!")

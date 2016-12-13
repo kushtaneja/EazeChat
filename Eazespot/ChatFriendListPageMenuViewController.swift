@@ -34,7 +34,8 @@ class ChatFriendListPageMenuViewController: UIViewController,CAPSPageMenuDelegat
         controller = storyBoard.instantiateViewController(withIdentifier: "GroupChatTableViewController")
         controller.title = "Group"
         controllerArray.append(controller)
-    EazeMessage.sharedInstance.getMessagesFromServer()
+        
+//    EazeMessage.sharedInstance.getMessagesFromServer()
         
         
         let parameters: [CAPSPageMenuOption] = [

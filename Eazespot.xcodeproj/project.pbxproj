@@ -11,6 +11,7 @@
 		4320D1A31DF5A203002EDC2C /* ChatFriendListPageMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4320D1A21DF5A203002EDC2C /* ChatFriendListPageMenuViewController.swift */; };
 		4320D1A61DF5A342002EDC2C /* ColorCodeExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4320D1A41DF5A342002EDC2C /* ColorCodeExtensions.swift */; };
 		4320D1A71DF5A342002EDC2C /* ColorCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4320D1A51DF5A342002EDC2C /* ColorCode.swift */; };
+		4345F88B1DFFF1BE005FC03C /* XMPPMessageArchivingManagement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4345F88A1DFFF1BE005FC03C /* XMPPMessageArchivingManagement.swift */; };
 		435E8B381DF029B5003D3F63 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 435E8B371DF029B5003D3F63 /* AppDelegate.swift */; };
 		435E8B3A1DF029B5003D3F63 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 435E8B391DF029B5003D3F63 /* LoginViewController.swift */; };
 		435E8B3D1DF029B5003D3F63 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 435E8B3B1DF029B5003D3F63 /* Main.storyboard */; };
@@ -73,6 +74,7 @@
 		4320D1A21DF5A203002EDC2C /* ChatFriendListPageMenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatFriendListPageMenuViewController.swift; sourceTree = "<group>"; };
 		4320D1A41DF5A342002EDC2C /* ColorCodeExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorCodeExtensions.swift; sourceTree = "<group>"; };
 		4320D1A51DF5A342002EDC2C /* ColorCode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorCode.swift; sourceTree = "<group>"; };
+		4345F88A1DFFF1BE005FC03C /* XMPPMessageArchivingManagement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XMPPMessageArchivingManagement.swift; sourceTree = "<group>"; };
 		435E8B341DF029B5003D3F63 /* Eazespot.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Eazespot.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		435E8B371DF029B5003D3F63 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		435E8B391DF029B5003D3F63 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -365,6 +367,7 @@
 				43AA9E261DFAAE9600C1876E /* EazePresence.swift */,
 				43AA9E281DFAAEA200C1876E /* EazeMessage.swift */,
 				43AA9E2A1DFAAEBA00C1876E /* EazeRoom.swift */,
+				4345F88A1DFFF1BE005FC03C /* XMPPMessageArchivingManagement.swift */,
 			);
 			name = XMPPServices;
 			sourceTree = "<group>";
@@ -590,6 +593,7 @@
 				43D5498B1DF98B6F00138473 /* UserProfileDisplayViewController.swift in Sources */,
 				435E8B761DF03238003D3F63 /* Network.swift in Sources */,
 				435E8B3A1DF029B5003D3F63 /* LoginViewController.swift in Sources */,
+				4345F88B1DFFF1BE005FC03C /* XMPPMessageArchivingManagement.swift in Sources */,
 				43E2B81E1DF15F1000F791B5 /* TeamSelectionViewController.swift in Sources */,
 				43D549891DF9468600138473 /* NewPrivateChatTableViewController.swift in Sources */,
 				435E8B891DF04868003D3F63 /* DeviceSizes.swift in Sources */,

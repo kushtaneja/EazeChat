@@ -21,8 +21,10 @@ class ChatRoomViewController: JSQMessagesViewController,EazeMessageDelegate,Cont
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         EazeMessage.sharedInstance.delegate = self
+        
+      
+        EazeMessage.sharedInstance.doIT()
         
         if EazeChat.sharedInstance.isConnected() {
             self.senderId = EazeChat.sharedInstance.xmppStream?.myJID.bare()

@@ -35,6 +35,48 @@ extension UIStoryboard {
 
 
 }
+extension Date {
+    init?(jsonDate: String) {
+        let scanner = Scanner(string: jsonDate)
+        
+        
+        // Read milliseconds part:
+        var milliseconds : Int64 = 0
+        guard scanner.scanInt64(&milliseconds) else { return nil }
+        // Milliseconds to seconds:
+        var timeStamp = TimeInterval(milliseconds)/1000.0
+        
+        // Read optional timezone part:
+        var timeZoneOffset : Int = 0
+        if scanner.scanInt(&timeZoneOffset) {
+            let hours = timeZoneOffset / 100
+            let minutes = timeZoneOffset % 100
+            // Adjust timestamp according to timezone:
+            timeStamp += TimeInterval(3600 * hours + 60 * minutes)
+        }
+        
+        
+        // Success! Create NSDate and return.
+        self.init(timeIntervalSince1970: timeStamp)
+    }
+
+    
+    
+    struct Formatter {
+        static let iso8601: DateFormatter = {
+            let formatter = DateFormatter()
+            formatter.calendar = Calendar(identifier: .iso8601)
+            formatter.locale = Locale(identifier: "en_US_POSIX")
+            formatter.timeZone = TimeZone(secondsFromGMT: 0)
+            formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssXXXXX"
+            return formatter
+        }()
+    }
+    var iso8601: String {
+        return Formatter.iso8601.string(from: self)
+    }
+}
+
 
 extension String {
     subscript (r: Range<Int>) -> String {
@@ -54,5 +96,8 @@ extension String {
     func toBase64() -> String {
         let data = self.data(using: String.Encoding.utf8)
         return data!.base64EncodedString(options: Data.Base64EncodingOptions(rawValue: 0))
+    }
+    var dateFromISO8601: Date? {
+        return Date.Formatter.iso8601.date(from: self)
     }
 }

@@ -28,12 +28,14 @@ class NewPrivateChatTableViewController: UITableViewController,EazeRosterDelegat
     
         override func viewDidLoad() {
         super.viewDidLoad()
+        tableView.reloadData()
         EazeRoster.sharedInstance.delegate = self
     
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if EazeChat.sharedInstance.isConnected() {
+            tableView.reloadData()
             navigationItem.title = "Select a recipient"
         }
         
@@ -42,8 +44,7 @@ class NewPrivateChatTableViewController: UITableViewController,EazeRosterDelegat
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        
-        EazeRoster.sharedInstance.delegate = nil
+     
     }
 
     override func didReceiveMemoryWarning() {
