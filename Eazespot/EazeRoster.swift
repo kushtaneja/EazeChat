@@ -102,21 +102,7 @@ public class EazeRoster: NSObject, NSFetchedResultsControllerDelegate {
     }
     
     
-    public func deleteUsersCoreData(){
-        
-        let moc = EazeRoster.sharedInstance.managedObjectContext_roster() as NSManagedObjectContext?
-        let entity = NSEntityDescription.entity(forEntityName: "XMPPUserCoreDataStorageObject", in: moc!)
-        let request = NSFetchRequest<NSFetchRequestResult>()
-        request.entity = entity
-        let deleteRequest = NSBatchDeleteRequest(fetchRequest: request)
-        
-        do {
-            try moc?.execute(deleteRequest)
-        } catch let error as NSError {
-            debugPrint(error)
-        }
-        
-    }
+
 
 }
 

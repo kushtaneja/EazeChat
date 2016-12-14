@@ -13,18 +13,16 @@ import SDWebImage
 class ChatFriendListPageMenuViewController: UIViewController,CAPSPageMenuDelegate{
     
     
-    var pageMenu : CAPSPageMenu?
-    let storyBoard: UIStoryboard =  UIStoryboard(name: "Main", bundle: nil)
-    var controllerArray : [UIViewController] = []
-    var pageMenuCurrentIndex = 0
+        var pageMenu : CAPSPageMenu?
+        let storyBoard: UIStoryboard =  UIStoryboard(name: "Main", bundle: nil)
+        var controllerArray : [UIViewController] = []
+        var pageMenuCurrentIndex = 0
         override func viewDidLoad() {
             super.viewDidLoad()
-        
-            EazeChat.sharedInstance.connect()
-           
-        
-        
-        
+            if (!(EazeChat.sharedInstance.isConnected())){
+                EazeChat.sharedInstance.connect()
+            
+            }
         // Making Page View Controllers
             var controller : UIViewController = UIViewController()
         
@@ -38,7 +36,7 @@ class ChatFriendListPageMenuViewController: UIViewController,CAPSPageMenuDelegat
             controller.title = "Group"
             controllerArray.append(controller)
         
-//    EazeMessage.sharedInstance.getMessagesFromServer()
+            //    EazeMessage.sharedInstance.getMessagesFromServer()
         
         
             let parameters: [CAPSPageMenuOption] = [
@@ -125,6 +123,7 @@ class ChatFriendListPageMenuViewController: UIViewController,CAPSPageMenuDelegat
         EazeChat.stop()
         UserDefaults.standard.setValue(false, forKey: "login")
         let loginScreen = UIStoryboard.loginScreen()
+        
         present(loginScreen, animated: true, completion: nil)
         
     }

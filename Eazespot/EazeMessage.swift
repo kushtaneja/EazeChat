@@ -247,22 +247,7 @@ public class EazeMessage: NSObject {
         })
     }
     
-    public func deleteMessagesCoreData(){
         
-        let moc = self.xmppMessageStorage?.mainThreadManagedObjectContext
-        let entityDescription = NSEntityDescription.entity(forEntityName: "XMPPMessageArchiving_Message_CoreDataObject", in: moc!)
-        let request = NSFetchRequest<NSFetchRequestResult>()
-        request.entity = entityDescription
-        let deleteRequest = NSBatchDeleteRequest(fetchRequest: request)
-        
-        do {
-            try moc?.execute(deleteRequest)
-        } catch let error as NSError {
-            debugPrint(error)
-        }
-        
-    }
-    
     
     
     

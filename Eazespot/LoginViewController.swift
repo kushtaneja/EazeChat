@@ -134,8 +134,7 @@ class LoginViewController: UIViewController,UITextFieldDelegate, UIScrollViewDel
                     let companyName = company["company_name"].stringValue
                     let companyId = company["company"].intValue
                     let currentCompany = Company(company_Name:companyName,company_Id: companyId)
-                    
-                    self.companyArray.append(currentCompany)
+                self.companyArray.append(currentCompany)
                 }
                 
                 let teamSelectionNavigationScreen = UIStoryboard.teamSelectionScreen()
