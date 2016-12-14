@@ -82,7 +82,20 @@ class TeamSelectionViewController: UIViewController,UIPickerViewDelegate,UIPicke
             let profUrl = "https://api.eazespot.com/v1/company/\(self.selectedTeamId)/user/\(user_id)/"
             self.setValue(value: jwt_token, forKey: "JWT_key")
             self.setValue(value: profUrl, forKey: "profileURL")
-            self.setValue(value: user_id, forKey: "user_id")
+            if (UserDefaults.standard.value(forKey: "user_id") !=  nil)
+            {
+                if ((UserDefaults.standard.value(forKey: "user_id") as! String) == user_id ) {
+                }
+                else {
+                    EazeMessage.sharedInstance.deleteMessages()
+                    self.setValue(value: user_id, forKey: "user_id")
+                }
+                
+            }
+            else {
+                self.setValue(value: user_id, forKey: "user_id")
+            }
+
             self.userChatId = (data["cid"].stringValue).fromBase64()
             self.userChatPassword = (data["cip"].stringValue).fromBase64()
             self.setValue(value: self.userChatId + "@chat.eazespot.com", forKey: kXMPP.myJID)

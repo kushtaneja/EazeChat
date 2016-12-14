@@ -12,17 +12,36 @@ import SDWebImage
 
 class ChatFriendListPageMenuViewController: UIViewController,CAPSPageMenuDelegate{
     
-    
         var pageMenu : CAPSPageMenu?
         let storyBoard: UIStoryboard =  UIStoryboard(name: "Main", bundle: nil)
         var controllerArray : [UIViewController] = []
         var pageMenuCurrentIndex = 0
         override func viewDidLoad() {
             super.viewDidLoad()
-            if (!(EazeChat.sharedInstance.isConnected())){
-                EazeChat.sharedInstance.connect()
+            if (UserDefaults.standard.value(forKey: "Name") != nil){
+                self.navigationItem.title = UserDefaults.standard.value(forKey: "Name") as! String?
+            }
+            else{
+             
+            self.navigationItem.title = "Chats"
             
             }
+            if (UserDefaults.standard.value(forKey: "login") !=  nil)
+            {
+                if (UserDefaults.standard.value(forKey: "login") as! Bool) {
+                    EazeChat.start(archiving: true, delegate: nil)
+                    EazeChat.sharedInstance.connect()
+                    debugPrint("**LOGIN == TRUE")
+                   
+                }
+                else if (!(UserDefaults.standard.value(forKey: "login") as! Bool))
+                {
+                    debugPrint("**LOGIN == FALSE")
+                  
+                }
+            }
+            
+
         // Making Page View Controllers
             var controller : UIViewController = UIViewController()
         
@@ -118,8 +137,8 @@ class ChatFriendListPageMenuViewController: UIViewController,CAPSPageMenuDelegat
         defaults.removeObject(forKey: kXMPP.myJID)
         defaults.removeObject(forKey: kXMPP.myPassword)
 //UserDefaults.standard.removePersistentDomain(forName: Bundle.main.bundleIdentifier!)
-        UserDefaults.standard.synchronize()
-        EazeChat.sharedInstance.disconnect()
+        defaults.synchronize()
+        EazePresence.goOffline()
         EazeChat.stop()
         UserDefaults.standard.setValue(false, forKey: "login")
         let loginScreen = UIStoryboard.loginScreen()

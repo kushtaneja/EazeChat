@@ -26,10 +26,10 @@ class ChatRoomViewController: JSQMessagesViewController,EazeMessageDelegate,Cont
       
         EazeMessage.sharedInstance.doIT()
         
-        if EazeChat.sharedInstance.isConnected() {
+//        if EazeChat.sharedInstance.isConnected() {
             self.senderId = EazeChat.sharedInstance.xmppStream?.myJID.bare()
             self.senderDisplayName = EazeChat.sharedInstance.xmppStream?.myJID.bare()
-        }
+//        }
         
         self.collectionView!.collectionViewLayout.springinessEnabled = false
         self.inputToolbar!.contentView!.leftBarButtonItem!.isHidden = true

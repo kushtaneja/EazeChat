@@ -28,11 +28,12 @@ class NewPrivateChatTableViewController: UITableViewController,EazeRosterDelegat
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        EazeRoster.sharedInstance.delegate = self
         self.tableView.tableFooterView = UIView(frame: CGRect.zero)
         ActivityIndicator.shared.showProgressView(uiView: self.view)
         presentRecipients()
        
-        EazeRoster.sharedInstance.delegate = self
+       
     
     }
     override func viewWillAppear(_ animated: Bool) {

@@ -25,8 +25,9 @@ class UserProfileDisplayViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        nameTextLabel.text = loggedinUser.firstName.capitalized + " " + loggedinUser.lastName.capitalized
+        UserDefaults.standard.set(loggedinUser.firstName + " " + loggedinUser.lastName
+, forKey: "Name")
+        nameTextLabel.text = loggedinUser.firstName.uppercased() + " " + loggedinUser.lastName.uppercased()
         usernameTextLabel.text = loggedinUser.email
         companyTextLabel.text = loggedinUser.company
         profilePictureView.sd_setImage(with: (NSURL(string: loggedinUser.profilePicUrl) as! URL), placeholderImage: UIImage(named: "person"))
@@ -45,6 +46,7 @@ class UserProfileDisplayViewController: UIViewController {
     @IBAction func doneButtonTapped(_ sender: UIBarButtonItem) {
         
         let ChatFriendListPageMenuNavigationScreen = UIStoryboard.ChatFriendListPageMenuNavigationScreen()
+        let ChatScreen = ChatFriendListPageMenuNavigationScreen.topViewController as! ChatFriendListPageMenuViewController
         present(ChatFriendListPageMenuNavigationScreen, animated: true, completion: nil)
     }
     

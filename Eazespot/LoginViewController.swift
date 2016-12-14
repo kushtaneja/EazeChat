@@ -159,19 +159,15 @@ class LoginViewController: UIViewController,UITextFieldDelegate, UIScrollViewDel
                     if ((UserDefaults.standard.value(forKey: "user_id") as! String) == user_id ) {
                     }
                     else {
-                        
+                        EazeMessage.sharedInstance.deleteMessages()
                        self.setValue(value: user_id, forKey: "user_id")
                     }
                 
-                
                 }
-    
+                else {
+                    self.setValue(value: user_id, forKey: "user_id")
+                }
 
-                
-                
-                
-                
-                
                 self.setValue(value: jwt_token, forKey: "JWT_key")
                 self.setValue(value: profUrl, forKey: "profileURL")
                 

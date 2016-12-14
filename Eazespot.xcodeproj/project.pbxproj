@@ -376,8 +376,8 @@
 			isa = PBXGroup;
 			children = (
 				4320D1A21DF5A203002EDC2C /* ChatFriendListPageMenuViewController.swift */,
-				43D549881DF9468600138473 /* NewPrivateChatTableViewController.swift */,
 				43AA9E2E1DFB53D100C1876E /* PrivateChatTableViewController.swift */,
+				43D549881DF9468600138473 /* NewPrivateChatTableViewController.swift */,
 				431D4B431DFC89D200FD3702 /* Cells */,
 				431D4B441DFC89DD00FD3702 /* Rooms */,
 			);
