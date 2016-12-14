@@ -24,7 +24,7 @@ public class EazeChats: NSObject, NSFetchedResultsControllerDelegate {
     }
     
     public class func getChatsList() ->[XMPPUserCoreDataStorageObject] {
-        
+        /*
         var jid = ""
         let objects = sharedInstance.getChatUsersFromCoreDataStorage()?.fetchedObjects
         for object in objects!{
@@ -43,6 +43,7 @@ public class EazeChats: NSObject, NSFetchedResultsControllerDelegate {
         
         
         }
+         */
         return sharedInstance.list
     }
     

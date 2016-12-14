@@ -17,55 +17,56 @@ class ChatFriendListPageMenuViewController: UIViewController,CAPSPageMenuDelegat
     let storyBoard: UIStoryboard =  UIStoryboard(name: "Main", bundle: nil)
     var controllerArray : [UIViewController] = []
     var pageMenuCurrentIndex = 0
-    override func viewDidLoad() {
+        override func viewDidLoad() {
             super.viewDidLoad()
+        
+            EazeChat.sharedInstance.connect()
+           
         
         
         
         // Making Page View Controllers
-        var controller : UIViewController = UIViewController()
+            var controller : UIViewController = UIViewController()
         
         
         
-        controller = storyBoard.instantiateViewController(withIdentifier: "PrivateChatTableViewController")
-        controller.title = "Private"
-        controllerArray.append(controller)
+            controller = storyBoard.instantiateViewController(withIdentifier: "PrivateChatTableViewController")
+            controller.title = "Private"
+            controllerArray.append(controller)
         //controller = storyBoard.instantiateViewControllerWithIdentifier("LookUpViewController")
-        controller = storyBoard.instantiateViewController(withIdentifier: "GroupChatTableViewController")
-        controller.title = "Group"
-        controllerArray.append(controller)
+            controller = storyBoard.instantiateViewController(withIdentifier: "GroupChatTableViewController")
+            controller.title = "Group"
+            controllerArray.append(controller)
         
 //    EazeMessage.sharedInstance.getMessagesFromServer()
         
         
-        let parameters: [CAPSPageMenuOption] = [
+            let parameters: [CAPSPageMenuOption] = [
             //.MenuHeight(40.0),
-            .menuItemSeparatorWidth(0.0),
-            .useMenuLikeSegmentedControl(true),
-            .menuItemSeparatorPercentageHeight(0.1),
-            .scrollMenuBackgroundColor(UIColor.clear),
-            .selectionIndicatorColor(ColorCode().navBarBlueTextColor),
-            .unselectedMenuItemLabelColor(ColorCode().navBarBlueTextColor),
-            .selectedMenuItemLabelColor(ColorCode().navBarBlueTextColor),
-            .selectedItemBackgroundColor(UIColor.clear),
-            .unSelectedMenuItemBackgroundColor(UIColor.clear),
-            .canChangePageOnHorizontalScroll(false),
-            .addBottomMenuHairline(true),
-            .bottomMenuHairlineColor(UIColor(rgb: 0xeeeeee))
+                .menuItemSeparatorWidth(0.0),
+                .useMenuLikeSegmentedControl(true),
+                .menuItemSeparatorPercentageHeight(0.1),
+                .scrollMenuBackgroundColor(UIColor.clear),
+                .selectionIndicatorColor(ColorCode().navBarBlueTextColor),
+                .unselectedMenuItemLabelColor(ColorCode().navBarBlueTextColor),
+                .selectedMenuItemLabelColor(ColorCode().navBarBlueTextColor),
+                .selectedItemBackgroundColor(UIColor.clear),
+                .unSelectedMenuItemBackgroundColor(UIColor.clear),
+                .canChangePageOnHorizontalScroll(false),
+                .addBottomMenuHairline(true),
+                .bottomMenuHairlineColor(UIColor(rgb: 0xeeeeee))
             
-        ]
-        pageMenu = CAPSPageMenu(viewControllers: controllerArray, frame:  CGRect(x: 0.0, y: 64.0
-            , width: self.view.frame.width, height: self.view.frame.height - 64.0
-        ), pageMenuOptions: parameters)
+            ]
+            pageMenu = CAPSPageMenu(viewControllers: controllerArray, frame:  CGRect(x: 0.0, y: 64.0, width: self.view.frame.width, height: self.view.frame.height - 64.0), pageMenuOptions: parameters)
         
         //pageMenu?.menuItemFont = UIFont(name: "Roboto-Regular", size: 15)!
-        pageMenu?.view.backgroundColor = UIColor.clear
-        pageMenu?.delegate = self
-        self.view.addSubview(pageMenu!.view)
+            pageMenu?.view.backgroundColor = UIColor.clear
+            pageMenu?.delegate = self
+            self.view.addSubview(pageMenu!.view)
 
         // Do any additional setup after loading the view.
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -105,10 +106,28 @@ class ChatFriendListPageMenuViewController: UIViewController,CAPSPageMenuDelegat
 
     @IBAction func newChatButtonTapped(_ sender: Any) {
         let newChatNavigationScreen = UIStoryboard.NewChatNavigationScreen()
+        
         present(newChatNavigationScreen, animated: true, completion: nil)
         
+        
     }
-    
+
+    @IBAction func logoutButtonTapped(_ sender: Any) {
+        
+        let defaults = UserDefaults.standard
+        defaults.removeObject(forKey: "JWT_key")
+        defaults.removeObject(forKey: "profileURL")
+        defaults.removeObject(forKey: kXMPP.myJID)
+        defaults.removeObject(forKey: kXMPP.myPassword)
+//UserDefaults.standard.removePersistentDomain(forName: Bundle.main.bundleIdentifier!)
+        UserDefaults.standard.synchronize()
+        EazeChat.sharedInstance.disconnect()
+        EazeChat.stop()
+        UserDefaults.standard.setValue(false, forKey: "login")
+        let loginScreen = UIStoryboard.loginScreen()
+        present(loginScreen, animated: true, completion: nil)
+        
+    }
 
     /*
     // MARK: - Navigation

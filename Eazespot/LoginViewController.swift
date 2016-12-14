@@ -23,6 +23,7 @@ class LoginViewController: UIViewController,UITextFieldDelegate, UIScrollViewDel
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        EazeChat.start(archiving: true, delegate: nil)
         passwordErrorLabel.text = ""
         usernameErrorLabel.text = ""
         passwordTextField.layer.borderWidth = CGFloat(integerLiteral: 1)
@@ -154,8 +155,28 @@ class LoginViewController: UIViewController,UITextFieldDelegate, UIScrollViewDel
                 let company_name = data["company_name"].stringValue
                 let jwt_token = data["key"].stringValue
                 let profUrl = "https://api.eazespot.com/v1/company/\(company_id)/user/\(user_id)/"
+                if (UserDefaults.standard.value(forKey: "user_id") !=  nil)
+                {
+                    if ((UserDefaults.standard.value(forKey: "user_id") as! String) == user_id ) {
+                    }
+                    else {
+                        
+                       self.setValue(value: user_id, forKey: "user_id")
+                    }
+                
+                
+                }
+    
+
+                
+                
+                
+                
+                
                 self.setValue(value: jwt_token, forKey: "JWT_key")
                 self.setValue(value: profUrl, forKey: "profileURL")
+                
+                
                 EazeChat.sharedInstance.connect()
                 ProfileService().profCall(self.view, params: [:], onSuccess: {(profdata: JSON) in
                     let firstname = profdata["user"]["first_name"].stringValue
@@ -170,13 +191,16 @@ class LoginViewController: UIViewController,UITextFieldDelegate, UIScrollViewDel
                         if (EazeChat.sharedInstance.isConnected()){
                             self.view.makeToast(message: "Successfully Logged in with Single Team")
                             ActivityIndicator.shared.hideProgressView()
+                            UserDefaults.standard.setValue(true, forKey: "login")
                             UIApplication.topViewController()?.present(ProfDisplayNavigationScreen, animated: true, completion: nil)
                         }
                         else { Utils().delay(4.0, closure: {
                         if (EazeChat.sharedInstance.isConnected()){
                         self.view.makeToast(message: "Successfully Logged in with Single Team")
                               ActivityIndicator.shared.hideProgressView()
-                            UIApplication.topViewController()?.present(ProfDisplayNavigationScreen, animated: true, completion: nil) }
+                            UserDefaults.standard.setValue(true, forKey: "login")
+                            UIApplication.topViewController()?.present(ProfDisplayNavigationScreen, animated: true, completion: nil)
+                        }
                         else {
                             ActivityIndicator.shared.hideProgressView()
                             self.view.makeToast(message: "Unable to connect")
@@ -277,7 +301,9 @@ class LoginViewController: UIViewController,UITextFieldDelegate, UIScrollViewDel
             UserDefaults.standard.removeObject(forKey: key)
         }
     }
-
+    
+    
+    
     
 
 }

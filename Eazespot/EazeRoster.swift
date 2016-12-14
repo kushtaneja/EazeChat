@@ -10,7 +10,7 @@ import Foundation
 import XMPPFramework
 
 public protocol EazeRosterDelegate {
-    func EazeRosterContentChanged(controller: NSFetchedResultsController<NSFetchRequestResult>)
+    func EazeRosterContentChanged()
 }
 
 public class EazeRoster: NSObject, NSFetchedResultsControllerDelegate {
@@ -70,7 +70,9 @@ public class EazeRoster: NSObject, NSFetchedResultsControllerDelegate {
                 abort()
             }
         }
-        
+    
+//        delegate?.EazeRosterContentChanged()
+
         return fetchedResultsControllerVar!
         
     }
@@ -96,8 +98,26 @@ public class EazeRoster: NSObject, NSFetchedResultsControllerDelegate {
 
     
     public func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        delegate?.EazeRosterContentChanged(controller: controller)
+        delegate?.EazeRosterContentChanged()
     }
+    
+    
+    public func deleteUsersCoreData(){
+        
+        let moc = EazeRoster.sharedInstance.managedObjectContext_roster() as NSManagedObjectContext?
+        let entity = NSEntityDescription.entity(forEntityName: "XMPPUserCoreDataStorageObject", in: moc!)
+        let request = NSFetchRequest<NSFetchRequestResult>()
+        request.entity = entity
+        let deleteRequest = NSBatchDeleteRequest(fetchRequest: request)
+        
+        do {
+            try moc?.execute(deleteRequest)
+        } catch let error as NSError {
+            debugPrint(error)
+        }
+        
+    }
+
 }
 
 extension EazeRoster: XMPPRosterDelegate {
@@ -126,74 +146,7 @@ extension EazeRoster: XMPPStreamDelegate {
     public func xmppStream(_ sender: XMPPStream!, didReceive iq: XMPPIQ!) -> Bool {
         
         print("Did receive \(iq!) from stream")
-     /*
-        if (iq.isResultIQ()) {
-            
-           let iqId = iq.attribute(forName: "id")?.stringValue
-            if iqId != nil {
-                
-                let finElement = iq.elements(forName: "fin")
-                            if finElement.count > 0 {
-                                        for element in finElement {
-                                           let QueryId = element.attribute(forName: "queryid")?.stringValue
-                
-                                            XMPPMessageArchivingManagement().retrieveMessageArchiveFromQuerryId(QueryId!, iqId: iqId!)
-                                            debugPrint("ARCHIVE IQ SENT")
-                                } } }
-            
-//            let iq = XMPPIQ.init(type: "set")
-//            iq?.addAttribute(withName: "id", stringValue: iqId!)
-//            let queryID = XMPPStream.generateUUID()
-//            let queryElement = DDXMLElement(name: "query", xmlns: "urn:xmpp:mam:1")
-////            queryElement?.addAttribute(withName: "queryid", stringValue: queryID!)
-//            let xElement = DDXMLElement(name: "x", xmlns: "jabber:x:data")
-//            xElement?.addAttribute(withName: "type", stringValue: "submit")
-//            xElement?.addChild(XMPPMessageArchiveManagement.field(withVar: "FORM_TYPE", type: "hidden", andValue: "urn:xmpp:mam:1"))
-//                
-//            let first = DDXMLElement(name: "field")
-//            let last = DDXMLElement(name: "field")
-//                first.addAttribute(withName: "var", stringValue: "start")
-//                last.addAttribute(withName: "var", stringValue: "end")
-//            let t = "1481323388727237"
-//            let firstDate = Date(jsonDate: t)?.iso8601
-//            if let dateFromString = firstDate?.dateFromISO8601 {
-//                first.stringValue = dateFromString.iso8601
-//            }
-//            let l = "1481550191617116"
-//            let lastDate = Date(jsonDate: l)?.iso8601
-//            if let dateFromString = lastDate?.dateFromISO8601 {
-//                last.stringValue = dateFromString.iso8601
-//            }
-//            
-//            xElement?.addChild(first)
-//            xElement?.addChild(last)
-//            queryElement?.addChild(xElement!)
-//            //            queryElement?.addChild(set!)
-//            
-//            iq?.addChild(queryElement!)
-//            
-//            
-//            
-//            debugPrint("ARCHIVE IQ SENT")
-//            
-//            EazeChat.sharedInstance.xmppStream?.send(iq)
-//            
-//            }
-//            
-//            
-//            
-//            
-        
-            
-//
-//        
-//            
-//            }
-//        
-//        
-//        }
-//        
-        } */
+ 
         return false
     }
 }

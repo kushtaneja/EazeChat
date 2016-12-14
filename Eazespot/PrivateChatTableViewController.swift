@@ -17,6 +17,7 @@ class PrivateChatTableViewController: UITableViewController, EazeRosterDelegate 
         override func viewDidLoad() {
         super.viewDidLoad()
         EazeRoster.sharedInstance.delegate = self
+            self.tableView.tableFooterView = UIView(frame: CGRect.zero)
         tableView.rowHeight = 65
         tableView.reloadData()
 
@@ -39,7 +40,7 @@ class PrivateChatTableViewController: UITableViewController, EazeRosterDelegate 
         
         // MARK: EazeRoster Delegates
         
-        func EazeRosterContentChanged(controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        func EazeRosterContentChanged() {
             //Will reload the tableView to reflet roster's changes
             tableView.reloadData()
         }

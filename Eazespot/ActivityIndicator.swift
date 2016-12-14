@@ -75,36 +75,36 @@ public class ActivityIndicator {
         return Static.instance
     }
     
-    public func showProgressView(uiView: UIView, text:String="Loading...") {
-        containerView.frame = uiView.frame
-        containerView.center = uiView.center
-        containerView.backgroundColor = UIColorFromHex(rgbValue: 0xffffff, alpha: 0.3)
-        progressView.backgroundColor = UIColorFromHex(rgbValue: 0x444444, alpha: 0.7)
-        progressView.clipsToBounds = true
-        progressView.layer.cornerRadius = 10
-        activityIndicator.frame = CGRect(x: 0.0, y: 0.0, width: 40.0, height: 40.0)
-        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.whiteLarge
-        activityIndicator.center = CGPoint(x: 30.0, y: 30.0)
+    public func showProgressView(uiView: UIView, text:String="") {
+        //        containerView.frame = uiView.frame
+        //        containerView.center = uiView.center
+        //        containerView.backgroundColor = UIColorFromHex(rgbValue: 0xffffff, alpha: 0.0)
+        //        progressView.backgroundColor = UIColorFromHex(rgbValue: 0x444444, alpha: 0.0)
+        //        progressView.clipsToBounds = true
+        //        progressView.layer.cornerRadius = 10
+        activityIndicator.frame = uiView.frame
+        activityIndicator.color = ColorCode().appThemeColor
+        activityIndicator.center = uiView.center
         
-        label.text=text
-        label.textColor=UIColor.white
-        let maxHeight : CGFloat = 60
-        let rect = label.attributedText?.boundingRect(with: CGSize(width: containerView.frame.size.width - 80.0, height: maxHeight),
-                                                      options: .usesLineFragmentOrigin, context: nil)
-        var frame = label.frame
-        frame.origin.x = 60
-        frame.origin.y = 0
-        frame.size.height = 60
-        frame.size.width = rect!.width + 30
-        label.frame = frame
-        
-        progressView.frame = CGRect(x: 0.0, y: 0.0, width: activityIndicator.frame.size.width + label.frame.size.width, height: 60.0)
-        progressView.center = uiView.center
-        progressView.addSubview(activityIndicator)
-        progressView.addSubview(label)
-        
-        containerView.addSubview(progressView)
-        uiView.addSubview(containerView)
+        //        label.text=text
+        //        label.textColor=UIColor.white
+        //        let maxHeight : CGFloat = 30
+        //        let rect = label.attributedText?.boundingRect(with: CGSize(width: containerView.frame.size.width - 80.0, height: maxHeight),
+        //                                                      options: .usesLineFragmentOrigin, context: nil)
+        //        var frame = label.frame
+        //        frame.origin.x = 60
+        //        frame.origin.y = 0
+        //        frame.size.height = 10
+        //        frame.size.width = rect!.width + 30
+        //        label.frame = frame
+        //
+        //        progressView.frame = CGRect(x: 0.0, y: 0.0, width: activityIndicator.frame.size.width + label.frame.size.width, height: 40.0)
+        //        progressView.center = uiView.center
+        //        progressView.addSubview(activityIndicator)
+        //        progressView.addSubview(label)
+        //
+        //        containerView.addSubview(progressView)
+        uiView.addSubview(activityIndicator)
         activityIndicator.startAnimating()
     }
     public func hideProgressView() {
@@ -122,5 +122,3 @@ public class ActivityIndicator {
         return UIColor(red:red, green:green, blue:blue, alpha:CGFloat(alpha))
     }
 }
-
-

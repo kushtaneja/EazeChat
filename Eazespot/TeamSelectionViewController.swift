@@ -81,10 +81,9 @@ class TeamSelectionViewController: UIViewController,UIPickerViewDelegate,UIPicke
             let jwt_token = data["key"].stringValue
             let company_name = data["company_name"].stringValue
             let profUrl = "https://api.eazespot.com/v1/company/\(self.selectedTeamId)/user/\(user_id)/"
-            
-            
             self.setValue(value: jwt_token, forKey: "JWT_key")
             self.setValue(value: profUrl, forKey: "profileURL")
+            self.setValue(value: user_id, forKey: "user_id")
             
             self.userChatId = (data["cid"].stringValue).fromBase64()
             self.userChatPassword = (data["cip"].stringValue).fromBase64()
@@ -108,12 +107,16 @@ class TeamSelectionViewController: UIViewController,UIPickerViewDelegate,UIPicke
                         if (EazeChat.sharedInstance.isConnected()){
                             self.view.makeToast(message: "Successfully Logged in")
                             ActivityIndicator.shared.hideProgressView()
+                            UserDefaults.standard.setValue(true, forKey: "login")
                             UIApplication.topViewController()?.present(ProfDisplayNavigationScreen, animated: true, completion: nil)
                         }
                         else { Utils().delay(4.0, closure: {
                             if (EazeChat.sharedInstance.isConnected()){
                                 self.view.makeToast(message: "Successfully Logged in")
+                                
                                 ActivityIndicator.shared.hideProgressView()
+                                
+                                UserDefaults.standard.setValue(true, forKey: "login")
                                 UIApplication.topViewController()?.present(ProfDisplayNavigationScreen, animated: true, completion: nil)
                             }
                             else {

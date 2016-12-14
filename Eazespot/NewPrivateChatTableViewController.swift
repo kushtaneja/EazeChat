@@ -26,19 +26,19 @@ class NewPrivateChatTableViewController: UITableViewController,EazeRosterDelegat
         return NewPrivateChatSingleton.instance
     }
     
-        override func viewDidLoad() {
+    override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.reloadData()
+        self.tableView.tableFooterView = UIView(frame: CGRect.zero)
+        ActivityIndicator.shared.showProgressView(uiView: self.view)
+        presentRecipients()
+       
         EazeRoster.sharedInstance.delegate = self
     
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        if EazeChat.sharedInstance.isConnected() {
-            tableView.reloadData()
-            navigationItem.title = "Select a recipient"
-        }
-        
+        ActivityIndicator.shared.showProgressView(uiView: self.view)
+        presentRecipients()
         
     }
 
@@ -189,10 +189,28 @@ class NewPrivateChatTableViewController: UITableViewController,EazeRosterDelegat
     
     // MARK: EazeRoster Delegates
     
-    func EazeRosterContentChanged(controller: NSFetchedResultsController<NSFetchRequestResult>) {
+    func EazeRosterContentChanged() {
         //Will reload the tableView to reflet roster's changes
+        EazeRoster.sharedInstance.delegate = self
+
+        ActivityIndicator.shared.showProgressView(uiView: self.view)
         tableView.reloadData()
     }
+    
+    //MARK: presentRecipients
+    func presentRecipients(){
+        
+        Utils().delay(2.0, closure: {
+    
+                if EazeChat.sharedInstance.isConnected() {
+                    self.tableView.reloadData()
+                    self.navigationItem.title = "Select a recipient"
+                    ActivityIndicator.shared.hideProgressView()
+            }
+            
+        })
+    }
+    
     
     
     // MARK: - Core Data Stack

@@ -13,6 +13,9 @@ extension UIStoryboard {
     
     class func eazeSpotMainStoryboard() -> UIStoryboard { return UIStoryboard(name: "Main", bundle: Bundle.main) }
     
+    class func loginScreen() -> UIViewController {
+        return eazeSpotMainStoryboard().instantiateViewController(withIdentifier: "LoginViewController")
+    }
     
     class func teamSelectionScreen() -> UINavigationController {
         return (eazeSpotMainStoryboard().instantiateViewController(withIdentifier: "TeamSelectionNavigationController") as? UINavigationController)!

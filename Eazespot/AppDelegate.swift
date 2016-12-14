@@ -11,15 +11,20 @@ import CoreData
 import XMPPFramework
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate,EazeChatDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate{
 
     var window: UIWindow?
+    let ChatFriendListPageMenuNavigationScreen = UIStoryboard.ChatFriendListPageMenuNavigationScreen()
+    let loginScreen = UIStoryboard.loginScreen()
+
     
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after applicatio launch.
         
-        EazeChat.start(archiving: true, delegate: self)
+        checkLoginStatus()
+        
+        EazeChat.start(archiving: true, delegate: nil)
         
         
         return true
@@ -48,6 +53,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate,EazeChatDelegate {
 
     func applicationDidBecomeActive(_ application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+        if (!Reachability.isConnectedToNetwork()) {
+            Utils().alertView((self.window?.rootViewController)!, title: "Not Connected to Internet", message: "Unable to connect")
+            
+            
+        }
    
 
     }
@@ -58,25 +68,32 @@ class AppDelegate: UIResponder, UIApplicationDelegate,EazeChatDelegate {
         self.saveContext()
     }
     
+    //MARK: Check Login
     
-    //MARK: EazeXMPP Delegates
+    func checkLoginStatus() {
+        
+        debugPrint("Yello \(UserDefaults.standard.value(forKey: "login"))")
+        
+        if (UserDefaults.standard.value(forKey: "login") !=  nil)
+        {
+            if (UserDefaults.standard.value(forKey: "login") as! Bool) {
+                
+                debugPrint("LOGIN == TRUE")
+                
+                self.window?.rootViewController = ChatFriendListPageMenuNavigationScreen
+            }
+            else if (!(UserDefaults.standard.value(forKey: "login") as! Bool))
+            {
+                debugPrint("LOGIN == FALSE")
+                self.window?.rootViewController = loginScreen
+            }
+        }
+     }
+    
+    
+    
+    
 
-    func EazeStream(sender: XMPPStream?, socketDidConnect socket: GCDAsyncSocket?){
-        debugPrint("Socket Connection Success")
-    }
-    func EazeStreamDidConnect(sender: XMPPStream) {
-        debugPrint("Stream Connection Success")
-    }
-    func EazeStreamDidAuthenticate(sender: XMPPStream){
-        debugPrint("Stream Authenticated")
-    }
-    func EazeStream(sender: XMPPStream, didNotAuthenticate error: DDXMLElement){
-        debugPrint("Stream Did Not Authenticate")
-    }
-    func EazeStreamDidDisconnect(sender: XMPPStream, withError error: Error)
-    {
-        debugPrint("Stream and ChatDisconnected")
-    }
     
     // MARK: - Core Data stack
     

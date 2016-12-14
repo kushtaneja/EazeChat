@@ -311,8 +311,12 @@ public class EazeChat: NSObject {
 
 extension EazeChat: XMPPStreamDelegate {
     
+    
+
+    
     public func xmppStream(_ sender: XMPPStream?, socketDidConnect socket: GCDAsyncSocket?) {
         delegate?.EazeStream(sender: sender, socketDidConnect: socket)
+        debugPrint("Socket Connection Success")
     }
     
     public func xmppStream(_ sender: XMPPStream?, willSecureWithSettings settings: NSMutableDictionary?) {
@@ -385,6 +389,8 @@ extension EazeChat: XMPPStreamDelegate {
     public func xmppStreamDidConnect(_ sender: XMPPStream!) {
         do {
             try xmppStream?.authenticate(withPassword: password)
+                debugPrint("Stream Connection Success")
+            
         } catch {
             print("Could not Authenticate")
         }
@@ -403,6 +409,7 @@ extension EazeChat: XMPPStreamDelegate {
     }
     
     public func xmppStreamDidDisconnect(_ sender: XMPPStream!, withError error: Error!) {
+          debugPrint("Stream and ChatDisconnected")
         delegate?.EazeStreamDidDisconnect(sender: sender, withError: error)
     }
     
