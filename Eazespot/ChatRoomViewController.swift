@@ -23,9 +23,8 @@ class ChatRoomViewController: JSQMessagesViewController,EazeMessageDelegate,Cont
         super.viewDidLoad()
         EazeMessage.sharedInstance.delegate = self
         
-      
-        EazeMessage.sharedInstance.doIT()
-        
+        XMPPMessageArchivingManagement().retriveChatHistoryFrom(fromBareJid:"alok_1_3@chat.eazespot.com")
+
 //        if EazeChat.sharedInstance.isConnected() {
             self.senderId = EazeChat.sharedInstance.xmppStream?.myJID.bare()
             self.senderDisplayName = EazeChat.sharedInstance.xmppStream?.myJID.bare()

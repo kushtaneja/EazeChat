@@ -18,6 +18,7 @@ class ChatFriendListPageMenuViewController: UIViewController,CAPSPageMenuDelegat
         var pageMenuCurrentIndex = 0
         override func viewDidLoad() {
             super.viewDidLoad()
+            UserDefaults.standard.set(false, forKey: "logout")
             if (UserDefaults.standard.value(forKey: "Name") != nil){
                 self.navigationItem.title = UserDefaults.standard.value(forKey: "Name") as! String?
             }
@@ -29,18 +30,22 @@ class ChatFriendListPageMenuViewController: UIViewController,CAPSPageMenuDelegat
             if (UserDefaults.standard.value(forKey: "login") !=  nil)
             {
                 if (UserDefaults.standard.value(forKey: "login") as! Bool) {
-                    EazeChat.start(archiving: true, delegate: nil)
+                    
                     EazeChat.sharedInstance.connect()
+                    
                     debugPrint("**LOGIN == TRUE")
-                   
+                    
                 }
                 else if (!(UserDefaults.standard.value(forKey: "login") as! Bool))
                 {
                     debugPrint("**LOGIN == FALSE")
-                  
+                    
                 }
             }
+
+          
             
+                      
 
         // Making Page View Controllers
             var controller : UIViewController = UIViewController()
@@ -136,11 +141,12 @@ class ChatFriendListPageMenuViewController: UIViewController,CAPSPageMenuDelegat
         defaults.removeObject(forKey: "profileURL")
         defaults.removeObject(forKey: kXMPP.myJID)
         defaults.removeObject(forKey: kXMPP.myPassword)
+
 //UserDefaults.standard.removePersistentDomain(forName: Bundle.main.bundleIdentifier!)
         defaults.synchronize()
-        EazePresence.goOffline()
         EazeChat.stop()
-        UserDefaults.standard.setValue(false, forKey: "login")
+        UserDefaults.standard.set(false, forKey: "login")
+        UserDefaults.standard.set(true, forKey: "logout")
         let loginScreen = UIStoryboard.loginScreen()
         
         present(loginScreen, animated: true, completion: nil)

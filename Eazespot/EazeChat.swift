@@ -67,17 +67,22 @@ public class EazeChat: NSObject {
         sharedInstance.teardownStream()
     }
     
-    public class func start(archiving: Bool? = false, delegate: EazeChatDelegate? = nil) {
+    public class func start(delegate: EazeChatDelegate? = nil) {
         
         sharedInstance.setupStream()
+        
+        if let delegate: EazeChatDelegate = delegate {
+            sharedInstance.delegate = delegate
+        }
+        
+    }
+    public class func setupArchiving(archiving: Bool? = false){
         
         if archiving! {
             EazeMessage.sharedInstance.setupArchiving()
         }
-        if let delegate: EazeChatDelegate = delegate {
-            sharedInstance.delegate = delegate
-        }
         EazeRoster.sharedInstance.fetchedResultsController()?.delegate = EazeRoster.sharedInstance
+       
     }
     
     public func setupStream() {

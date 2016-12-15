@@ -89,12 +89,22 @@ public class EazeRoster: NSObject, NSFetchedResultsControllerDelegate {
     public class func userFromRosterForJID(jid: String) -> XMPPUserCoreDataStorageObject? {
         let userJID = XMPPJID(string: jid)
         
-        if let user = EazeChat.sharedInstance.xmppRosterStorage.user(for: userJID, xmppStream: EazeChat.sharedInstance.xmppStream, managedObjectContext:sharedInstance.managedObjectContext_roster()) { debugPrint("user From Roster Added")
+        if let user = EazeChat.sharedInstance.xmppRosterStorage.user(for: userJID, xmppStream: EazeChat.sharedInstance.xmppStream, managedObjectContext:sharedInstance.managedObjectContext_roster()) { 
             return user
         } else {
             return nil
         }
     }
+    public class func removeUsers() {
+        let objects = sharedInstance.fetchedResultsController()!.fetchedObjects
+        
+        for object in objects! {
+            
+            let object = object as!XMPPUserCoreDataStorageObject
+            sharedInstance.fetchedResultsController()?.managedObjectContext.delete(object)
+        }
+    }
+    
 
     
     public func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {

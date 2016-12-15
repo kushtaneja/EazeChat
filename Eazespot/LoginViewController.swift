@@ -23,7 +23,24 @@ class LoginViewController: UIViewController,UITextFieldDelegate, UIScrollViewDel
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        EazeChat.start(archiving: true, delegate: nil)
+        
+        if (UserDefaults.standard.value(forKey: "logout") !=  nil)
+        {
+            if (UserDefaults.standard.value(forKey: "logout") as! Bool) {
+                
+                EazeChat.start(delegate: nil)
+                EazeChat.setupArchiving(archiving: true)
+                
+                debugPrint("**LOGout == TRUE")
+                
+            }
+            else if (!(UserDefaults.standard.value(forKey: "logout") as! Bool))
+            {
+                debugPrint("**LOGout == FALSE")
+                
+            }
+        }
+
         passwordErrorLabel.text = ""
         usernameErrorLabel.text = ""
         passwordTextField.layer.borderWidth = CGFloat(integerLiteral: 1)
@@ -154,12 +171,15 @@ class LoginViewController: UIViewController,UITextFieldDelegate, UIScrollViewDel
                 let company_name = data["company_name"].stringValue
                 let jwt_token = data["key"].stringValue
                 let profUrl = "https://api.eazespot.com/v1/company/\(company_id)/user/\(user_id)/"
+                EazeChat.setupArchiving(archiving: true)
                 if (UserDefaults.standard.value(forKey: "user_id") !=  nil)
                 {
                     if ((UserDefaults.standard.value(forKey: "user_id") as! String) == user_id ) {
                     }
                     else {
+                        
                         EazeMessage.sharedInstance.deleteMessages()
+                        EazeRoster.removeUsers()
                        self.setValue(value: user_id, forKey: "user_id")
                     }
                 
@@ -171,8 +191,10 @@ class LoginViewController: UIViewController,UITextFieldDelegate, UIScrollViewDel
                 self.setValue(value: jwt_token, forKey: "JWT_key")
                 self.setValue(value: profUrl, forKey: "profileURL")
                 
+                Utils().delay(2.0, closure: {
+                    EazeChat.sharedInstance.connect()
+                })
                 
-                EazeChat.sharedInstance.connect()
                 ProfileService().profCall(self.view, params: [:], onSuccess: {(profdata: JSON) in
                     let firstname = profdata["user"]["first_name"].stringValue
                     let lastname = profdata["user"]["last_name"].stringValue

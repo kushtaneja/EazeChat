@@ -9,6 +9,8 @@
 import Foundation
 import XMPPFramework
 
+fileprivate var messagesPerView: Int = 20
+
 class XMPPMessageArchivingManagement {
     
     func retrieveMessageArchive(withFields fields: [Any]) {
@@ -22,50 +24,123 @@ class XMPPMessageArchivingManagement {
                 let xElement = DDXMLElement(name: "x", xmlns: "jabber:x:data")
                 xElement?.addAttribute(withName: "type", stringValue: "submit")
             xElement?.addChild(XMPPMessageArchiveManagement.field(withVar: "FORM_TYPE", type: "hidden", andValue: "urn:xmpp:mam:1"))
-//        let set = DDXMLElement(name: "set", xmlns: "http://jabber.org/protocol/rsm")
-        for field in fields {
+            for field in fields {
             xElement?.addChild(field as! DDXMLElement)
-        }
-
-        
-       
-        let first = DDXMLElement(name: "field")
-        let last = DDXMLElement(name: "field")
-        first.addAttribute(withName: "var", stringValue: "start")
-//        first.addAttribute(withName: "type", stringValue:"text-single")
-//        last.addAttribute(withName: "type", stringValue:"text-single")
-        last.addAttribute(withName: "var", stringValue: "end")
-        let firstValue = DDXMLElement(name: "value")
-        let secondValue = DDXMLElement(name: "value")
-        let t = "1481323388727237"
-        let firstDate = Date(jsonDate: t)?.iso8601
-        if let dateFromString = firstDate?.dateFromISO8601 {
-//            firstValue.stringValue = dateFromString.iso8601
-            firstValue.stringValue = "2016-12-03T00:00:00Z"
-        }
-        let l = "1481550191617116"
-        let lastDate = Date(jsonDate: l)?.iso8601
-        if let dateFromString = lastDate?.dateFromISO8601 {
-//            secondValue.stringValue = dateFromString.iso8601
-            secondValue.stringValue = "2016-12-13T00:00:00Z"
-        }
-             first.addChild(firstValue)
-             last.addChild(secondValue)
-            xElement?.addChild(first)
-            xElement?.addChild(last)
-        
+            }
+            let set = DDXMLElement(name: "set", xmlns: "http://jabber.org/protocol/rsm")
+            let max = DDXMLElement(name: "max")
+            max.stringValue = "20"
+            set?.addChild(max)
             queryElement?.addChild(xElement!)
-//            queryElement?.addChild(set!)
-
+            queryElement?.addChild(set!)
             iq?.addChild(queryElement!)
         
-        
-        
+       // XMPPIDTracker().add(iq, target: self, selector:Selector("handleMessageArchiveIQ"), timeout: 60)
         debugPrint("ARCHIVE \(iq!) SENT")
         
         EazeChat.sharedInstance.xmppStream?.send(iq)
     
     }
+    
+    
+    
+    public func field(withVar Var:String, andValue value: String) -> DDXMLElement
+    {
+        
+        let field = DDXMLElement(name: "field")
+        field.addAttribute(withName: "var", stringValue:Var)
+        let elementValue = DDXMLElement(name: "value")
+        elementValue.stringValue = value
+        field.addChild(elementValue)
+        return field
+    }
+    
+    
+    public func retriveChatHistoryFrom(fromBareJid jid:String){
+        
+        let field1 = field(withVar: "with", andValue: jid)
+        
+        var value: String?
+        let date = Date().iso8601
+        if let dateFromString = date.dateFromISO8601 {
+            value = dateFromString.iso8601
+        }
+        let field2 = field(withVar: "end", andValue: value!)
+        
+        let fields = [field1,field2]
+    
+        retrieveMessageArchive(withFields: fields)
+    }
+            
+        
+    }
+    extension XMPPMessageArchivingManagement: XMPPStreamDelegate {
+        /*
+        public func xmppStream(_ sender: XMPPStream!, didReceive message: XMPPMessage!) {
+            
+            var results = message.elements(forXmlns: "urn:xmpp:mam:1")
+            
+            for result in results! {
+                let result = result as! DDXMLElement
+                debugPrint("Message Recieved*** \(result)")
+                
+                var forwarded = result.hasForwardedStanza()
+                var queryID = result.attribute(forName: "queryid")?.stringValue
+                if forwarded {
+                    
+                }
+            }
+            
+            
+            
+*/
+
+
+
+
+
+
+
+
+
+
+        }
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    /*
     func retrieveMessageArchiveFromQuerryId(_ queeryId:String, iqId: String){
      
         let iq = XMPPIQ.init(type: "get")
@@ -86,21 +161,6 @@ class XMPPMessageArchivingManagement {
     
     }
 
+*/
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-}

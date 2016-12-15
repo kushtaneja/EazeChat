@@ -166,8 +166,10 @@ public class EazeChats: NSObject, NSFetchedResultsControllerDelegate {
     
     public class func addUserToChatList(jidStr: String) {
         if !knownUserForJid(jidStr: jidStr) {
+            
             sharedInstance.chatList.add(EazeRoster.userFromRosterForJID(jid: jidStr)!)
             sharedInstance.chatListBare.add(jidStr)
+            debugPrint("user From Roster Added")
         }
     }
 

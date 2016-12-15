@@ -21,8 +21,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after applicatio launch.
-        
+        EazeChat.start(delegate: nil)
+        EazeChat.setupArchiving(archiving: true)
         checkLoginStatus()
+        
         
         
         
@@ -33,7 +35,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.
         
-//        EazePresence.goOffline()
+  //      EazePresence.goOffline()
     }
 
     func applicationDidEnterBackground(_ application: UIApplication) {
@@ -79,12 +81,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
                 
                 debugPrint("LOGIN == TRUE")
                 
+                
                 self.window?.rootViewController = ChatFriendListPageMenuNavigationScreen
             }
             else if (!(UserDefaults.standard.value(forKey: "login") as! Bool))
             {
                 debugPrint("LOGIN == FALSE")
-                EazeChat.start(archiving: true, delegate: nil)
+                
+                
+              
                 
                 self.window?.rootViewController = loginScreen
             }

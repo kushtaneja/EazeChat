@@ -201,7 +201,7 @@ class NewPrivateChatTableViewController: UITableViewController,EazeRosterDelegat
     //MARK: presentRecipients
     func presentRecipients(){
         
-        Utils().delay(2.0, closure: {
+        Utils().delay(1.0, closure: {
     
                 if EazeChat.sharedInstance.isConnected() {
                     self.tableView.reloadData()
