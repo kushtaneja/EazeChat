@@ -70,6 +70,7 @@ public class EazeChat: NSObject {
     public class func start(delegate: EazeChatDelegate? = nil) {
         
         sharedInstance.setupStream()
+        debugPrint("STREAM STARTED")
         
         if let delegate: EazeChatDelegate = delegate {
             sharedInstance.delegate = delegate
@@ -79,6 +80,8 @@ public class EazeChat: NSObject {
     public class func setupArchiving(archiving: Bool? = false){
         
         if archiving! {
+            debugPrint("MESSAGE ARCHIVING STARTED")
+
             EazeMessage.sharedInstance.setupArchiving()
         }
         EazeRoster.sharedInstance.fetchedResultsController()?.delegate = EazeRoster.sharedInstance
@@ -227,6 +230,7 @@ public class EazeChat: NSObject {
         xmppvCardAvatarModule!.deactivate()
         xmppCapabilities!.deactivate()
         EazeMessage.sharedInstance.xmppMessageArchiving!.deactivate()
+        
         xmppStream!.disconnect()
         
         EazeMessage.sharedInstance.xmppMessageStorage = nil;
@@ -240,6 +244,11 @@ public class EazeChat: NSObject {
         xmppCapabilities = nil;
         xmppCapabilitiesStorage = nil;
         xmppLastActivity = nil;
+        
+        
+        print("******TEAR DOWN COMPLETED%%%%%%%")
+        
+        
     }
     
     // MARK: Connect / Disconnect
@@ -275,7 +284,10 @@ public class EazeChat: NSObject {
     }
     
     public func isConnected() -> Bool {
-        return xmppStream!.isConnected()
+        if (xmppStream != nil) {
+            return (xmppStream?.isConnected())!
+        }
+        return false
     }
     
     public func disconnect() {

@@ -28,6 +28,20 @@ class Utils {
         myActivityIndicator.removeFromSuperview()
     }
     
+    func alertViewforXmppStreamConnection(_ vc: UIViewController, title: String, message: String)
+    {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
+        
+        alert.addAction(UIAlertAction(title: "Retry", style: .default, handler: { (UIAlertAction) in
+             EazeChat.sharedInstance.connect()
+        }))
+        alert.addAction(UIAlertAction(title: "Cancel", style: .destructive, handler: nil))
+        vc.present(alert, animated: true, completion: nil)
+        let myActivityIndicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.gray)
+        
+        myActivityIndicator.stopAnimating()
+        myActivityIndicator.removeFromSuperview()
+    }
     
     func checkNSUserDefault(_ key:String)->String{
         if(UserDefaults.standard.object(forKey: key) != nil){

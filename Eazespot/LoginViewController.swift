@@ -8,9 +8,10 @@
 
 import UIKit
 import Alamofire
+import XMPPFramework
 
 class LoginViewController: UIViewController,UITextFieldDelegate, UIScrollViewDelegate{
-
+    
     @IBOutlet var passwordTextField: UITextField!
     @IBOutlet var emailTextField: UITextField!
     
@@ -24,23 +25,6 @@ class LoginViewController: UIViewController,UITextFieldDelegate, UIScrollViewDel
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if (UserDefaults.standard.value(forKey: "logout") !=  nil)
-        {
-            if (UserDefaults.standard.value(forKey: "logout") as! Bool) {
-                
-                EazeChat.start(delegate: nil)
-                EazeChat.setupArchiving(archiving: true)
-                
-                debugPrint("**LOGout == TRUE")
-                
-            }
-            else if (!(UserDefaults.standard.value(forKey: "logout") as! Bool))
-            {
-                debugPrint("**LOGout == FALSE")
-                
-            }
-        }
-
         passwordErrorLabel.text = ""
         usernameErrorLabel.text = ""
         passwordTextField.layer.borderWidth = CGFloat(integerLiteral: 1)
@@ -50,7 +34,33 @@ class LoginViewController: UIViewController,UITextFieldDelegate, UIScrollViewDel
         emailTextField.tintColor = ColorCode().appThemeColor
         emailTextField.layer.borderColor = ColorCode().appThemeColor.cgColor
     }
-
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
+        if (UserDefaults.standard.value(forKey: "logout") !=  nil)
+        {
+            if (UserDefaults.standard.value(forKey: "logout") as! Bool) {
+                
+                EazeChat.start(delegate: nil)
+                EazeChat.setupArchiving(archiving: true)
+                
+                debugPrint("STREAM STARTED AFTER LOGOUT")
+                debugPrint("**LOGout == TRUE")
+                
+            }
+            else if (!(UserDefaults.standard.value(forKey: "logout") as! Bool))
+            {
+                debugPrint("**LOGout == FALSE")
+                
+            }
+        } else {
+            
+            EazeChat.start(delegate: nil)
+            EazeChat.setupArchiving(archiving: true)
+            
+        }
+        
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
@@ -109,37 +119,37 @@ class LoginViewController: UIViewController,UITextFieldDelegate, UIScrollViewDel
     
     
     
-
+    
     
     @IBAction func loginButtonTapped(_ sender: UIButton) {
-         disableTextFieldEditing()
-
-      if (!wrongPasswordField() && !wrongUsernameField()) {
+        disableTextFieldEditing()
+        
+        if (!wrongPasswordField() && !wrongUsernameField()) {
             self.usernameErrorLabel.text = ""
             self.passwordErrorLabel.text = ""
             loginCall(email: emailTextField.text!.trimmingCharacters(in: whitespaceSet as CharacterSet), password: passwordTextField.text!)
+            
+        }
+        else {
+            switch wrongUsernameField() {
+            case true:
+                showErrorMessage(emailTextField.placeholder!)
+            case false:
+                removeErrorMessage(emailTextField.placeholder!)
+            default:
+                showErrorMessage(emailTextField.placeholder!)
+            }
+            switch wrongPasswordField() {
+            case true:
+                showErrorMessage(passwordTextField.placeholder!)
+            case false:
+                removeErrorMessage(passwordTextField.placeholder!)
+            default:
+                showErrorMessage(passwordTextField.placeholder!)
+            }
+            
+        }
         
-        }
-      else {
-        switch wrongUsernameField() {
-        case true:
-            showErrorMessage(emailTextField.placeholder!)
-        case false:
-            removeErrorMessage(emailTextField.placeholder!)
-        default:
-            showErrorMessage(emailTextField.placeholder!)
-        }
-        switch wrongPasswordField() {
-        case true:
-            showErrorMessage(passwordTextField.placeholder!)
-        case false:
-            removeErrorMessage(passwordTextField.placeholder!)
-        default:
-            showErrorMessage(passwordTextField.placeholder!)
-        }
-        
-        }
-
     }
     
     func loginCall(email:String, password: String){
@@ -151,7 +161,7 @@ class LoginViewController: UIViewController,UITextFieldDelegate, UIScrollViewDel
                     let companyName = company["company_name"].stringValue
                     let companyId = company["company"].intValue
                     let currentCompany = Company(company_Name:companyName,company_Id: companyId)
-                self.companyArray.append(currentCompany)
+                    self.companyArray.append(currentCompany)
                 }
                 
                 let teamSelectionNavigationScreen = UIStoryboard.teamSelectionScreen()
@@ -171,29 +181,37 @@ class LoginViewController: UIViewController,UITextFieldDelegate, UIScrollViewDel
                 let company_name = data["company_name"].stringValue
                 let jwt_token = data["key"].stringValue
                 let profUrl = "https://api.eazespot.com/v1/company/\(company_id)/user/\(user_id)/"
-                EazeChat.setupArchiving(archiving: true)
+                
                 if (UserDefaults.standard.value(forKey: "user_id") !=  nil)
                 {
                     if ((UserDefaults.standard.value(forKey: "user_id") as! String) == user_id ) {
+                        
                     }
                     else {
                         
-                        EazeMessage.sharedInstance.deleteMessages()
+                     EazeMessage.sharedInstance.deleteMessages()
                         EazeRoster.removeUsers()
-                       self.setValue(value: user_id, forKey: "user_id")
+                        self.setValue(value: user_id, forKey: "user_id")
+                        
+                        
+                        
+                        
+                        //EazeChat.stop()
+                        //EazeChat.start(delegate: nil)
+                        //EazeChat.setupArchiving(archiving: true)
                     }
-                
+                    
                 }
                 else {
                     self.setValue(value: user_id, forKey: "user_id")
                 }
-
+                
                 self.setValue(value: jwt_token, forKey: "JWT_key")
                 self.setValue(value: profUrl, forKey: "profileURL")
                 
-                Utils().delay(2.0, closure: {
-                    EazeChat.sharedInstance.connect()
-                })
+                //Utils().delay(2.0, closure: {
+                EazeChat.sharedInstance.connect()
+                //   })
                 
                 ProfileService().profCall(self.view, params: [:], onSuccess: {(profdata: JSON) in
                     let firstname = profdata["user"]["first_name"].stringValue
@@ -204,30 +222,17 @@ class LoginViewController: UIViewController,UITextFieldDelegate, UIScrollViewDel
                     let ProfDisplayNavigationScreen = UIStoryboard.ProfDisplayNavigationScreen()
                     let ProfDisplayScreen = ProfDisplayNavigationScreen.topViewController as!UserProfileDisplayViewController
                     ProfDisplayScreen.loggedinUser = user
-                    Utils().delay(4.0, closure: {
-                        if (EazeChat.sharedInstance.isConnected()){
-                            self.view.makeToast(message: "Successfully Logged in with Single Team")
-                            ActivityIndicator.shared.hideProgressView()
-                            UserDefaults.standard.setValue(true, forKey: "login")
-                            UIApplication.topViewController()?.present(ProfDisplayNavigationScreen, animated: true, completion: nil)
-                        }
-                        else { Utils().delay(4.0, closure: {
-                        if (EazeChat.sharedInstance.isConnected()){
-                        self.view.makeToast(message: "Successfully Logged in with Single Team")
-                              ActivityIndicator.shared.hideProgressView()
-                            UserDefaults.standard.setValue(true, forKey: "login")
-                            UIApplication.topViewController()?.present(ProfDisplayNavigationScreen, animated: true, completion: nil)
-                        }
-                        else {
-                            ActivityIndicator.shared.hideProgressView()
-                            self.view.makeToast(message: "Unable to connect")
-                            } })
-                        } })
+                    
+                    self.view.makeToast(message: "Successfully Logged in with Single Team")
+                    ActivityIndicator.shared.hideProgressView()
+                    UserDefaults.standard.setValue(false, forKey: "logout")
+                    UIApplication.topViewController()?.present(ProfDisplayNavigationScreen, animated: true, completion: nil)
                     
                 }, failed: {(errorCode: Int) in debugPrint("loginError")})
                 
-                }
-            }, failed: {(errorCode: Int) in debugPrint("loginError")})
+            }
+        }, failed: {(errorCode: Int) in debugPrint("loginError")})
+        
     }
     func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?)
     {
@@ -241,7 +246,7 @@ class LoginViewController: UIViewController,UITextFieldDelegate, UIScrollViewDel
         textField.resignFirstResponder()
         return true
     }
-
+    
     
     
     func wrongUsernameField()->Bool{
@@ -252,8 +257,8 @@ class LoginViewController: UIViewController,UITextFieldDelegate, UIScrollViewDel
         else {
             errorExists = false
         }
-         return errorExists
-    
+        return errorExists
+        
     }
     func wrongPasswordField()->Bool{
         var errorExists = true
@@ -263,7 +268,7 @@ class LoginViewController: UIViewController,UITextFieldDelegate, UIScrollViewDel
             
             errorExists = true
         }
- //        else if Utils().isValidPassword(passwordTextField.text!) {
+            //        else if Utils().isValidPassword(passwordTextField.text!) {
         else {
             
             removeErrorMessage(passwordTextField.placeholder!)
@@ -276,20 +281,20 @@ class LoginViewController: UIViewController,UITextFieldDelegate, UIScrollViewDel
     
     func showErrorMessage(_ placeholder: String){
         switch placeholder {
-            case "Email or Username":
+        case "Email or Username":
             emailTextField.layer.borderColor = ColorCode().redColor.cgColor
             self.usernameErrorLabel.text = "Invalid Username"
             self.view.makeToast(message: "Invalid Username or Email")
-            case "Password":
+        case "Password":
             passwordTextField.layer.borderColor = ColorCode().redColor.cgColor
             self.passwordErrorLabel.text = "Invalid Password"
             self.view.makeToast(message: "Invalid Password")
         default:
             break
-        
+            
         }
         
-            }
+    }
     func removeErrorMessage(_ placeholder: String) {
         switch placeholder {
         case "Email or Username" :
@@ -322,6 +327,6 @@ class LoginViewController: UIViewController,UITextFieldDelegate, UIScrollViewDel
     
     
     
-
+    
 }
 

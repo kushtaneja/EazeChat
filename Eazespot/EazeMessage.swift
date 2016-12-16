@@ -237,9 +237,14 @@ public class EazeMessage: NSObject {
             } catch _ {
                 //catch fetch error here
             }
-        }
+            do {
+            try moc?.save()
+            } catch _ {
+            }
+    
+    }
 
-        
+    
 
     
     

@@ -21,13 +21,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after applicatio launch.
-        EazeChat.start(delegate: nil)
-        EazeChat.setupArchiving(archiving: true)
+       
         checkLoginStatus()
-        
-        
-        
-        
         return true
     }
 
@@ -73,25 +68,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
     
     func checkLoginStatus() {
         
-        debugPrint("Yello \(UserDefaults.standard.value(forKey: "login"))")
+        debugPrint("Yello \(UserDefaults.standard.value(forKey: "logout"))")
         
-        if (UserDefaults.standard.value(forKey: "login") !=  nil)
+        if (UserDefaults.standard.value(forKey: "logout") !=  nil)
         {
-            if (UserDefaults.standard.value(forKey: "login") as! Bool) {
+            if (UserDefaults.standard.value(forKey: "logout") as! Bool) {
                 
                 debugPrint("LOGIN == TRUE")
                 
+                self.window?.rootViewController = loginScreen
                 
-                self.window?.rootViewController = ChatFriendListPageMenuNavigationScreen
             }
-            else if (!(UserDefaults.standard.value(forKey: "login") as! Bool))
+            else if (!(UserDefaults.standard.value(forKey: "logout") as! Bool))
             {
                 debugPrint("LOGIN == FALSE")
+                EazeChat.start(delegate: nil)
+                EazeChat.setupArchiving(archiving: true)
+                self.window?.rootViewController = ChatFriendListPageMenuNavigationScreen
                 
-                
-              
-                
-                self.window?.rootViewController = loginScreen
             }
         }
      }

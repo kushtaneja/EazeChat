@@ -29,10 +29,10 @@ class XMPPMessageArchivingManagement {
             }
             let set = DDXMLElement(name: "set", xmlns: "http://jabber.org/protocol/rsm")
             let max = DDXMLElement(name: "max")
-            max.stringValue = "20"
-            set?.addChild(max)
+            max.stringValue = "100"
+           set?.addChild(max)
             queryElement?.addChild(xElement!)
-            queryElement?.addChild(set!)
+           queryElement?.addChild(set!)
             iq?.addChild(queryElement!)
         
        // XMPPIDTracker().add(iq, target: self, selector:Selector("handleMessageArchiveIQ"), timeout: 60)

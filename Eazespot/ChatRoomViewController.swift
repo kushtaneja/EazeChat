@@ -281,10 +281,17 @@ class ChatRoomViewController: JSQMessagesViewController,EazeMessageDelegate,Cont
     // Mark: Chat message Delegates
     
     func EazeStream(sender: XMPPStream, didReceiveHistoryMessage historyMessage: XMPPMessage, from user: XMPPUserCoreDataStorageObject) {
-        let bareJidFrom: String = (historyMessage.attribute(forName: "from")?.stringValue)!
         let bareJidto: String = (historyMessage.attribute(forName: "to")?.stringValue)!
         
-        if (bareJidFrom == recipient?.jidStr)
+        
+        
+        
+        let recipientID = (recipient?.jidStr)!
+        
+        debugPrint("ID TO \(bareJidto) __ RECIPENT ID \(recipientID)")
+        
+        
+        if (!(bareJidto == recipientID))
         {
         EazeMessage.sharedInstance.xmppMessageStorage?.archiveMessage(historyMessage, outgoing: false, xmppStream: EazeChat.sharedInstance.xmppStream)
             
@@ -298,22 +305,29 @@ class ChatRoomViewController: JSQMessagesViewController,EazeMessageDelegate,Cont
                         let fullMessage = JSQMessage(senderId: from, senderDisplayName: displayName, date: NSDate() as Date!, text: msg)
                         
                         messages.add(fullMessage!)
-                        
-                        self.finishReceivingMessage(animated: true)
+                        self.finishSendingMessage(animated: true)
                     }
                 }
             }
         }
-        if (bareJidto == recipient?.jidStr)
+        if (bareJidto == recipientID)
         {
          EazeMessage.sharedInstance.xmppMessageStorage?.archiveMessage(historyMessage, outgoing: true, xmppStream: EazeChat.sharedInstance.xmppStream)
             
-            let fullMessage = JSQMessage(senderId: EazeChat.sharedInstance.xmppStream?.myJID.bare(), senderDisplayName: EazeChat.sharedInstance.xmppStream?.myJID.bare(), date: Date(), text: historyMessage.forName("body")?.stringValue)
-            messages.add(fullMessage!)
+            
+            if historyMessage.isChatMessageWithBody() {
+                let displayName = user.displayName
+                
+                debugPrint("**SENT History Message Recieved")
+                JSQSystemSoundPlayer.jsq_playMessageSentSound()
+                    
+                 if let msg: String = historyMessage.forName("body")?.stringValue    {
+            let fullMessage = JSQMessage(senderId: EazeChat.sharedInstance.xmppStream?.myJID.bare(), senderDisplayName: EazeChat.sharedInstance.xmppStream?.myJID.bare(), date: Date(), text: msg)
+                    messages.add(fullMessage!)
             self.finishSendingMessage(animated: true)
-        
+                }
         }
-        
+        }
         
         
     

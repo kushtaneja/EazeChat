@@ -10,15 +10,10 @@ import UIKit
 import SDWebImage
 
 class UserProfileDisplayViewController: UIViewController {
-
+    
     @IBOutlet weak var profilePictureView: UIImageView!
-    
     @IBOutlet weak var nameTextLabel: UILabel!
-    
-    
     @IBOutlet weak var usernameTextLabel: UILabel!
-    
-    
     @IBOutlet weak var companyTextLabel: UILabel!
     
     var loggedinUser = LoggedinUserProfile()
@@ -26,38 +21,23 @@ class UserProfileDisplayViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         UserDefaults.standard.set(loggedinUser.firstName + " " + loggedinUser.lastName
-, forKey: "Name")
+            , forKey: "Name")
         nameTextLabel.text = loggedinUser.firstName.uppercased() + " " + loggedinUser.lastName.uppercased()
         usernameTextLabel.text = loggedinUser.email
         companyTextLabel.text = loggedinUser.company
         profilePictureView.sd_setImage(with: (NSURL(string: loggedinUser.profilePicUrl) as! URL), placeholderImage: UIImage(named: "person"))
         
-        
-        // Do any additional setup after loading the view.
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
-
-
     @IBAction func doneButtonTapped(_ sender: UIBarButtonItem) {
-        
         let ChatFriendListPageMenuNavigationScreen = UIStoryboard.ChatFriendListPageMenuNavigationScreen()
-        let ChatScreen = ChatFriendListPageMenuNavigationScreen.topViewController as! ChatFriendListPageMenuViewController
+       
         present(ChatFriendListPageMenuNavigationScreen, animated: true, completion: nil)
     }
     
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

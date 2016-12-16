@@ -17,7 +17,7 @@ class PrivateChatTableViewController: UITableViewController, EazeRosterDelegate 
         override func viewDidLoad() {
         super.viewDidLoad()
         EazeRoster.sharedInstance.delegate = self
-            self.tableView.tableFooterView = UIView(frame: CGRect.zero)
+        self.tableView.tableFooterView = UIView(frame: CGRect.zero)
         tableView.rowHeight = 65
         tableView.reloadData()
 
