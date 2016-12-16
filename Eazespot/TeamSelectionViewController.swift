@@ -88,7 +88,10 @@ class TeamSelectionViewController: UIViewController,UIPickerViewDelegate,UIPicke
                 }
                 else {
                     EazeMessage.sharedInstance.deleteMessages()
-                    EazeRoster.removeUsers()
+                        EazeRoster.removeUsers()
+                    
+                    
+                    
                     self.setValue(value: user_id, forKey: "user_id")
                 }
                 

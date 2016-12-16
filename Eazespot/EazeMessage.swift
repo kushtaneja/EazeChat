@@ -15,8 +15,11 @@ public typealias EazeChatMessageCompletionHandler = (_ stream: XMPPStream, _ mes
 // MARK: Protocols
 
 public protocol EazeMessageDelegate {
+    func EazeStream(sender: XMPPStream, didReceiveHistoryMessage historyMessage: XMPPMessage, from user: XMPPUserCoreDataStorageObject)
+    
     func EazeStream(sender: XMPPStream, didReceiveMessage message: XMPPMessage, from user: XMPPUserCoreDataStorageObject)
     func EazeStream(sender: XMPPStream, userIsComposing user: XMPPUserCoreDataStorageObject)
+    
 }
 
 
@@ -315,7 +318,7 @@ extension EazeMessage: XMPPStreamDelegate {
                         EazeChats.addUserToChatList(jidStr: (historyUser.jidStr)!)
                     }
                     if (historyMessage?.isChatMessageWithBody())! {
-                        EazeMessage.sharedInstance.delegate?.EazeStream(sender: sender, didReceiveMessage: historyMessage!, from: historyUser)
+                        EazeMessage.sharedInstance.delegate?.EazeStream(sender: sender, didReceiveHistoryMessage: historyMessage!, from: historyUser)
                         }
                 }
 
