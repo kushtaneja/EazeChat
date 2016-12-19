@@ -74,7 +74,45 @@ class XMPPMessageArchivingManagement {
     
         retrieveMessageArchive(withFields: fields)
     }
-            
+   
+    public func continueRetriveChatHistory(fromBareJid jid:String, afterMessage UID: String){
+
+    
+        let iq = XMPPIQ.init(type: "set")
+        iq?.addAttribute(withName: "id", stringValue: XMPPStream.generateUUID())
+        let queryID = XMPPStream.generateUUID()
+        let queryElement = DDXMLElement(name: "query", xmlns: "urn:xmpp:mam:1")
+        queryElement?.addAttribute(withName: "queryid", stringValue: queryID!)
+        
+        let xElement = DDXMLElement(name: "x", xmlns: "jabber:x:data")
+        xElement?.addAttribute(withName: "type", stringValue: "submit")
+        xElement?.addChild(XMPPMessageArchiveManagement.field(withVar: "FORM_TYPE", type: "hidden", andValue: "urn:xmpp:mam:1"))
+    
+        xElement?.addChild(field(withVar: "with", andValue: String(jid)))
+        
+        let set = DDXMLElement(name: "set", xmlns: "http://jabber.org/protocol/rsm")
+        let max = DDXMLElement(name: "max")
+        max.stringValue = "20"
+        set?.addChild(max)
+        let after = DDXMLElement(name: "after")
+        after.stringValue = UID
+        set?.addChild(after)
+        queryElement?.addChild(xElement!)
+        queryElement?.addChild(set!)
+        iq?.addChild(queryElement!)
+        
+        // XMPPIDTracker().add(iq, target: self, selector:Selector("handleMessageArchiveIQ"), timeout: 60)
+        debugPrint("ARCHIVE \(iq!) SENT")
+        
+        EazeChat.sharedInstance.xmppStream?.send(iq)
+
+    
+    
+    }
+    
+    
+    
+    
     }
     extension XMPPMessageArchivingManagement: XMPPStreamDelegate {
         /*

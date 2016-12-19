@@ -166,6 +166,8 @@ extension EazeRoster: XMPPStreamDelegate {
     public func xmppStream(_ sender: XMPPStream!, didReceive iq: XMPPIQ!) -> Bool {
         
         print("Did receive \(iq!) from stream")
+        
+        
  
         return false
     }

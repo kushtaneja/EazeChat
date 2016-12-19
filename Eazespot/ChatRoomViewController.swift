@@ -9,8 +9,11 @@
 import UIKit
 import XMPPFramework
 import JSQMessagesViewController
+import SVPullToRefresh
+
 
 class ChatRoomViewController: JSQMessagesViewController,EazeMessageDelegate,ContactPickerDelegate {
+    
     
     let appDelegate = UIApplication.shared.delegate as? AppDelegate
     var messages = NSMutableArray()
@@ -38,6 +41,14 @@ class ChatRoomViewController: JSQMessagesViewController,EazeMessageDelegate,Cont
         
         self.collectionView!.collectionViewLayout.springinessEnabled = false
         self.inputToolbar!.contentView!.leftBarButtonItem!.isHidden = true
+        
+        self.collectionView.addInfiniteScrolling( actionHandler: { () -> Void in
+            self.loadMore()
+        }, direction: UInt(SVInfiniteScrollingDirectionTop))
+        
+
+     
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -298,6 +309,16 @@ class ChatRoomViewController: JSQMessagesViewController,EazeMessageDelegate,Cont
                 if let from: String = historyMessage.attribute(forName: "from")?.stringValue {
                     let message = JSQMessage(senderId: from, senderDisplayName: displayName, date: date, text: msg)
                     messages.add(message!)
+                    if ((messages.count)%20 == 0){
+                        UserDefaults.standard.set(historyMessage.elementID(), forKey: "lastMessageUID")
+                        print("UIDD OF LAST ELEMENT \(historyMessage.elementID())")
+                    
+                    }
+                    
+                    
+                    
+                    
+                    
                     
                     self.finishReceivingMessage(animated: true)
                 }
@@ -316,6 +337,11 @@ class ChatRoomViewController: JSQMessagesViewController,EazeMessageDelegate,Cont
             if let text: String = historyMessage.forName("body")?.stringValue {
                 let fullMessage = JSQMessage(senderId: EazeChat.sharedInstance.xmppStream?.myJID.bare(), senderDisplayName: EazeChat.sharedInstance.xmppStream?.myJID.bare(), date: date, text: text)
                 messages.add(fullMessage!)
+                if ((messages.count)%20 == 0){
+                    UserDefaults.standard.set(historyMessage.elementID(), forKey: "lastMessageUID")
+                    print("UIDD OF LAST ELEMENT \(historyMessage.elementID())")
+                    
+                }
                 self.finishSendingMessage(animated: true)
             }
         }
@@ -346,6 +372,37 @@ class ChatRoomViewController: JSQMessagesViewController,EazeMessageDelegate,Cont
         self.showTypingIndicator = !self.showTypingIndicator
         self.scrollToBottom(animated: true)
     }
+    
+    func loadMore() {
+        debugPrint("Load earlier messages triggered by scroll!")
+        
+            
+            collectionView.collectionViewLayout.springinessEnabled = false
+            self.collectionView.infiniteScrollingView.startAnimating()
+        
+        
+        
+        
+        
+        let lastMessageId = UserDefaults.standard.value(forKey: "lastMessageUID") as! String
+        
+        XMPPMessageArchivingManagement().continueRetriveChatHistory(fromBareJid: (recipient?.jidStr)!, afterMessage: lastMessageId)
+        self.collectionView.infiniteScrollingView.stopAnimating()
+        
+        self.collectionView.collectionViewLayout.springinessEnabled = false
+    
+        
+    
+//            else {
+//                    self.collectionView.infiniteScrollingView.stopAnimating()
+//                    self.collectionView.collectionViewLayout.springinessEnabled = true
+//                    println("No more messages to load.")
+//                }
+        
+        
+        
+    }
+   
     
     // Mark: Memory Management
     override func didReceiveMemoryWarning() {
