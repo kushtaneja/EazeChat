@@ -27,9 +27,11 @@ class XMPPMessageArchivingManagement {
             for field in fields {
             xElement?.addChild(field as! DDXMLElement)
             }
+        
+        
             let set = DDXMLElement(name: "set", xmlns: "http://jabber.org/protocol/rsm")
             let max = DDXMLElement(name: "max")
-            max.stringValue = "100"
+            max.stringValue = "20"
            set?.addChild(max)
             queryElement?.addChild(xElement!)
            queryElement?.addChild(set!)
@@ -58,7 +60,8 @@ class XMPPMessageArchivingManagement {
     
     public func retriveChatHistoryFrom(fromBareJid jid:String){
         
-        let field1 = field(withVar: "with", andValue: jid)
+        let field1 = field(withVar: "with", andValue: String(jid))
+        
         
         var value: String?
         let date = Date().iso8601
@@ -72,7 +75,6 @@ class XMPPMessageArchivingManagement {
         retrieveMessageArchive(withFields: fields)
     }
             
-        
     }
     extension XMPPMessageArchivingManagement: XMPPStreamDelegate {
         /*

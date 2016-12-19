@@ -11,6 +11,8 @@
 		4320D1A31DF5A203002EDC2C /* ChatFriendListPageMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4320D1A21DF5A203002EDC2C /* ChatFriendListPageMenuViewController.swift */; };
 		4320D1A61DF5A342002EDC2C /* ColorCodeExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4320D1A41DF5A342002EDC2C /* ColorCodeExtensions.swift */; };
 		4320D1A71DF5A342002EDC2C /* ColorCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4320D1A51DF5A342002EDC2C /* ColorCode.swift */; };
+		4326AF291E07F1730043188E /* TextFieldsEffects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4326AF271E07F1730043188E /* TextFieldsEffects.swift */; };
+		4326AF2A1E07F1730043188E /* HoshiTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4326AF281E07F1730043188E /* HoshiTextField.swift */; };
 		4345F88B1DFFF1BE005FC03C /* XMPPMessageArchivingManagement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4345F88A1DFFF1BE005FC03C /* XMPPMessageArchivingManagement.swift */; };
 		435E8B381DF029B5003D3F63 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 435E8B371DF029B5003D3F63 /* AppDelegate.swift */; };
 		435E8B3D1DF029B5003D3F63 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 435E8B3B1DF029B5003D3F63 /* Main.storyboard */; };
@@ -74,6 +76,8 @@
 		4320D1A21DF5A203002EDC2C /* ChatFriendListPageMenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatFriendListPageMenuViewController.swift; sourceTree = "<group>"; };
 		4320D1A41DF5A342002EDC2C /* ColorCodeExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorCodeExtensions.swift; sourceTree = "<group>"; };
 		4320D1A51DF5A342002EDC2C /* ColorCode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorCode.swift; sourceTree = "<group>"; };
+		4326AF271E07F1730043188E /* TextFieldsEffects.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextFieldsEffects.swift; sourceTree = "<group>"; };
+		4326AF281E07F1730043188E /* HoshiTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HoshiTextField.swift; sourceTree = "<group>"; };
 		4345F88A1DFFF1BE005FC03C /* XMPPMessageArchivingManagement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XMPPMessageArchivingManagement.swift; sourceTree = "<group>"; };
 		435E8B341DF029B5003D3F63 /* Eazespot.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Eazespot.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		435E8B371DF029B5003D3F63 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -184,6 +188,15 @@
 				4320D1A41DF5A342002EDC2C /* ColorCodeExtensions.swift */,
 			);
 			name = ColorCode;
+			sourceTree = "<group>";
+		};
+		4326AF261E07F15C0043188E /* TextFieldsEffects */ = {
+			isa = PBXGroup;
+			children = (
+				4326AF271E07F1730043188E /* TextFieldsEffects.swift */,
+				4326AF281E07F1730043188E /* HoshiTextField.swift */,
+			);
+			name = TextFieldsEffects;
 			sourceTree = "<group>";
 		};
 		435E8B2B1DF029B4003D3F63 = {
@@ -309,6 +322,7 @@
 		435E8B811DF047BE003D3F63 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				4326AF261E07F15C0043188E /* TextFieldsEffects */,
 				4320D1A81DF5A34A002EDC2C /* ColorCode */,
 				43E2B8221DF1871C00F791B5 /* Extensions */,
 				435E8B921DF057D3003D3F63 /* PageMenu */,
@@ -594,6 +608,7 @@
 				435E8B761DF03238003D3F63 /* Network.swift in Sources */,
 				4345F88B1DFFF1BE005FC03C /* XMPPMessageArchivingManagement.swift in Sources */,
 				43E2B81E1DF15F1000F791B5 /* TeamSelectionViewController.swift in Sources */,
+				4326AF291E07F1730043188E /* TextFieldsEffects.swift in Sources */,
 				43D549891DF9468600138473 /* NewPrivateChatTableViewController.swift in Sources */,
 				435E8B891DF04868003D3F63 /* DeviceSizes.swift in Sources */,
 				43AA9E291DFAAEA200C1876E /* EazeMessage.swift in Sources */,
@@ -613,6 +628,7 @@
 				43E2B8241DF1872B00F791B5 /* Extensions.swift in Sources */,
 				43AA9E251DFAAE8200C1876E /* EazeLastActivity.swift in Sources */,
 				4320D1A31DF5A203002EDC2C /* ChatFriendListPageMenuViewController.swift in Sources */,
+				4326AF2A1E07F1730043188E /* HoshiTextField.swift in Sources */,
 				43AA9E231DFAAE5F00C1876E /* EazeRoster.swift in Sources */,
 				43C5539C1E0165AE00A06201 /* LoginViewController.swift in Sources */,
 				431D4B421DFC893B00FD3702 /* ContactTableViewCell.swift in Sources */,

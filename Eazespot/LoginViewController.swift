@@ -25,6 +25,9 @@ class LoginViewController: UIViewController,UITextFieldDelegate, UIScrollViewDel
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        EazeChat.start(delegate: nil)
+        EazeChat.setupArchiving(archiving: true)
+        
         passwordErrorLabel.text = ""
         usernameErrorLabel.text = ""
         passwordTextField.layer.borderWidth = CGFloat(integerLiteral: 1)
@@ -36,10 +39,12 @@ class LoginViewController: UIViewController,UITextFieldDelegate, UIScrollViewDel
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
+        
+        /*
         if (UserDefaults.standard.value(forKey: "logout") !=  nil)
         {
             if (UserDefaults.standard.value(forKey: "logout") as! Bool) {
-                
+               
                 EazeChat.start(delegate: nil)
                 EazeChat.setupArchiving(archiving: true)
                 
@@ -58,6 +63,7 @@ class LoginViewController: UIViewController,UITextFieldDelegate, UIScrollViewDel
             EazeChat.setupArchiving(archiving: true)
             
         }
+ */
         
     }
     
@@ -172,16 +178,8 @@ class LoginViewController: UIViewController,UITextFieldDelegate, UIScrollViewDel
                 UIApplication.topViewController()?.present(teamSelectionNavigationScreen, animated: true, completion: nil)
                 
             } else if (data["login"] == true) {
-                let userChatId = (data["cid"].stringValue).fromBase64()
-                let userChatPassword = (data["cip"].stringValue).fromBase64()
-                self.setValue(value: userChatId + "@chat.eazespot.com", forKey: kXMPP.myJID)
-                self.setValue(value: userChatPassword, forKey: kXMPP.myPassword)
-                let company_id = data["company_id"].intValue
-                let user_id = data["user_id"].stringValue
-                let company_name = data["company_name"].stringValue
-                let jwt_token = data["key"].stringValue
-                let profUrl = "https://api.eazespot.com/v1/company/\(company_id)/user/\(user_id)/"
                 
+                let user_id = data["user_id"].stringValue
                 if (UserDefaults.standard.value(forKey: "user_id") !=  nil)
                 {
                     if ((UserDefaults.standard.value(forKey: "user_id") as! String) == user_id ) {
@@ -189,16 +187,15 @@ class LoginViewController: UIViewController,UITextFieldDelegate, UIScrollViewDel
                     }
                     else {
                         
-                     EazeMessage.sharedInstance.deleteMessages()
+//                   EazeMessage.sharedInstance.deleteMessages()
                         EazeRoster.removeUsers()
+                        EazeChat.sharedInstance.disconnect()
+                                                
+
+                        
+                       
                         self.setValue(value: user_id, forKey: "user_id")
                         
-                        
-                        
-                        
-                        //EazeChat.stop()
-                        //EazeChat.start(delegate: nil)
-                        //EazeChat.setupArchiving(archiving: true)
                     }
                     
                 }
@@ -206,12 +203,28 @@ class LoginViewController: UIViewController,UITextFieldDelegate, UIScrollViewDel
                     self.setValue(value: user_id, forKey: "user_id")
                 }
                 
+                
+                
+                let userChatId = (data["cid"].stringValue).fromBase64()
+                let userChatPassword = (data["cip"].stringValue).fromBase64()
+                self.setValue(value: userChatId + "@chat.eazespot.com", forKey: kXMPP.myJID)
+                self.setValue(value: userChatPassword, forKey: kXMPP.myPassword)
+                
+                let company_id = data["company_id"].intValue
+                let company_name = data["company_name"].stringValue
+                let jwt_token = data["key"].stringValue
+                let profUrl = "https://api.eazespot.com/v1/company/\(company_id)/user/\(user_id)/"
+                
+           
+                
                 self.setValue(value: jwt_token, forKey: "JWT_key")
                 self.setValue(value: profUrl, forKey: "profileURL")
                 
-                //Utils().delay(2.0, closure: {
-                EazeChat.sharedInstance.connect()
-                //   })
+                Utils().delay(2.0, closure: { 
+                     EazeChat.sharedInstance.connect()
+                })
+               
+
                 
                 ProfileService().profCall(self.view, params: [:], onSuccess: {(profdata: JSON) in
                     let firstname = profdata["user"]["first_name"].stringValue

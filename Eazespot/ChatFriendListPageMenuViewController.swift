@@ -19,6 +19,7 @@ class ChatFriendListPageMenuViewController: UIViewController,CAPSPageMenuDelegat
     
     
     override func viewDidLoad() {
+        
         super.viewDidLoad()
         
         UserDefaults.standard.set(false, forKey: "logout")
@@ -61,16 +62,20 @@ class ChatFriendListPageMenuViewController: UIViewController,CAPSPageMenuDelegat
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
-        
+    
         self.navigationItem.title = (UserDefaults.standard.value(forKey: "Name") != nil) ? UserDefaults.standard.value(forKey: "Name") as! String? : "Chats"
         
         if (UserDefaults.standard.value(forKey: "logout") !=  nil)
         {
             if (UserDefaults.standard.value(forKey: "logout") as! Bool) {
-                debugPrint("**LOGout == TRUE")
+                
                 
             } else {
+                
+                EazeChat.sharedInstance.connect()
+                
                 Utils().delay(2.0, closure: {
+                    
                     if (!(EazeChat.sharedInstance.isConnected())) {
                         
                         Utils().alertViewforXmppStreamConnection(self, title: "Unable to connect to our Chat Server", message: "Chat not Connected")
@@ -129,17 +134,13 @@ class ChatFriendListPageMenuViewController: UIViewController,CAPSPageMenuDelegat
     }
     
     @IBAction func logoutButtonTapped(_ sender: Any) {
-        
+       
         let defaults = UserDefaults.standard
         defaults.removeObject(forKey: "JWT_key")
         defaults.removeObject(forKey: "profileURL")
-        defaults.removeObject(forKey: kXMPP.myJID)
-        defaults.removeObject(forKey: kXMPP.myPassword)
         
         //UserDefaults.standard.removePersistentDomain(forName: Bundle.main.bundleIdentifier!)
-        defaults.synchronize()
-        
-        EazeChat.stop()
+         defaults.synchronize()
         
         //let appDelegate = UIApplication.shared.delegate as? AppDelegate
         //appDelegate?.saveContext()

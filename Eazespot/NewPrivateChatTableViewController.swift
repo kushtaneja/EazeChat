@@ -118,7 +118,12 @@ class NewPrivateChatTableViewController: UITableViewController,EazeRosterDelegat
         
         cell.statusView?.layer.borderWidth = CGFloat(integerLiteral: 2)
         
-        if (indexPath.section == 0) {
+        let sections: Array? =  EazeRoster.buddyList.sections
+        
+        let sectionInfo: AnyObject = sections![indexPath.section]
+        let tmpSection: Int = Int(sectionInfo.name)!
+        
+        if (tmpSection == 0) {
             cell.statusView?.layer.backgroundColor = ColorCode().statusOnlineGreenColor.cgColor
             cell.statusView?.layer.borderColor = UIColor.white.cgColor
         }
@@ -224,14 +229,5 @@ class NewPrivateChatTableViewController: UITableViewController,EazeRosterDelegat
             UserDefaults.standard.removeObject(forKey: key)
         }
     }
-       /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+      
 }

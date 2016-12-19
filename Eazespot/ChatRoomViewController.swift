@@ -22,14 +22,19 @@ class ChatRoomViewController: JSQMessagesViewController,EazeMessageDelegate,Cont
     override func viewDidLoad() {
         super.viewDidLoad()
         EazeMessage.sharedInstance.delegate = self
-     
-        XMPPMessageArchivingManagement().retriveChatHistoryFrom(fromBareJid:(recipient?.jidStr)!)
         
-
-//        if EazeChat.sharedInstance.isConnected() {
-            self.senderId = EazeChat.sharedInstance.xmppStream?.myJID.bare()
-            self.senderDisplayName = EazeChat.sharedInstance.xmppStream?.myJID.bare()
-//        }
+        // Retrive History messages
+        if EazeMessage.sharedInstance.messageCoreDataIsEmptyFor(jid:(recipient?.jidStr)!){
+            
+            XMPPMessageArchivingManagement().retriveChatHistoryFrom(fromBareJid:(recipient?.jidStr)!)
+        }
+        
+        if EazeChat.sharedInstance.isConnected() {
+            
+        self.senderId = EazeChat.sharedInstance.xmppStream?.myJID.bare()
+        self.senderDisplayName = EazeChat.sharedInstance.xmppStream?.myJID.bare()
+            
+       }
         
         self.collectionView!.collectionViewLayout.springinessEnabled = false
         self.inputToolbar!.contentView!.leftBarButtonItem!.isHidden = true
@@ -58,34 +63,34 @@ class ChatRoomViewController: JSQMessagesViewController,EazeMessageDelegate,Cont
         } else {
             if userDetails == nil {
                 navigationItem.title = "New message"
-            
-            
+                
+                
             }
             
             self.inputToolbar!.contentView!.rightBarButtonItem!.isEnabled = false
             /*
-            self.navigationItem.setRightBarButton(UIBarButtonItem(barButtonSystemItem: .add, target: self, action: Selector("addRecipient")), animated: true)
-            if firstTime {
-                firstTime = false
-                addRecipient()
-            }
+             self.navigationItem.setRightBarButton(UIBarButtonItem(barButtonSystemItem: .add, target: self, action: Selector("addRecipient")), animated: true)
+             if firstTime {
+             firstTime = false
+             addRecipient()
+             }
              
              */
         }
+        
+    }
     
-    }
-        
-// Mark: Private methods
-        /*
-    func addRecipient() {
-        let navController = self.storyboard?.instantiateViewController(withIdentifier: "contactListNav") as? UINavigationController
-        let contactController: ContactListTableViewController? = navController?.viewControllers[0] as? ContactListTableViewController
-        contactController?.delegate = self
-        
-        self.present(navController!, animated: true, completion: nil)
-    }
- 
-    */
+    // Mark: Private methods
+    /*
+     func addRecipient() {
+     let navController = self.storyboard?.instantiateViewController(withIdentifier: "contactListNav") as? UINavigationController
+     let contactController: ContactListTableViewController? = navController?.viewControllers[0] as? ContactListTableViewController
+     contactController?.delegate = self
+     
+     self.present(navController!, animated: true, completion: nil)
+     }
+     
+     */
     func didSelectContact(recipient: XMPPUserCoreDataStorageObject) {
         self.recipient = recipient
         if userDetails == nil {
@@ -99,8 +104,8 @@ class ChatRoomViewController: JSQMessagesViewController,EazeMessageDelegate,Cont
             finishReceivingMessage(animated: true)
         }
     }
-         
-   
+    
+    
     // Mark: JSQMessagesViewController method overrides
     
     var isComposing = false
@@ -116,7 +121,7 @@ class ChatRoomViewController: JSQMessagesViewController,EazeMessageDelegate,Cont
             timer?.invalidate()
             if !isComposing {
                 isComposing = true
-               EazeMessage.sendIsComposingMessage(recipient: (recipient?.jidStr)!, completionHandler: { (stream, message) -> Void in
+                EazeMessage.sendIsComposingMessage(recipient: (recipient?.jidStr)!, completionHandler: { (stream, message) -> Void in
                     self.timer = Timer.scheduledTimer(timeInterval: 4.0, target: self, selector: #selector(ChatRoomViewController.hideTypingIndicator), userInfo: nil, repeats: false)
                 })
             } else {
@@ -182,7 +187,7 @@ class ChatRoomViewController: JSQMessagesViewController,EazeMessageDelegate,Cont
                 return senderAvatar
             }
         } else {
-  
+            
             if let photoData = EazeChat.sharedInstance.xmppvCardAvatarModule?.photoData(for: recipient!.jid!) {
                 let recipientAvatar = JSQMessagesAvatarImageFactory.avatarImage(with: UIImage(data: photoData), diameter: 30)
                 return recipientAvatar
@@ -249,7 +254,7 @@ class ChatRoomViewController: JSQMessagesViewController,EazeMessageDelegate,Cont
     
     // Mark: JSQMessages collection view flow layout delegate
     
-   override func collectionView(_ collectionView: JSQMessagesCollectionView!, layout collectionViewLayout: JSQMessagesCollectionViewFlowLayout!, heightForCellTopLabelAt indexPath: IndexPath!) -> CGFloat {
+    override func collectionView(_ collectionView: JSQMessagesCollectionView!, layout collectionViewLayout: JSQMessagesCollectionViewFlowLayout!, heightForCellTopLabelAt indexPath: IndexPath!) -> CGFloat {
         if indexPath.item % 3 == 0 {
             return kJSQMessagesCollectionViewCellLabelHeightDefault
         }
@@ -257,7 +262,7 @@ class ChatRoomViewController: JSQMessagesViewController,EazeMessageDelegate,Cont
         return 0.0
     }
     
-   override func collectionView(_ collectionView: JSQMessagesCollectionView!, layout collectionViewLayout: JSQMessagesCollectionViewFlowLayout!, heightForMessageBubbleTopLabelAt indexPath: IndexPath!) -> CGFloat {
+    override func collectionView(_ collectionView: JSQMessagesCollectionView!, layout collectionViewLayout: JSQMessagesCollectionViewFlowLayout!, heightForMessageBubbleTopLabelAt indexPath: IndexPath!) -> CGFloat {
         let currentMessage: JSQMessage = self.messages[indexPath.item] as! JSQMessage
         if currentMessage.senderId == self.senderId {
             return 0.0
@@ -281,84 +286,72 @@ class ChatRoomViewController: JSQMessagesViewController,EazeMessageDelegate,Cont
     // Mark: Chat message Delegates
     
     func EazeStream(sender: XMPPStream, didReceiveHistoryMessage historyMessage: XMPPMessage, from user: XMPPUserCoreDataStorageObject) {
-        let bareJidto: String = (historyMessage.attribute(forName: "to")?.stringValue)!
         
-        
-        
-        
-        let recipientID = (recipient?.jidStr)!
-        
-        debugPrint("ID TO \(bareJidto) __ RECIPENT ID \(recipientID)")
-        
-        
-        if (!(bareJidto == recipientID))
-        {
         EazeMessage.sharedInstance.xmppMessageStorage?.archiveMessage(historyMessage, outgoing: false, xmppStream: EazeChat.sharedInstance.xmppStream)
+        
+        if historyMessage.isChatMessageWithBody() {
+            let displayName = user.displayName
             
-            if historyMessage.isChatMessageWithBody() {
-                let displayName = user.displayName
-                
-                JSQSystemSoundPlayer.jsq_playMessageReceivedSound()
-                
-                if let msg: String = historyMessage.forName("body")?.stringValue {
-                    if let from: String = historyMessage.attribute(forName: "from")?.stringValue {
-                        let fullMessage = JSQMessage(senderId: from, senderDisplayName: displayName, date: NSDate() as Date!, text: msg)
-                        
-                        messages.add(fullMessage!)
-                        self.finishSendingMessage(animated: true)
-                    }
-                }
-            }
-        }
-        if (bareJidto == recipientID)
-        {
-         EazeMessage.sharedInstance.xmppMessageStorage?.archiveMessage(historyMessage, outgoing: true, xmppStream: EazeChat.sharedInstance.xmppStream)
+            JSQSystemSoundPlayer.jsq_playMessageReceivedSound()
             
-            
-            if historyMessage.isChatMessageWithBody() {
-                let displayName = user.displayName
-                
-                debugPrint("**SENT History Message Recieved")
-                JSQSystemSoundPlayer.jsq_playMessageSentSound()
+            if let msg: String = historyMessage.forName("body")?.stringValue {
+                if let from: String = historyMessage.attribute(forName: "from")?.stringValue {
+                    let message = JSQMessage(senderId: from, senderDisplayName: displayName, date: NSDate() as Date!, text: msg)
+                    messages.add(message!)
                     
-                 if let msg: String = historyMessage.forName("body")?.stringValue    {
-            let fullMessage = JSQMessage(senderId: EazeChat.sharedInstance.xmppStream?.myJID.bare(), senderDisplayName: EazeChat.sharedInstance.xmppStream?.myJID.bare(), date: Date(), text: msg)
-                    messages.add(fullMessage!)
-            self.finishSendingMessage(animated: true)
-                }
-        }
-        }
-        
-        
-    
-    }
-    func EazeStream(sender: XMPPStream, didReceiveMessage message: XMPPMessage, from user: XMPPUserCoreDataStorageObject) {
-            if message.isChatMessageWithBody() {
-                let displayName = user.displayName
-                
-                JSQSystemSoundPlayer.jsq_playMessageReceivedSound()
-                
-                if let msg: String = message.forName("body")?.stringValue {
-                    if let from: String = message.attribute(forName: "from")?.stringValue {
-                        let message = JSQMessage(senderId: from, senderDisplayName: displayName, date: NSDate() as Date!, text: msg)
-                        messages.add(message!)
-                        
-                        self.finishReceivingMessage(animated: true)
-                    }
+                    self.finishReceivingMessage(animated: true)
                 }
             }
         }
-
-    func EazeStream(sender: XMPPStream, userIsComposing user: XMPPUserCoreDataStorageObject) {
-            self.showTypingIndicator = !self.showTypingIndicator
-            self.scrollToBottom(animated: true)
+    }
+    
+    
+    func EazeStream(sender: XMPPStream, didSendHistoryMessage historyMessage: XMPPMessage) {
+        
+        EazeMessage.sharedInstance.xmppMessageStorage?.archiveMessage(historyMessage, outgoing: true, xmppStream: EazeChat.sharedInstance.xmppStream)
+        
+        
+        if historyMessage.isChatMessageWithBody() {
+            JSQSystemSoundPlayer.jsq_playMessageSentSound()
+            if let text: String = historyMessage.forName("body")?.stringValue {
+                let fullMessage = JSQMessage(senderId: EazeChat.sharedInstance.xmppStream?.myJID.bare(), senderDisplayName: EazeChat.sharedInstance.xmppStream?.myJID.bare(), date: Date(), text: text)
+                messages.add(fullMessage!)
+                self.finishSendingMessage(animated: true)
+            }
         }
-
+        
+    }
+    
+    
+    
+    
+    func EazeStream(sender: XMPPStream, didReceiveMessage message: XMPPMessage, from user: XMPPUserCoreDataStorageObject) {
+        if message.isChatMessageWithBody() {
+            let displayName = user.displayName
+            
+            JSQSystemSoundPlayer.jsq_playMessageReceivedSound()
+            
+            if let msg: String = message.forName("body")?.stringValue {
+                if let from: String = message.attribute(forName: "from")?.stringValue {
+                    let message = JSQMessage(senderId: from, senderDisplayName: displayName, date: NSDate() as Date!, text: msg)
+                    messages.add(message!)
+                    
+                    self.finishReceivingMessage(animated: true)
+                }
+            }
+        }
+    }
+    
+    func EazeStream(sender: XMPPStream, userIsComposing user: XMPPUserCoreDataStorageObject) {
+        self.showTypingIndicator = !self.showTypingIndicator
+        self.scrollToBottom(animated: true)
+    }
+    
     // Mark: Memory Management
     override func didReceiveMemoryWarning() {
-            super.didReceiveMemoryWarning()
-            // Dispose of any resources that can be recreated.
-        }
-
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+    
 }
 

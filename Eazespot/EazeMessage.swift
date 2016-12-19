@@ -16,6 +16,7 @@ public typealias EazeChatMessageCompletionHandler = (_ stream: XMPPStream, _ mes
 
 public protocol EazeMessageDelegate {
     func EazeStream(sender: XMPPStream, didReceiveHistoryMessage historyMessage: XMPPMessage, from user: XMPPUserCoreDataStorageObject)
+    func EazeStream(sender: XMPPStream, didSendHistoryMessage historyMessage: XMPPMessage)
     
     func EazeStream(sender: XMPPStream, didReceiveMessage message: XMPPMessage, from user: XMPPUserCoreDataStorageObject)
     func EazeStream(sender: XMPPStream, userIsComposing user: XMPPUserCoreDataStorageObject)
@@ -46,16 +47,17 @@ public class EazeMessage: NSObject {
     
     func setupArchiving() {
         
-     
+        
         xmppMessageStorage = XMPPMessageArchivingCoreDataStorage.sharedInstance()
         xmppMessageArchiving = XMPPMessageArchiving(messageArchivingStorage: xmppMessageStorage)
+
         
         xmppMessageArchiving?.clientSideMessageArchivingOnly = true
         xmppMessageArchiving?.activate(EazeChat.sharedInstance.xmppStream)
         xmppMessageArchiving?.addDelegate(self, delegateQueue: DispatchQueue.main)
         
     }
-
+    
     
     // MARK: public methods
     
@@ -64,9 +66,9 @@ public class EazeMessage: NSObject {
         let body = DDXMLElement.element(withName: "body") as! DDXMLElement
         let messageID = EazeChat.sharedInstance.xmppStream?.generateUUID()
         
-//        body.setXmlns(message)
+        //        body.setXmlns(message)
         body.stringValue = message
-    
+        
         let completeMessage = DDXMLElement.element(withName: "message") as! DDXMLElement
         
         completeMessage.addAttribute(withName: "id", stringValue: messageID!)
@@ -175,23 +177,28 @@ public class EazeMessage: NSObject {
         do {
             let results = try moc?.fetch(request)
             
-            for message in results! {
-                var message = message as! XMPPMessageArchiving_Message_CoreDataObject
-                if (message == nil || results?.count == 0){
-                     debugPrint("** messageCoreData Is Empty For  \(jid)")
-                    return true
-                }
-                else {
-                    return false
-                }
-                
+            if (results?.count == 0){
+                debugPrint("** messageCoreData Is Empty For  \(jid)")
+                return true
             }
+                /*
+                 for message in results! {
+                 var message = message as! XMPPMessageArchiving_Message_CoreDataObject
+                 if (message == nil || results?.count == 0){
+                 debugPrint("** messageCoreData Is Empty For  \(jid)")
+                 return true
+                 }*/
+            else {
+                return false
+            }
+            
+            //}
         } catch _ {
             //catch fetch error here
         }
         return false
     }
-
+    
     public func deleteMessagesFrom(jid: String, messages: NSArray) {
         messages.enumerateObjects({ (Message, idx, stop) -> Void in
             let moc = self.xmppMessageStorage?.mainThreadManagedObjectContext
@@ -225,27 +232,27 @@ public class EazeMessage: NSObject {
         })
     }
     public func deleteMessages() {
-            let moc = self.xmppMessageStorage?.mainThreadManagedObjectContext
-            let entityDescription = NSEntityDescription.entity(forEntityName: "XMPPMessageArchiving_Message_CoreDataObject", in: moc!)
-            let request = NSFetchRequest<NSFetchRequestResult>()
-            request.entity = entityDescription
-            let deleteRequest = NSBatchDeleteRequest(fetchRequest: request)
+        let moc = self.xmppMessageStorage?.mainThreadManagedObjectContext
+        let entityDescription = NSEntityDescription.entity(forEntityName: "XMPPMessageArchiving_Message_CoreDataObject", in: moc!)
+        let request = NSFetchRequest<NSFetchRequestResult>()
+        request.entity = entityDescription
+        let deleteRequest = NSBatchDeleteRequest(fetchRequest: request)
+        
+        do {
+            try moc?.execute(deleteRequest)
             
-            do {
-                try moc?.execute(deleteRequest)
-            
-            } catch _ {
-                //catch fetch error here
-            }
-            do {
+        } catch _ {
+            //catch fetch error here
+        }
+        do {
             try moc?.save()
-            } catch _ {
-            }
-    
+        } catch _ {
+        }
+        
     }
-
     
-
+    
+    
     
     
 }
@@ -253,36 +260,36 @@ public class EazeMessage: NSObject {
 
 
 extension EazeMessage: XMPPMessageArchiveManagementDelegate{
-  
+    
     public func xmppMessageArchiveManagement(_ xmppMessageArchiveManagement: XMPPMessageArchiveManagement!, didFinishReceivingMessagesWith resultSet: XMPPResultSet!) {
         
         debugPrint("FInished Receiving messages with resultset\(resultSet) ")
-    
+        
     }
     
     public func xmppMessageArchiveManagement(_ xmppMessageArchiveManagement: XMPPMessageArchiveManagement!, didReceiveMAMMessage message: XMPPMessage!) {
         debugPrint("FInished Receiving messages with message\(message) ")
-    
-    
+        
+        
     }
     
     public func xmppMessageArchiveManagement(_ xmppMessageArchiveManagement: XMPPMessageArchiveManagement!, didFailToReceiveMessages error: XMPPIQ!) {
-    
+        
         debugPrint("Failed Receiving messages with message\(error) ")
-
-    
+        
+        
     }
     
     
     public func xmppMessageArchiveManagement(_ xmppMessageArchiveManagement: XMPPMessageArchiveManagement!, didReceiveFormFields iq: XMPPIQ!) {
-    
+        
         debugPrint("FInished Receiving fromFields with result ::: \(iq) ")
-
-    
+        
+        
     }
     
     public func xmppMessageArchiveManagement(_ xmppMessageArchiveManagement: XMPPMessageArchiveManagement!, didFailToReceiveFormFields iq: XMPPIQ!) {
-    
+        
         debugPrint("Failed Receiving fromFields with result ::: \(iq) ")
     }
     
@@ -296,67 +303,89 @@ extension EazeMessage: XMPPStreamDelegate {
         if let completion = EazeMessage.sharedInstance.didSendMessageCompletionBlock {
             debugPrint("Message was sent")
             completion(sender, message)
+            
         }
+        
+        
+        
         //EazeMessage.sharedInstance.didSendMessageCompletionBlock!(stream: sender, message: message)
     }
     
     public func xmppStream(_ sender: XMPPStream!, didReceive message: XMPPMessage!) {
-       
-        var results = message.elements(forXmlns: "urn:xmpp:mam:1")
         
+        
+        // for fetching history
+        
+        var results = message.elements(forXmlns: "urn:xmpp:mam:1")
         for result in results! {
             let result = result as! DDXMLElement
-            debugPrint("Message Recieved*** \(result)")
+            
             let forwarded = result.elements(forXmlns: "urn:xmpp:forward:0")
-
+            
             for messageResultss in forwarded! {
                 let messageResultss = messageResultss as! DDXMLElement
                 let messageResults = messageResultss.elements(forName: "message")
-
+                
                 for messageResult in messageResults {
                     let messageResult = messageResult as! DDXMLElement
-                
-                let historyMessage = XMPPMessage(from: messageResult)
-                let historyUser = EazeChat.sharedInstance.xmppRosterStorage.user(for: historyMessage?.from(), xmppStream: EazeChat.sharedInstance.xmppStream, managedObjectContext: EazeRoster.sharedInstance.managedObjectContext_roster())
-                if let historyUser = historyUser {
-                    if !EazeChats.knownUserForJid(jidStr: (historyUser.jidStr)!) {
-                        EazeChats.addUserToChatList(jidStr: (historyUser.jidStr)!)
-                    }
-                    if (historyMessage?.isChatMessageWithBody())! {
-                        EazeMessage.sharedInstance.delegate?.EazeStream(sender: sender, didReceiveHistoryMessage: historyMessage!, from: historyUser)
+                    
+                    let historyMessage = XMPPMessage(from: messageResult)
+                    debugPrint("History Message Recieved*** \(historyMessage) -- FROM \(historyMessage?.from()) ")
+                    
+                    var jidTo: String = (historyMessage?.to().bare())!
+                    
+                    // for sentHistory Messaged
+                    if (jidTo != (EazeChat.sharedInstance.xmppStream?.myJID.bare())!) {
+                        
+                        if (historyMessage?.isChatMessageWithBody())! {
+                            EazeMessage.sharedInstance.delegate?.EazeStream(sender: sender, didSendHistoryMessage: historyMessage!)
                         }
+                        
+                    }
+                    
+                    // for receivedHistory Messaged
+                    let historyUser = EazeChat.sharedInstance.xmppRosterStorage.user(for: historyMessage?.from(), xmppStream: EazeChat.sharedInstance.xmppStream, managedObjectContext: EazeRoster.sharedInstance.managedObjectContext_roster())
+                    if let historyUser = historyUser {
+                        if !EazeChats.knownUserForJid(jidStr: (historyUser.jidStr)!) {
+                            EazeChats.addUserToChatList(jidStr: (historyUser.jidStr)!)
+                        }
+                        if (historyMessage?.isChatMessageWithBody())! {
+                            EazeMessage.sharedInstance.delegate?.EazeStream(sender: sender, didReceiveHistoryMessage: historyMessage!, from: historyUser)
+                        }
+                    }
+                    
                 }
-
-                }
-          
+                
             }
-   /*
-        var forwarded = result.hasForwardedStanza()
-        var queryID = result.attribute(forName: "queryid")?.stringValue */
+            /*
+             var forwarded = result.hasForwardedStanza()
+             var queryID = result.attribute(forName: "queryid")?.stringValue
+             */
+            
         }
         
         
-        
+        //for Real time messages recieved
         
         let user = EazeChat.sharedInstance.xmppRosterStorage.user(for: message.from(), xmppStream: EazeChat.sharedInstance.xmppStream, managedObjectContext: EazeRoster.sharedInstance.managedObjectContext_roster())
         
         if let user = user {
-        if !EazeChats.knownUserForJid(jidStr: (user.jidStr)!) {
-            EazeChats.addUserToChatList(jidStr: (user.jidStr)!)
-        }
-        
-        if message.isChatMessageWithBody() {
-            debugPrint("RRR::: \(message)")
-            EazeMessage.sharedInstance.delegate?.EazeStream(sender: sender, didReceiveMessage: message, from: user)
-        } else {
-            //was composing
-            if let _ = message.forName("composing") {
-                EazeMessage.sharedInstance.delegate?.EazeStream(sender: sender, userIsComposing: user)
+            if !EazeChats.knownUserForJid(jidStr: (user.jidStr)!) {
+                EazeChats.addUserToChatList(jidStr: (user.jidStr)!)
+            }
+            
+            if message.isChatMessageWithBody() {
+                debugPrint("RRR::: \(message) from \(message.from())")
+                EazeMessage.sharedInstance.delegate?.EazeStream(sender: sender, didReceiveMessage: message, from: user)
+            } else {
+                //was composing
+                if let _ = message.forName("composing") {
+                    EazeMessage.sharedInstance.delegate?.EazeStream(sender: sender, userIsComposing: user)
+                }
             }
         }
     }
-}
     
     
-   
+    
 }

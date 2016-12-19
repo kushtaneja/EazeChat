@@ -96,6 +96,15 @@ public class EazeRoster: NSObject, NSFetchedResultsControllerDelegate {
         }
     }
     public class func removeUsers() {
+        let users = sharedInstance.fetchedResultsController()!.fetchedObjects
+        for user in users! {
+            let user = user as! XMPPUserCoreDataStorageObject
+            sharedInstance.fetchedResultsController()?.managedObjectContext.delete(user)
+        }
+        
+    
+
+        /*
         let moc = EazeRoster.sharedInstance.managedObjectContext_roster() as NSManagedObjectContext?
         let entityDescription = NSEntityDescription.entity(forEntityName: "XMPPUserCoreDataStorageObject", in: moc!)
         let request = NSFetchRequest<NSFetchRequestResult>()
@@ -109,6 +118,7 @@ public class EazeRoster: NSObject, NSFetchedResultsControllerDelegate {
             //catch fetch error here
         }
         
+        */
           }
     
 

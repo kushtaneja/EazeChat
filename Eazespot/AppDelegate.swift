@@ -74,16 +74,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
         {
             if (UserDefaults.standard.value(forKey: "logout") as! Bool) {
                 
-                debugPrint("LOGIN == TRUE")
                 
                 self.window?.rootViewController = loginScreen
                 
             }
             else if (!(UserDefaults.standard.value(forKey: "logout") as! Bool))
             {
-                debugPrint("LOGIN == FALSE")
+                
                 EazeChat.start(delegate: nil)
                 EazeChat.setupArchiving(archiving: true)
+                
                 self.window?.rootViewController = ChatFriendListPageMenuNavigationScreen
                 
             }
