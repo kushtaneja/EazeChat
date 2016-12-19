@@ -100,8 +100,16 @@ public class EazeRoster: NSObject, NSFetchedResultsControllerDelegate {
         for user in users! {
             let user = user as! XMPPUserCoreDataStorageObject
             sharedInstance.fetchedResultsController()?.managedObjectContext.delete(user)
+           
         }
         
+        do {
+            try sharedInstance.fetchedResultsController()?.managedObjectContext.save()
+        }
+            
+        catch _ {
+            
+        }
     
 
         /*

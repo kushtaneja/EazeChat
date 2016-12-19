@@ -39,6 +39,8 @@ extension UIStoryboard {
 
 }
 extension Date {
+    
+    
     init?(jsonDate: String) {
         let scanner = Scanner(string: jsonDate)
         
@@ -68,6 +70,7 @@ extension Date {
     struct Formatter {
         static let iso8601: DateFormatter = {
             let formatter = DateFormatter()
+            
             formatter.calendar = Calendar(identifier: .iso8601)
            formatter.locale = Locale(identifier: "en_US_POSIX")
             formatter.timeZone = TimeZone(abbreviation: "local")
@@ -80,6 +83,53 @@ extension Date {
         
         return Formatter.iso8601.string(from: self)
     }
+    
+    struct Formatters {
+        
+        static let custom: DateFormatter = {
+            let formatter = DateFormatter()
+            return formatter
+        }()
+        static let date:DateFormatter = {
+            let formatter = DateFormatter()
+            formatter.dateFormat = "yyyy-MM-dd"
+            return formatter
+        }()
+        static let time:DateFormatter = {
+            let formatter = DateFormatter()
+            formatter.dateFormat = "HH:mm"
+            return formatter
+        }()
+        static let weekday: DateFormatter = {
+            let formatter = DateFormatter()
+            formatter.dateFormat = "cccc"
+            return formatter
+        }()
+        static let month: DateFormatter = {
+            let formatter = DateFormatter()
+            formatter.dateFormat = "LLLL"
+            return formatter
+        }()
+    }
+    var date: String {
+        return Formatters.date.string(from: self)
+    }
+    var time: String {
+        return Formatters.time.string(from: self)
+    }
+    var weekdayName: String {
+        return Formatters.weekday.string(from: self)
+    }
+    var monthName: String {
+        return Formatters.month.string(from: self)
+    }
+    func formatted(with dateFormat: String) -> String {
+        Formatters.custom.dateFormat = dateFormat
+        return Formatters.custom.string(from: self)
+    }
+    
+    
+    
 }
 
 
@@ -104,5 +154,11 @@ extension String {
     }
     var dateFromISO8601: Date? {
         return Date.Formatter.iso8601.date(from: self)
+    }
+    
+    
+    func toDateFormatted(with dateFormat:String)-> Date? {
+        Date.Formatters.custom.dateFormat = dateFormat
+        return Date.Formatters.custom.date(from: self)
     }
 }

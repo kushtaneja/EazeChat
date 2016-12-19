@@ -39,7 +39,7 @@ class TeamSelectionViewController: UIViewController,UIPickerViewDelegate,UIPicke
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         return companysArray.count
     }
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String!{
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String?{
         return  "\(companysArray[row].company_name)"
         
     }
@@ -69,7 +69,7 @@ class TeamSelectionViewController: UIViewController,UIPickerViewDelegate,UIPicke
     
     
     func loginCall(email:String, password: String, company_id: Int){
-        let params: [String:Any] = ["username": email as! String,"password": password as! String, "company": company_id as! Int]
+        let params: [String:Any] = ["username": email ,"password": password , "company": company_id]
         
         LoginService().loginCall(self.view, params: params, onSuccess: {(data: JSON) in
             
@@ -80,9 +80,10 @@ class TeamSelectionViewController: UIViewController,UIPickerViewDelegate,UIPicke
                 if ((UserDefaults.standard.value(forKey: "user_id") as! String) == user_id ) {
                 }
                 else {
+                    EazeChat.sharedInstance.disconnect()
 //                   EazeMessage.sharedInstance.deleteMessages()
-                  EazeRoster.removeUsers()
-                  EazeChat.sharedInstance.disconnect()
+                    EazeRoster.removeUsers()
+                    
                     self.setValue(value: user_id, forKey: "user_id")
                    
                 }
@@ -102,11 +103,7 @@ class TeamSelectionViewController: UIViewController,UIPickerViewDelegate,UIPicke
             self.setValue(value: self.userChatId + "@chat.eazespot.com", forKey: kXMPP.myJID)
             self.setValue(value: self.userChatPassword, forKey: kXMPP.myPassword)
             
-            Utils().delay(2.0, closure: { 
-                EazeChat.sharedInstance.connect()
-
-            })
-           
+            EazeChat.sharedInstance.connect()
             
             ProfileService().profCall(self.view, params: [:], onSuccess: {(profdata: JSON) in
                 

@@ -186,14 +186,12 @@ class LoginViewController: UIViewController,UITextFieldDelegate, UIScrollViewDel
                         
                     }
                     else {
-                        
+                        EazeChat.sharedInstance.disconnect()
 //                   EazeMessage.sharedInstance.deleteMessages()
                         EazeRoster.removeUsers()
-                        EazeChat.sharedInstance.disconnect()
-                                                
-
                         
-                       
+                                                
+                      
                         self.setValue(value: user_id, forKey: "user_id")
                         
                     }
@@ -220,12 +218,8 @@ class LoginViewController: UIViewController,UITextFieldDelegate, UIScrollViewDel
                 self.setValue(value: jwt_token, forKey: "JWT_key")
                 self.setValue(value: profUrl, forKey: "profileURL")
                 
-                Utils().delay(2.0, closure: { 
-                     EazeChat.sharedInstance.connect()
-                })
+                EazeChat.sharedInstance.connect()
                
-
-                
                 ProfileService().profCall(self.view, params: [:], onSuccess: {(profdata: JSON) in
                     let firstname = profdata["user"]["first_name"].stringValue
                     let lastname = profdata["user"]["last_name"].stringValue

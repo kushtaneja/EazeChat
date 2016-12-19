@@ -15,8 +15,8 @@ public typealias EazeChatMessageCompletionHandler = (_ stream: XMPPStream, _ mes
 // MARK: Protocols
 
 public protocol EazeMessageDelegate {
-    func EazeStream(sender: XMPPStream, didReceiveHistoryMessage historyMessage: XMPPMessage, from user: XMPPUserCoreDataStorageObject)
-    func EazeStream(sender: XMPPStream, didSendHistoryMessage historyMessage: XMPPMessage)
+    func EazeStream(sender: XMPPStream, didReceiveHistoryMessage historyMessage: XMPPMessage, from user: XMPPUserCoreDataStorageObject,on date: Date)
+    func EazeStream(sender: XMPPStream, didSendHistoryMessage historyMessage: XMPPMessage,on date: Date)
     
     func EazeStream(sender: XMPPStream, didReceiveMessage message: XMPPMessage, from user: XMPPUserCoreDataStorageObject)
     func EazeStream(sender: XMPPStream, userIsComposing user: XMPPUserCoreDataStorageObject)
@@ -324,13 +324,23 @@ extension EazeMessage: XMPPStreamDelegate {
             
             for messageResultss in forwarded! {
                 let messageResultss = messageResultss as! DDXMLElement
-                let messageResults = messageResultss.elements(forName: "message")
                 
+                var timeStamp: String?
+                
+                let timeResults = messageResultss.elements(forXmlns: "urn:xmpp:delay")
+                for timestamp in timeResults! {
+                            let timestamp = timestamp as! DDXMLElement
+                            timeStamp = timestamp.attribute(forName: "stamp")?.stringValue
+                    
+                let messageResults = messageResultss.elements(forName: "message")
                 for messageResult in messageResults {
                     let messageResult = messageResult as! DDXMLElement
-                    
+                  
+
+                    let date = timeStamp?.toDateFormatted(with: "yyyy-MM-dd'T'HH:mm:ss.SSSSSS'Z'")
+
                     let historyMessage = XMPPMessage(from: messageResult)
-                    debugPrint("History Message Recieved*** \(historyMessage) -- FROM \(historyMessage?.from()) ")
+                    debugPrint("History Message Recieved*** \(historyMessage) -- AT \(timeStamp) -- on  DATE \(date)")
                     
                     var jidTo: String = (historyMessage?.to().bare())!
                     
@@ -338,7 +348,7 @@ extension EazeMessage: XMPPStreamDelegate {
                     if (jidTo != (EazeChat.sharedInstance.xmppStream?.myJID.bare())!) {
                         
                         if (historyMessage?.isChatMessageWithBody())! {
-                            EazeMessage.sharedInstance.delegate?.EazeStream(sender: sender, didSendHistoryMessage: historyMessage!)
+                            EazeMessage.sharedInstance.delegate?.EazeStream(sender: sender, didSendHistoryMessage: historyMessage!,on: date!)
                         }
                         
                     }
@@ -350,10 +360,12 @@ extension EazeMessage: XMPPStreamDelegate {
                             EazeChats.addUserToChatList(jidStr: (historyUser.jidStr)!)
                         }
                         if (historyMessage?.isChatMessageWithBody())! {
-                            EazeMessage.sharedInstance.delegate?.EazeStream(sender: sender, didReceiveHistoryMessage: historyMessage!, from: historyUser)
+                            EazeMessage.sharedInstance.delegate?.EazeStream(sender: sender, didReceiveHistoryMessage: historyMessage!, from: historyUser,on: date!)
                         }
                     }
                     
+                }
+                
                 }
                 
             }
