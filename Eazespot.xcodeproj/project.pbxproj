@@ -473,7 +473,7 @@
 				TargetAttributes = {
 					435E8B331DF029B4003D3F63 = {
 						CreatedOnToolsVersion = 8.1;
-						DevelopmentTeam = JTK792GD3V;
+						DevelopmentTeam = 2B4X6X3467;
 						ProvisioningStyle = Automatic;
 					};
 					435E8B4A1DF029B5003D3F63 = {
@@ -781,8 +781,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Abhishek Negi (42R8X8NT5P)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = JTK792GD3V;
+				DEVELOPMENT_TEAM = 2B4X6X3467;
 				INFOPLIST_FILE = Eazespot/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = app.eazespot.com;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -797,8 +798,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Abhishek Negi (42R8X8NT5P)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = JTK792GD3V;
+				DEVELOPMENT_TEAM = 2B4X6X3467;
 				INFOPLIST_FILE = Eazespot/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = app.eazespot.com;
 				PRODUCT_NAME = "$(TARGET_NAME)";
