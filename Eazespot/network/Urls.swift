@@ -10,13 +10,24 @@ class Urls {
         return "\(serverUrlV1)login/"
     }
     
+    func getProfile(company_id: String, user_id: String ) -> String {
+        return "\(serverUrlV1)company/\(company_id)/user/\(user_id)/"
+    }
+    
+    func forgotPassword()->String{
+        return "\(serverUrlV1)forgetpassword/"
+    }
+    
+    
+    
+    
+    
+    
     func signUp() -> String{
         return "\(serverUrlV1)users/"
     }
     
-    func forgotPassword()->String{
-        return "\(serverUrl)password/forgot/"
-    }
+    
     
     func socialLogin() -> String{
         return"\(serverUrlV1)social/signin/"

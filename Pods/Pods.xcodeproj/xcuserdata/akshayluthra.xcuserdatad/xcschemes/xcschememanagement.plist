@@ -44,6 +44,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>SVPullToRefresh.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>SWXMLHash.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -57,17 +62,17 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>400E76DDC1FACA2F5FFD356E0CB2E65F</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
 		<key>416B388906DEFAC81F0676F277AC9058</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>56FFA66BBC29834407031FA7842919A9</key>
+		<key>5486B9A2D256F563251F91ABFDC11182</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>7B94D2F70F30C5F55AC609C2F6339E4F</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -82,7 +87,7 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>96D0652E64E76980F9B40BC2F8B08E56</key>
+		<key>AAA58C5B7D67965CE22EC8E6B942B056</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -97,12 +102,17 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>CB6DD18957AC8B9709C09E65C0B14889</key>
+		<key>C8528CCC9B904ED9889EADA163689DA7</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
 		<key>D0581AF7BF4A6DA140D280B19ECC7BFF</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>DF0819F5C19744CEF9EFFD0A326C3635</key>
 		<dict>
 			<key>primary</key>
 			<true/>

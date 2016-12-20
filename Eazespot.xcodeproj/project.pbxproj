@@ -51,6 +51,8 @@
 		43E2B8241DF1872B00F791B5 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43E2B8231DF1872B00F791B5 /* Extensions.swift */; };
 		43E2B8261DF1927700F791B5 /* Company.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43E2B8251DF1927700F791B5 /* Company.swift */; };
 		43E2B8281DF19A1E00F791B5 /* UserChatCredentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43E2B8271DF19A1E00F791B5 /* UserChatCredentials.swift */; };
+		6F0B5B4B1E093B220035A2C6 /* ResetPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F0B5B4A1E093B220035A2C6 /* ResetPasswordViewController.swift */; };
+		6F0B5B4D1E093D460035A2C6 /* ForgotPasswordService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F0B5B4C1E093D460035A2C6 /* ForgotPasswordService.swift */; };
 		F1222B7B61BF1130AB346C08 /* Pods_Eazespot.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 949A8CB5748D9837E3008E2F /* Pods_Eazespot.framework */; };
 /* End PBXBuildFile section */
 
@@ -123,6 +125,8 @@
 		43E2B8251DF1927700F791B5 /* Company.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Company.swift; sourceTree = "<group>"; };
 		43E2B8271DF19A1E00F791B5 /* UserChatCredentials.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserChatCredentials.swift; sourceTree = "<group>"; };
 		4B6C78EFF868E31505E7641E /* Pods-Eazespot.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Eazespot.release.xcconfig"; path = "Pods/Target Support Files/Pods-Eazespot/Pods-Eazespot.release.xcconfig"; sourceTree = "<group>"; };
+		6F0B5B4A1E093B220035A2C6 /* ResetPasswordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResetPasswordViewController.swift; sourceTree = "<group>"; };
+		6F0B5B4C1E093D460035A2C6 /* ForgotPasswordService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForgotPasswordService.swift; sourceTree = "<group>"; };
 		949A8CB5748D9837E3008E2F /* Pods_Eazespot.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Eazespot.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE8A18A85531C075AA3E097E /* Pods-Eazespot.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Eazespot.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Eazespot/Pods-Eazespot.debug.xcconfig"; sourceTree = "<group>"; };
 		F4C39BAB0BFA6E846A2599C3 /* Pods_EazespotTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_EazespotTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -297,18 +301,19 @@
 			children = (
 				43AA9E1D1DFAAD6400C1876E /* XMPPServices */,
 				43AA9E1C1DFAAD4C00C1876E /* Classes */,
-				435E8B7D1DF033ED003D3F63 /* LogiAndSignUp */,
+				435E8B7D1DF033ED003D3F63 /* LoginAndSignUp */,
 			);
 			name = Services;
 			sourceTree = "<group>";
 		};
-		435E8B7D1DF033ED003D3F63 /* LogiAndSignUp */ = {
+		435E8B7D1DF033ED003D3F63 /* LoginAndSignUp */ = {
 			isa = PBXGroup;
 			children = (
 				435E8B7B1DF03338003D3F63 /* LoginService.swift */,
 				43D5498C1DF9949100138473 /* ProfileService.swift */,
+				6F0B5B4C1E093D460035A2C6 /* ForgotPasswordService.swift */,
 			);
-			name = LogiAndSignUp;
+			name = LoginAndSignUp;
 			sourceTree = "<group>";
 		};
 		435E8B801DF0479E003D3F63 /* ActivityIndicator */ = {
@@ -348,6 +353,7 @@
 				43E2B81D1DF15F1000F791B5 /* TeamSelectionViewController.swift */,
 				43C5539B1E0165AE00A06201 /* LoginViewController.swift */,
 				43D5498A1DF98B6F00138473 /* UserProfileDisplayViewController.swift */,
+				6F0B5B4A1E093B220035A2C6 /* ResetPasswordViewController.swift */,
 			);
 			name = LoginAndSignUp;
 			sourceTree = "<group>";
@@ -610,6 +616,7 @@
 				43E2B81E1DF15F1000F791B5 /* TeamSelectionViewController.swift in Sources */,
 				4326AF291E07F1730043188E /* TextFieldsEffects.swift in Sources */,
 				43D549891DF9468600138473 /* NewPrivateChatTableViewController.swift in Sources */,
+				6F0B5B4D1E093D460035A2C6 /* ForgotPasswordService.swift in Sources */,
 				435E8B891DF04868003D3F63 /* DeviceSizes.swift in Sources */,
 				43AA9E291DFAAEA200C1876E /* EazeMessage.swift in Sources */,
 				43AA9E311DFB5C5900C1876E /* ChatRoomViewController.swift in Sources */,
@@ -631,6 +638,7 @@
 				4326AF2A1E07F1730043188E /* HoshiTextField.swift in Sources */,
 				43AA9E231DFAAE5F00C1876E /* EazeRoster.swift in Sources */,
 				43C5539C1E0165AE00A06201 /* LoginViewController.swift in Sources */,
+				6F0B5B4B1E093B220035A2C6 /* ResetPasswordViewController.swift in Sources */,
 				431D4B421DFC893B00FD3702 /* ContactTableViewCell.swift in Sources */,
 				43AA9E271DFAAE9600C1876E /* EazePresence.swift in Sources */,
 				43D5498D1DF9949100138473 /* ProfileService.swift in Sources */,
@@ -801,7 +809,7 @@
 				INFOPLIST_FILE = Eazespot/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = app.eazespot.com;
+				PRODUCT_BUNDLE_IDENTIFIER = com.eazespot.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
@@ -818,7 +826,7 @@
 				INFOPLIST_FILE = Eazespot/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = app.eazespot.com;
+				PRODUCT_BUNDLE_IDENTIFIER = com.eazespot.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};

@@ -14,10 +14,10 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '7B94D2F70F30C5F55AC609C2F6339E4F'
-               BlueprintName = 'XMPPFramework'
+               BlueprintIdentifier = 'DF0819F5C19744CEF9EFFD0A326C3635'
+               BlueprintName = 'SVPullToRefresh'
                ReferencedContainer = 'container:Pods.xcodeproj'
-               BuildableName = 'XMPPFramework.framework'>
+               BuildableName = 'SVPullToRefresh.framework'>
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
