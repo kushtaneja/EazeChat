@@ -22,6 +22,8 @@ class ChatFriendListPageMenuViewController: UIViewController,CAPSPageMenuDelegat
         
         super.viewDidLoad()
         
+        
+        
         UserDefaults.standard.set(false, forKey: "logout")
         
         // Making Page View Controllers

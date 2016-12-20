@@ -166,9 +166,21 @@ extension EazeRoster: XMPPStreamDelegate {
     public func xmppStream(_ sender: XMPPStream!, didReceive iq: XMPPIQ!) -> Bool {
         
         print("Did receive \(iq!) from stream")
+        if iq.isResultIQ() {
+        let finElements = iq.elements(forXmlns: "urn:xmpp:mam:1")
+            for finElement in finElements! {
+                let finElement = finElement as! DDXMLElement
+                let sets = finElement.elements(forXmlns: "http://jabber.org/protocol/rsm")
+                for set in sets! {
+                    let set = set as! DDXMLElement
+                    let last = set.elements(forName: "last")
+                    debugPrint("Lasttt *** -- \(last)")
+                }
+            
+            }
+         
+        }
         
-        
- 
         return false
     }
 }

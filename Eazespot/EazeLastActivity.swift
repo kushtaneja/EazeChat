@@ -26,61 +26,91 @@ public class EazeLastActivity: NSObject {
     
     // MARK: Public Functions
     
-    public func getStringFormattedDateFrom(second: UInt) -> String {
+    public func getStringFormattedDateFrom(second: UInt) -> String{
         if second > 0 {
             let time = NSNumber(integerLiteral: Int(second))
             let interval = time.doubleValue
             let elapsedTime = Date(timeIntervalSince1970: interval)
+            
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "HH:mm:ss"
-            
-            return dateFormatter.string(from: elapsedTime)
+            let string = dateFormatter.string(from: elapsedTime)
+            return string
         } else {
             return ""
         }
     }
-    /*
-    public func getStringFormattedElapsedTimeFrom(date: NSDate!) -> String {
+    
+    public func getStringForNavigationBarFrom(seconds: UInt) -> String {
+        let time = NSNumber(integerLiteral: Int(seconds))
+        let interval = time.intValue
+        var lastSeen: String = ""
+        
+        switch interval {
+        case 0:
+            lastSeen = "now"
+        case 1..<60:
+            lastSeen = "\(interval) seconds ago"
+        case 60..<3600:
+            lastSeen = "\(Int(interval/60)) minutes ago"
+        case 3600..<86400:
+            lastSeen = "\(Int(interval/3600)) hours ago"
+            
+        default:
+            if (interval >= 86400) {
+                lastSeen = "\(Int(interval/86400)) days ago"
+            }
+        }
+        return "Active" + " " + lastSeen
+    
+    }
+    
+    
+    
+    
+    
+    public func getStringFormattedElapsedTimeFrom(date: Date!) -> String {
+        
         var elapsedTime = "nc"
-        let startDate = Date()
-        let compEazents = Calendar.current.dateComponents(Calendar.Component.day, from: date, to: startDate)
+        let compEazents = date!.daysFrom(Date())
+        
     
         
         if nil == date {
             return elapsedTime
         }
         
-        if 52 < compEazents.weekOfYear {
+        if 52 < compEazents.weekOfYear! {
             elapsedTime = "more than a year"
-        } else if 1 <= compEazents.weekOfYear {
-            if 1 < compEazents.weekOfYear {
-                elapsedTime = "\(compEazents.weekOfYear) weeks"
+        } else if 1 <= compEazents.weekOfYear! {
+            if 1 < compEazents.weekOfYear! {
+                elapsedTime = "\((compEazents.weekOfYear)!) weeks"
             } else {
-                elapsedTime = "\(compEazents.weekOfYear) week"
+                elapsedTime = "\((compEazents.weekOfYear)!) week"
             }
-        } else if 1 <= compEazents.day {
-            if 1 < compEazents.day {
-                elapsedTime = "\(compEazents.day) days"
+        } else if 1 <= compEazents.day! {
+            if 1 < compEazents.day!{
+                elapsedTime = "\((compEazents.day)!) days"
             } else {
-                elapsedTime = "\(compEazents.day) day"
+                elapsedTime = "\((compEazents.day)!) day"
             }
-        } else if 1 <= compEazents.hour {
-            if 1 < compEazents.hour {
-                elapsedTime = "\(compEazents.hour) hours"
+        } else if 1 <= compEazents.hour! {
+            if 1 < compEazents.hour! {
+                elapsedTime = "\((compEazents.hour)!) hours"
             } else {
-                elapsedTime = "\(compEazents.hour) hour"
+                elapsedTime = "\((compEazents.hour)!) hour"
             }
-        } else if 1 <= compEazents.minute {
-            if 1 < compEazents.minute {
-                elapsedTime = "\(compEazents.minute) minutes"
+        } else if 1 <= compEazents.minute! {
+            if 1 < compEazents.minute! {
+                elapsedTime = "\((compEazents.minute)!) minutes"
             } else {
-                elapsedTime = "\(compEazents.minute) minute"
+                elapsedTime = "\((compEazents.minute)!) minute"
             }
-        } else if 1 <= compEazents.second {
-            if 1 < compEazents.second {
-                elapsedTime = "\(compEazents.second) seconds"
+        } else if 1 <= compEazents.second!{
+            if 1 < compEazents.second! {
+                elapsedTime = "\((compEazents.second)!) seconds"
             } else {
-                elapsedTime = "\(compEazents.second) second"
+                elapsedTime = "\((compEazents.second)!) second"
             }
         } else {
             elapsedTime = "now"
@@ -88,11 +118,11 @@ public class EazeLastActivity: NSObject {
         
         return elapsedTime
     }
-    */
+
     public class func sendLastActivityQueryToJID(userName: String, sender: XMPPLastActivity? = nil, completionHandler completion:@escaping EazeMakeLastCallCompletionHandler) {
         sharedInstance.didMakeLastCallCompletionBlock = completion
         let userJID = XMPPJID(string: userName)
-        sender?.sendQuery(to: userJID)
+        _ = sender?.sendQuery(to: userJID)
     }
 }
 

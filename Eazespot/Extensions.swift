@@ -38,6 +38,8 @@ extension UIStoryboard {
 
 
 }
+
+
 extension Date {
     
     
@@ -128,7 +130,9 @@ extension Date {
         return Formatters.custom.string(from: self)
     }
     
-    
+    func daysFrom(_ date: Date) -> DateComponents{
+        return (Calendar.current as NSCalendar).components(.day, from: date, to: self, options: [])
+    }
     
 }
 
