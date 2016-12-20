@@ -201,7 +201,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, UIScrollViewDe
                 self.setValue(value: userChatId + "@chat.eazespot.com", forKey: kXMPP.myJID)
                 self.setValue(value: userChatPassword, forKey: kXMPP.myPassword)
                 
-                let company_id = data["company_id"].intValue
+                let company_id = data["company_id"].stringValue
                 let company_name = data["company_name"].stringValue
                 let jwt_token = data["key"].stringValue
                            

@@ -104,7 +104,9 @@ class TeamSelectionViewController: UIViewController,UIPickerViewDelegate,UIPicke
             
             EazeChat.sharedInstance.connect()
             
-            ProfileService().profileCall(self.view, params: [:], onSuccess: {(profdata: JSON) in
+            let params = ["company_id": String(self.selectedTeamId), "user_id": user_id] as [String : Any]
+            
+            ProfileService().profileCall(self.view, params: params, onSuccess: {(profdata: JSON) in
                 
                 let firstname = profdata["user"]["first_name"].stringValue
                 let lastname = profdata["user"]["last_name"].stringValue
