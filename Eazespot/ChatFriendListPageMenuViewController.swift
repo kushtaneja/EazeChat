@@ -137,7 +137,6 @@ class ChatFriendListPageMenuViewController: UIViewController,CAPSPageMenuDelegat
        
         let defaults = UserDefaults.standard
         defaults.removeObject(forKey: "JWT_key")
-        defaults.removeObject(forKey: "profileURL")
         defaults.removeObject(forKey: kXMPP.myJID)
         defaults.removeObject(forKey: kXMPP.myPassword)
         //UserDefaults.standard.removePersistentDomain(forName: Bundle.main.bundleIdentifier!)

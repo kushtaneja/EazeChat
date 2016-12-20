@@ -11,11 +11,15 @@ import UIKit
 
 class ProfileService {
     
-    func profCall(_ view: UIView, params: [String:Any],onSuccess: @escaping (_ parsedJSON: JSON) -> Void, failed:@escaping (_ errorCode: Int) -> Void){
+    func profileCall(_ view: UIView, params: [String:Any],onSuccess: @escaping (_ parsedJSON: JSON) -> Void, failed:@escaping (_ errorCode: Int) -> Void){
+        
+        let company_id = params["company_id"] as! String
+        let user_id = params["user_id"] as! String
+        
         ActivityIndicator.shared.showProgressView(uiView: view, text: "loading")
         
         if Reachability.isConnectedToNetwork(){
-            Network().sendGetRequest(Utils().checkNSUserDefault("profileURL"), params: params, completion: {(data: JSON) in onSuccess(data) }, failed: {(errorMsg: JSON) in self.handleFailureCases(errorMsg,view: view)
+            Network().sendGetRequest(Urls().getProfile(company_id: company_id, user_id: user_id), params: params, completion: {(data: JSON) in onSuccess(data) }, failed: {(errorMsg: JSON) in self.handleFailureCases(errorMsg,view: view)
             })
         }
         else {

@@ -17,6 +17,10 @@ extension UIStoryboard {
         return eazeSpotMainStoryboard().instantiateViewController(withIdentifier: "LoginViewController")
     }
     
+    class func resetPasswordScreen() -> ResetPasswordViewController? {
+        return eazeSpotMainStoryboard().instantiateViewController(withIdentifier: "ResetPasswordViewController") as? ResetPasswordViewController
+    }
+    
     class func teamSelectionScreen() -> UINavigationController {
         return (eazeSpotMainStoryboard().instantiateViewController(withIdentifier: "TeamSelectionNavigationController") as? UINavigationController)!
     }
@@ -160,5 +164,17 @@ extension String {
     func toDateFormatted(with dateFormat:String)-> Date? {
         Date.Formatters.custom.dateFormat = dateFormat
         return Date.Formatters.custom.date(from: self)
+    }
+}
+
+
+extension UIViewController {
+    func hideKeyboardWhenTappedAround() {
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(UIViewController.dismissKeyboard))
+        view.addGestureRecognizer(tap)
+    }
+    
+    func dismissKeyboard() {
+        view.endEditing(true)
     }
 }

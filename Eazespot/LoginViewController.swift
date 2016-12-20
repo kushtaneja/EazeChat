@@ -10,20 +10,22 @@ import UIKit
 import Alamofire
 import XMPPFramework
 
-class LoginViewController: UIViewController,UITextFieldDelegate, UIScrollViewDelegate{
+class LoginViewController: UIViewController, UITextFieldDelegate, UIScrollViewDelegate{
     
     @IBOutlet var passwordTextField: UITextField!
     @IBOutlet var emailTextField: UITextField!
-    
     @IBOutlet weak var passwordErrorLabel: UILabel!
     @IBOutlet weak var usernameErrorLabel: UILabel!
     @IBOutlet weak var scrollView: UIScrollView!
+    
     var activeField: UITextField?
     var companyArray = [Company]()
     let whitespaceSet =  Utils().returnWhiteSpaceCharacters()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.hideKeyboardWhenTappedAround()
         
         EazeChat.start(delegate: nil)
         EazeChat.setupArchiving(archiving: true)
@@ -37,6 +39,7 @@ class LoginViewController: UIViewController,UITextFieldDelegate, UIScrollViewDel
         emailTextField.tintColor = ColorCode().appThemeColor
         emailTextField.layer.borderColor = ColorCode().appThemeColor.cgColor
     }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
         
@@ -63,7 +66,7 @@ class LoginViewController: UIViewController,UITextFieldDelegate, UIScrollViewDel
             EazeChat.setupArchiving(archiving: true)
             
         }
- */
+        */
         
     }
     
@@ -75,6 +78,7 @@ class LoginViewController: UIViewController,UITextFieldDelegate, UIScrollViewDel
     
     override func viewWillAppear(_ animated:Bool) {
         super.viewWillAppear(animated)
+        
         passwordErrorLabel.text = ""
         usernameErrorLabel.text = ""
         passwordTextField.layer.borderWidth = CGFloat(integerLiteral: 1)
@@ -88,6 +92,7 @@ class LoginViewController: UIViewController,UITextFieldDelegate, UIScrollViewDel
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        
         stopNotification()
     }
     
@@ -125,8 +130,6 @@ class LoginViewController: UIViewController,UITextFieldDelegate, UIScrollViewDel
     
     
     
-    
-    
     @IBAction func loginButtonTapped(_ sender: UIButton) {
         disableTextFieldEditing()
         
@@ -134,32 +137,30 @@ class LoginViewController: UIViewController,UITextFieldDelegate, UIScrollViewDel
             self.usernameErrorLabel.text = ""
             self.passwordErrorLabel.text = ""
             loginCall(email: emailTextField.text!.trimmingCharacters(in: whitespaceSet as CharacterSet), password: passwordTextField.text!)
-            
-        }
-        else {
+        } else {
             switch wrongUsernameField() {
             case true:
                 showErrorMessage(emailTextField.placeholder!)
             case false:
                 removeErrorMessage(emailTextField.placeholder!)
             default:
-                showErrorMessage(emailTextField.placeholder!)
+                break
             }
+            
             switch wrongPasswordField() {
             case true:
                 showErrorMessage(passwordTextField.placeholder!)
             case false:
                 removeErrorMessage(passwordTextField.placeholder!)
             default:
-                showErrorMessage(passwordTextField.placeholder!)
+                break
             }
-            
         }
         
     }
     
     func loginCall(email:String, password: String){
-        let params: [String:Any] = ["username": email as! String,"password": password as! String]
+        let params: [String:Any] = ["username": email ,"password": password ]
         LoginService().loginCall(self.view, params: params, onSuccess: {(data: JSON) in
             if (data["login"] == false) {
                 self.companyArray = []
@@ -184,24 +185,16 @@ class LoginViewController: UIViewController,UITextFieldDelegate, UIScrollViewDel
                 {
                     if ((UserDefaults.standard.value(forKey: "user_id") as! String) == user_id ) {
                         
-                    }
-                    else {
+                    } else {
                         EazeChat.sharedInstance.disconnect()
-//                   EazeMessage.sharedInstance.deleteMessages()
+//                      EazeMessage.sharedInstance.deleteMessages()
                         EazeRoster.removeUsers()
                         
-                                                
-                      
                         self.setValue(value: user_id, forKey: "user_id")
-                        
                     }
-                    
-                }
-                else {
+                } else {
                     self.setValue(value: user_id, forKey: "user_id")
                 }
-                
-                
                 
                 let userChatId = (data["cid"].stringValue).fromBase64()
                 let userChatPassword = (data["cip"].stringValue).fromBase64()
@@ -211,16 +204,14 @@ class LoginViewController: UIViewController,UITextFieldDelegate, UIScrollViewDel
                 let company_id = data["company_id"].intValue
                 let company_name = data["company_name"].stringValue
                 let jwt_token = data["key"].stringValue
-                let profUrl = "https://api.eazespot.com/v1/company/\(company_id)/user/\(user_id)/"
-                
-           
-                
+                           
                 self.setValue(value: jwt_token, forKey: "JWT_key")
-                self.setValue(value: profUrl, forKey: "profileURL")
                 
                 EazeChat.sharedInstance.connect()
                
-                ProfileService().profCall(self.view, params: [:], onSuccess: {(profdata: JSON) in
+                let params = ["company_id": company_id, "user_id": user_id] as [String : Any]
+                
+                ProfileService().profileCall(self.view, params: params, onSuccess: {(profdata: JSON) in
                     let firstname = profdata["user"]["first_name"].stringValue
                     let lastname = profdata["user"]["last_name"].stringValue
                     let email = profdata["user"]["email"].stringValue
@@ -241,19 +232,6 @@ class LoginViewController: UIViewController,UITextFieldDelegate, UIScrollViewDel
         }, failed: {(errorCode: Int) in debugPrint("loginError")})
         
     }
-    func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?)
-    {
-        self.resignFirstResponder()
-    }
-    func disableTextFieldEditing() {
-        passwordTextField.resignFirstResponder()
-        emailTextField.resignFirstResponder()
-    }
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
-        return true
-    }
-    
     
     
     func wrongUsernameField()->Bool{
@@ -265,8 +243,8 @@ class LoginViewController: UIViewController,UITextFieldDelegate, UIScrollViewDel
             errorExists = false
         }
         return errorExists
-        
     }
+    
     func wrongPasswordField()->Bool{
         var errorExists = true
         if passwordTextField.text!.isEmpty {
@@ -285,7 +263,6 @@ class LoginViewController: UIViewController,UITextFieldDelegate, UIScrollViewDel
         return errorExists
     }
     
-    
     func showErrorMessage(_ placeholder: String){
         switch placeholder {
         case "Email or Username":
@@ -300,8 +277,8 @@ class LoginViewController: UIViewController,UITextFieldDelegate, UIScrollViewDel
             break
             
         }
-        
     }
+    
     func removeErrorMessage(_ placeholder: String) {
         switch placeholder {
         case "Email or Username" :
@@ -314,6 +291,17 @@ class LoginViewController: UIViewController,UITextFieldDelegate, UIScrollViewDel
             break
         }
     }
+    
+    func disableTextFieldEditing() {
+        passwordTextField.resignFirstResponder()
+        emailTextField.resignFirstResponder()
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
     func textFieldDidBeginEditing(_ textField: UITextField) {
         activeField = textField
         removeErrorMessage(textField.placeholder!)
@@ -332,8 +320,10 @@ class LoginViewController: UIViewController,UITextFieldDelegate, UIScrollViewDel
     }
     
     
-    
+    @IBAction func forgotPasswordTapped(_ sender: AnyObject) {
+        let resetPasswordScreen:ResetPasswordViewController = UIStoryboard.resetPasswordScreen()!
+        UIApplication.topViewController()?.present(resetPasswordScreen, animated: true, completion: nil)
+    }
     
     
 }
-

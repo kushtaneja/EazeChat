@@ -94,9 +94,8 @@ class TeamSelectionViewController: UIViewController,UIPickerViewDelegate,UIPicke
             }
             let jwt_token = data["key"].stringValue
             let company_name = data["company_name"].stringValue
-            let profUrl = "https://api.eazespot.com/v1/company/\(self.selectedTeamId)/user/\(user_id)/"
+            
             self.setValue(value: jwt_token, forKey: "JWT_key")
-            self.setValue(value: profUrl, forKey: "profileURL")
             
             self.userChatId = (data["cid"].stringValue).fromBase64()
             self.userChatPassword = (data["cip"].stringValue).fromBase64()
@@ -105,7 +104,7 @@ class TeamSelectionViewController: UIViewController,UIPickerViewDelegate,UIPicke
             
             EazeChat.sharedInstance.connect()
             
-            ProfileService().profCall(self.view, params: [:], onSuccess: {(profdata: JSON) in
+            ProfileService().profileCall(self.view, params: [:], onSuccess: {(profdata: JSON) in
                 
                 let firstname = profdata["user"]["first_name"].stringValue
                 let lastname = profdata["user"]["last_name"].stringValue
