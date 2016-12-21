@@ -145,13 +145,27 @@ class NewPrivateChatTableViewController: UITableViewController,EazeRosterDelegat
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let chatRoomNavigationScreen = UIStoryboard.ChatRoomNavigationScreen()
         if let controller = chatRoomNavigationScreen.topViewController as? ChatRoomViewController{
-                let user = EazeRoster.userFromRosterAtIndexPath(indexPath: indexPath)
-                controller.recipient = user
-            let ChatFriendListNavigationScreen = UIStoryboard.ChatFriendListPageMenuNavigationScreen()
-            present(ChatFriendListNavigationScreen, animated: true, completion:{
-            ChatFriendListNavigationScreen.pushViewController(controller, animated: false)
+            let user = EazeRoster.userFromRosterAtIndexPath(indexPath: indexPath)
+            controller.recipient = user
+            
+            
+            self.navigationController?.pushViewController(controller, animated: true)
+            
+            /*
+            self.dismiss(animated: true, completion: {
+                
+                Utils().delay(2.0, closure: {
+                    let chatHomeNavigationScreen = UIStoryboard.chatHomeNavigationScreen()
+                    chatHomeNavigationScreen.pushViewController(controller, animated: true)
+                })
+                
+                
+                
             })
+            */
+            
         }
+        
     }
     
   
