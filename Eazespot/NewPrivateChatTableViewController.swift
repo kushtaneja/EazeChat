@@ -14,11 +14,19 @@ protocol ContactPickerDelegate{
     func didSelectContact(recipient: XMPPUserCoreDataStorageObject)
 }
 
+extension NewPrivateChatTableViewController: UISearchResultsUpdating {
+    func updateSearchResults(for searchController: UISearchController){
+        filterContentForSearchText(searchText: searchController.searchBar.text!)
+        
+    }
+}
+
 class NewPrivateChatTableViewController: UITableViewController,EazeRosterDelegate {
-    
+    let searchController = UISearchController(searchResultsController: nil)
     var delegate:ContactPickerDelegate?
     var xmppUserCoreDataStorageObject = XMPPRosterCoreDataStorage()
-    
+    var filteredUsers = [XMPPUserCoreDataStorageObject]()
+    var filderedBuddyList : NSFetchedResultsController<NSFetchRequestResult>?
     class var sharedInstance : NewPrivateChatTableViewController {
         struct NewPrivateChatSingleton {
             static let instance = NewPrivateChatTableViewController()
@@ -28,10 +36,23 @@ class NewPrivateChatTableViewController: UITableViewController,EazeRosterDelegat
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         EazeRoster.sharedInstance.delegate = self
         self.tableView.tableFooterView = UIView(frame: CGRect.zero)
         ActivityIndicator.shared.showProgressView(uiView: self.view)
         presentRecipients()
+        
+        
+        if (searchController.isActive && searchController.searchBar.text != "")
+        {
+            self.navigationController?.navigationBar.isHidden = false
+            searchController.searchBar.isHidden = false
+        }
+        
+        searchController.searchResultsUpdater = self
+        searchController.dimsBackgroundDuringPresentation = false
+        tableView.tableHeaderView = searchController.searchBar
+
        
        
     
@@ -57,15 +78,23 @@ class NewPrivateChatTableViewController: UITableViewController,EazeRosterDelegat
 // Mark: UITableView Datasources
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return (EazeRoster.buddyList.sections?.count)!
+       if (searchController.isActive && searchController.searchBar.text != "") {
+            return (filderedBuddyList!.sections?.count)!
+        } else {
+            return (EazeRoster.buddyList.sections?.count)!
+        }
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-
-        let sections: Array? =  EazeRoster.buddyList.sections
-        
+        var sections: Array<Any>?
+        if (searchController.isActive && searchController.searchBar.text != "") {
+           sections = filderedBuddyList?.sections
+        }
+       else {
+        sections =  EazeRoster.buddyList.sections
+        }
         if section < sections!.count {
-            let sectionInfo: AnyObject = sections![section]
+            let sectionInfo: AnyObject = sections![section] as AnyObject
             
             return (sectionInfo as AnyObject).numberOfObjects
         }
@@ -74,10 +103,16 @@ class NewPrivateChatTableViewController: UITableViewController,EazeRosterDelegat
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        let sections: Array? =  EazeRoster.buddyList.sections
+        var sections: Array<Any>?
+        if (searchController.isActive && searchController.searchBar.text != "") {
+           sections = filderedBuddyList?.sections
+        }
+        else {
+         sections =  EazeRoster.buddyList.sections
         
+        }
         if section < sections!.count {
-            let sectionInfo: AnyObject = sections![section]
+            let sectionInfo: AnyObject = sections![section] as AnyObject
             let tmpSection: Int = Int(sectionInfo.name)!
             
             switch (tmpSection) {
@@ -102,9 +137,21 @@ class NewPrivateChatTableViewController: UITableViewController,EazeRosterDelegat
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "NewPrivateChatTableViewCell", for: indexPath) as! ContactTableViewCell
-        let user = EazeRoster.buddyList.object(at: indexPath) as! XMPPUserCoreDataStorageObject
-
-
+        
+        if (searchController.isActive && searchController.searchBar.text != "")
+        {
+           // let user = filteredUsers[indexPath.row]
+            let user = filderedBuddyList?.object(at: indexPath) as! XMPPUserCoreDataStorageObject
+            cell.titleLabel?.text = user.displayName
+        }
+        else {
+         
+          let User = EazeRoster.buddyList.object(at: indexPath) as! XMPPUserCoreDataStorageObject
+            
+            cell.titleLabel?.text = User.displayName
+        }
+        
+        
         /*
          
         if user.unreadMessages.intValue > 0 {
@@ -114,7 +161,7 @@ class NewPrivateChatTableViewController: UITableViewController,EazeRosterDelegat
         } 
          
          */
-        cell.titleLabel?.text = user.displayName
+        
         
         cell.statusView?.layer.borderWidth = CGFloat(integerLiteral: 2)
         
@@ -130,7 +177,6 @@ class NewPrivateChatTableViewController: UITableViewController,EazeRosterDelegat
         else {
             cell.statusView?.layer.backgroundColor = UIColor.white.cgColor
             cell.statusView?.layer.borderColor = ColorCode().statusOfflineBorderColor.cgColor
-        
         
         }
         /*
@@ -217,6 +263,21 @@ class NewPrivateChatTableViewController: UITableViewController,EazeRosterDelegat
             
         })
     }
+    
+    
+    func filterContentForSearchText(searchText: String, scope: String = "All") {
+        
+        //filteredUsers = filter(EazeRoster.buddyList.fetchedObjects as! [XMPPUserCoreDataStorageObject],searchText: searchText)
+        filderedBuddyList = filter(EazeRoster.buddyList, searchText: searchText)
+        
+        self.tableView.reloadData()
+    }
+   
+    func filter(_ controller: NSFetchedResultsController<NSFetchRequestResult>, searchText: String)->NSFetchedResultsController<NSFetchRequestResult>{
+        
+        return EazeRoster.sharedInstance.filteredUsersFetchedResultsController(frorName: searchText.lowercased())!
+    }
+
     
     
     
