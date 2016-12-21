@@ -101,6 +101,13 @@
 **/
 - (void)archiveMessage:(XMPPMessage *)message outgoing:(BOOL)isOutgoing xmppStream:(XMPPStream *)stream;
 
+/**
+ *
+ **/
+
+- (void)archiveHistoryMessage:(XMPPMessage *)message outgoing:(BOOL)isOutgoing xmppStream:(XMPPStream *)xmppStream delayDate:(NSDate*)date;
+
+
 @optional
 
 /**

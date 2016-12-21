@@ -340,6 +340,10 @@ extension EazeMessage: XMPPStreamDelegate {
                     let date = timeStamp?.toDateFormatted(with: "yyyy-MM-dd'T'HH:mm:ss.SSSSSS'Z'")
 
                     let historyMessage = XMPPMessage(from: messageResult)
+                    
+                    
+                    
+                    
                     debugPrint("History Message Recieved*** \(historyMessage) -- AT \(timeStamp) -- on  DATE \(date)")
                     
                     var jidTo: String = (historyMessage?.to().bare())!
@@ -353,7 +357,7 @@ extension EazeMessage: XMPPStreamDelegate {
                         
                     }
                     
-                    // for receivedHistory Messaged
+                    // for receivedHistory Messages
                     let historyUser = EazeChat.sharedInstance.xmppRosterStorage.user(for: historyMessage?.from(), xmppStream: EazeChat.sharedInstance.xmppStream, managedObjectContext: EazeRoster.sharedInstance.managedObjectContext_roster())
                     if let historyUser = historyUser {
                         if !EazeChats.knownUserForJid(jidStr: (historyUser.jidStr)!) {

@@ -175,6 +175,13 @@ extension EazeRoster: XMPPStreamDelegate {
                     let set = set as! DDXMLElement
                     let last = set.elements(forName: "last")
                     debugPrint("Lasttt *** -- \(last)")
+                    for lastUID in last {
+                        let lastUID = lastUID as! DDXMLElement
+                        let uid = lastUID.stringValue
+                       debugPrint("Lasttt StringValue*** -- \(uid)")
+                        UserDefaults.standard.set(uid!, forKey: "lastUID")
+                    
+                    }
                 }
             
             }

@@ -31,7 +31,12 @@ class ChatRoomViewController: JSQMessagesViewController,EazeMessageDelegate,Cont
         super.viewDidLoad()
         initialCount = messages.count
         EazeMessage.sharedInstance.delegate = self
-  
+        self.collectionView.addInfiniteScrolling( actionHandler: { () -> Void in
+        self.loadMore() }, direction: UInt(SVInfiniteScrollingDirectionTop))
+        
+        self.collectionView.infiniteScrollingView.isHidden = false
+
+        
         
         // Retrive History messages
         if EazeMessage.sharedInstance.messageCoreDataIsEmptyFor(jid:(recipient?.jidStr)!){
@@ -41,10 +46,10 @@ class ChatRoomViewController: JSQMessagesViewController,EazeMessageDelegate,Cont
         
         if EazeChat.sharedInstance.isConnected() {
             
-        self.senderId = EazeChat.sharedInstance.xmppStream?.myJID.bare()
-        self.senderDisplayName = EazeChat.sharedInstance.xmppStream?.myJID.bare()
+            self.senderId = EazeChat.sharedInstance.xmppStream?.myJID.bare()
+            self.senderDisplayName = EazeChat.sharedInstance.xmppStream?.myJID.bare()
             
-       }
+        }
         
         self.collectionView!.collectionViewLayout.springinessEnabled = false
         self.inputToolbar!.contentView!.leftBarButtonItem!.isHidden = true
@@ -60,29 +65,27 @@ class ChatRoomViewController: JSQMessagesViewController,EazeMessageDelegate,Cont
             
             //MARK: Adding LastActivity functionality to NavigationBar
             
-             EazeLastActivity.sendLastActivityQueryToJID(userName: (recipient.jidStr), sender: EazeChat.sharedInstance.xmppLastActivity) { (response, forJID, error) -> Void in
-              
-            let lastActivityResponse = EazeLastActivity.sharedInstance.getStringForNavigationBarFrom(seconds: (response?.lastActivitySeconds())!)
-            debugPrint("last Seen \(lastActivityResponse)")
+            EazeLastActivity.sendLastActivityQueryToJID(userName: (recipient.jidStr), sender: EazeChat.sharedInstance.xmppLastActivity) { (response, forJID, error) -> Void in
+                
+                let lastActivityResponse = EazeLastActivity.sharedInstance.getStringForNavigationBarFrom(seconds: (response?.lastActivitySeconds())!)
+                debugPrint("last Seen \(lastActivityResponse)")
                 
                 let statusLabel = UILabel()
                 self.navigationItem.title = lastActivityResponse
                 statusLabel.text = lastActivityResponse
                 self.navigationController?.view.addSubview(statusLabel)
                 
-             
-          //   self.userDetails = EazeLastActivity.sharedInstance.addLastActivityLabelToNavigationBar(lastActivityResponse, displayName: recipient.displayName)
-         //    self.navigationController!.view.addSubview(self.userDetails!)
-             
-          //   if (self.userDetails != nil) {
-           //  self.navigationItem.title = ""
-          //   }
-             }
+                
+                //   self.userDetails = EazeLastActivity.sharedInstance.addLastActivityLabelToNavigationBar(lastActivityResponse, displayName: recipient.displayName)
+                //    self.navigationController!.view.addSubview(self.userDetails!)
+                
+                //   if (self.userDetails != nil) {
+                //  self.navigationItem.title = ""
+                //   }
+            }
             DispatchQueue.main.async {
                 self.messages = EazeMessage.sharedInstance.loadArchivedMessagesFrom(jid: recipient.jidStr)
                 self.finishReceivingMessage(animated: true)
-                
-                
                 if (self.messages.count >= 20) {
                     self.collectionView.addInfiniteScrolling( actionHandler: { () -> Void in
                         self.loadMore() }, direction: UInt(SVInfiniteScrollingDirectionTop))
@@ -318,94 +321,145 @@ class ChatRoomViewController: JSQMessagesViewController,EazeMessageDelegate,Cont
     
     func EazeStream(sender: XMPPStream, didReceiveHistoryMessage historyMessage: XMPPMessage, from user: XMPPUserCoreDataStorageObject,on date: Date) {
         
-        EazeMessage.sharedInstance.xmppMessageStorage?.archiveMessage(historyMessage, outgoing: false, xmppStream: EazeChat.sharedInstance.xmppStream)
+       EazeMessage.sharedInstance.xmppMessageStorage?.archiveHistoryMessage(historyMessage, outgoing: false, xmppStream: EazeChat.sharedInstance.xmppStream, delay: date)
         
+        DispatchQueue.main.async {
+            self.messages = EazeMessage.sharedInstance.loadArchivedMessagesFrom(jid: (self.recipient?.jidStr)!)
+            self.finishReceivingMessage(animated: true)
+            if (self.messages.count >= 20) {
+                self.collectionView.addInfiniteScrolling( actionHandler: { () -> Void in
+                    self.loadMore() }, direction: UInt(SVInfiniteScrollingDirectionTop))
+                self.collectionView.infiniteScrollingView.isHidden = false
+                
+            }
+        }
+
+        
+        //EazeMessage.sharedInstance.xmppMessageStorage?.archiveMessage(historyMessage, outgoing: false, xmppStream: EazeChat.sharedInstance.xmppStream)
+        /*
         if historyMessage.isChatMessageWithBody() {
-           
-        if (messages.count > 20) {
-             let displayName = user.displayName
-            if let msg: String = historyMessage.forName("body")?.stringValue {
-                if let from: String = historyMessage.attribute(forName: "from")?.stringValue {
-                    let message = JSQMessage(senderId: from, senderDisplayName: displayName, date: date, text: msg)
-                    self.messages.insert(message!, at: 0)
-                    initialCount = messages.count
-                    JSQSystemSoundPlayer.jsq_playMessageReceivedSound()
-                    self.finishReceivingMessage(animated: true)
+            
+             if (messages.count >= 20){
+                
+                let displayName = user.displayName
+                if let msg: String = historyMessage.forName("body")?.stringValue {
+                    if let from: String = historyMessage.attribute(forName: "from")?.stringValue {
+                        let message = JSQMessage(senderId: from, senderDisplayName: displayName, date: date, text: msg)
+                        DispatchQueue.main.async {
+                        self.messages.insert(message!, at: self.messages.count-20)
+                            self.finishReceivingMessage()
+                            let indexpath = IndexPath(item: 0, section: 0)
+                            //JSQSystemSoundPlayer.jsq_playMessageSentSound()
+                            self.scroll(to: indexpath, animated: true)
+
+                        self.initialCount = self.messages.count
+                 //       JSQSystemSoundPlayer.jsq_playMessageReceivedSound()
+                       //     self.finishReceivingMessage(animated: true)
+                        
+                        }
+                    }
+                    
+                }
+                
+            } else {
+                let displayName = user.displayName
+                if let msg: String = historyMessage.forName("body")?.stringValue {
+                    if let from: String = historyMessage.attribute(forName: "from")?.stringValue {
+                        let message = JSQMessage(senderId: from, senderDisplayName: displayName, date: date, text: msg)
+                        DispatchQueue.main.async {
+                        self.messages.add(message!)
+                            self.finishReceivingMessage()
+                            let indexpath = IndexPath(item: 0, section: 0)
+                            //JSQSystemSoundPlayer.jsq_playMessageSentSound()
+                            self.scroll(to: indexpath, animated: true)
+    
+                        self.initialCount = self.messages.count
+                     //   JSQSystemSoundPlayer.jsq_playMessageReceivedSound()
+                            
+                        }
+                    }
+                    
                 }
                 
             }
-         
-        } else {
-            let displayName = user.displayName
-            if let msg: String = historyMessage.forName("body")?.stringValue {
-                if let from: String = historyMessage.attribute(forName: "from")?.stringValue {
-                    let message = JSQMessage(senderId: from, senderDisplayName: displayName, date: date, text: msg)
-                    self.messages.add(message)
-                    initialCount = messages.count
-                    JSQSystemSoundPlayer.jsq_playMessageReceivedSound()
-                    self.finishReceivingMessage(animated: true)
+            
+            if (messages.count >= 19){
+                DispatchQueue.main.async {
+                self.collectionView.addInfiniteScrolling( actionHandler: { () -> Void in
+                    self.loadMore() }, direction: UInt(SVInfiniteScrollingDirectionTop))
+                    self.collectionView.infiniteScrollingView.isHidden = false
                 }
- 
+                
             }
             
-            }
             
-            if (messages.count >= 20){
-            self.collectionView.addInfiniteScrolling( actionHandler: { () -> Void in
-                self.loadMore() }, direction: UInt(SVInfiniteScrollingDirectionTop))
-            self.collectionView.infiniteScrollingView.isHidden = false
-            }
-        
-        
-        }
+        }*/
     }
     
     
     func EazeStream(sender: XMPPStream, didSendHistoryMessage historyMessage: XMPPMessage,on date: Date) {
         
-        EazeMessage.sharedInstance.xmppMessageStorage?.archiveMessage(historyMessage, outgoing: true, xmppStream: EazeChat.sharedInstance.xmppStream)
         
+        EazeMessage.sharedInstance.xmppMessageStorage?.archiveHistoryMessage(historyMessage, outgoing: true, xmppStream: EazeChat.sharedInstance.xmppStream, delay: date)
         
+        DispatchQueue.main.async {
+            self.messages = EazeMessage.sharedInstance.loadArchivedMessagesFrom(jid: (self.recipient?.jidStr)!)
+            self.finishReceivingMessage(animated: true)
+            if (self.messages.count >= 20) {
+                self.collectionView.addInfiniteScrolling( actionHandler: { () -> Void in
+                    self.loadMore() }, direction: UInt(SVInfiniteScrollingDirectionTop))
+                self.collectionView.infiniteScrollingView.isHidden = false
+                
+            }
+        }
+        /*
         if historyMessage.isChatMessageWithBody() {
             
-          if (messages.count > 20) {
+            if (messages.count >= 20) {
                 
-            
-            if let text: String = historyMessage.forName("body")?.stringValue {
-                let fullMessage = JSQMessage(senderId: EazeChat.sharedInstance.xmppStream?.myJID.bare(), senderDisplayName: EazeChat.sharedInstance.xmppStream?.myJID.bare(), date: date, text: text)
-                messages.insert(fullMessage!, at: 0)
-                initialCount = messages.count
-                JSQSystemSoundPlayer.jsq_playMessageSentSound()
-                self.finishSendingMessage(animated: true)
-            }
-            
-            }
-            else {
-            
                 if let text: String = historyMessage.forName("body")?.stringValue {
                     let fullMessage = JSQMessage(senderId: EazeChat.sharedInstance.xmppStream?.myJID.bare(), senderDisplayName: EazeChat.sharedInstance.xmppStream?.myJID.bare(), date: date, text: text)
-                    messages.add(fullMessage!)
-                    initialCount = messages.count
-                    JSQSystemSoundPlayer.jsq_playMessageSentSound()
-                    self.finishSendingMessage(animated: true)
+                    DispatchQueue.main.async {
+                    self.messages.insert(fullMessage!, at: self.messages.count-20)
+                    self.initialCount = self.messages.count
+                    self.finishSendingMessage()
+                    let indexpath = IndexPath(item: 0, section: 0)
+                    //JSQSystemSoundPlayer.jsq_playMessageSentSound()
+                    self.scroll(to: indexpath, animated: true)
+                
+                    }
                 }
-            
- 
+                
+            }
+            else {
+                
+                if let text: String = historyMessage.forName("body")?.stringValue {
+                    let fullMessage = JSQMessage(senderId: EazeChat.sharedInstance.xmppStream?.myJID.bare(), senderDisplayName: EazeChat.sharedInstance.xmppStream?.myJID.bare(), date: date, text: text)
+                     DispatchQueue.main.async {
+                    self.messages.add(fullMessage!)
+                    self.initialCount = self.messages.count
+                    self.finishSendingMessage()
+                    let indexpath = IndexPath(item: 0, section: 0)
+                    //JSQSystemSoundPlayer.jsq_playMessageSentSound()
+                    self.scroll(to: indexpath, animated: true)
+                    //JSQSystemSoundPlayer.jsq_playMessageSentSound()
+                  
+                    }
+                    
+                }
+                
+                
             }
             
         }
-       
         
-        if (messages.count >= 20) {
-                self.collectionView.addInfiniteScrolling( actionHandler: { () -> Void in
-                self.loadMore() }, direction: UInt(SVInfiniteScrollingDirectionTop))
-            
-            self.collectionView.infiniteScrollingView.isHidden = false
-        } else {
-            
+        
+        if (messages.count >= 19) {
+             DispatchQueue.main.async {
+                          }
         }
         
-
+        */
     }
     
     
@@ -435,34 +489,34 @@ class ChatRoomViewController: JSQMessagesViewController,EazeMessageDelegate,Cont
     
     func loadMore() {
         
-            debugPrint("Load earlier messages triggered by scroll! : \(messages[0])")
+        debugPrint("Load earlier messages triggered by scroll! : \(messages[0])")
         
-            initialCount = messages.count
+        initialCount = messages.count
         
-            collectionView.collectionViewLayout.springinessEnabled = true
-            self.collectionView.infiniteScrollingView.startAnimating()
+        collectionView.collectionViewLayout.springinessEnabled = true
+        self.collectionView.infiniteScrollingView.startAnimating()
+        
+        debugPrint("MMMM**\(messages.count)")
+        
+        XMPPMessageArchivingManagement().continueRetriveChatHistory(fromBareJid: (self.recipient?.jidStr)!)
         
         
+      //  automaticallyScrollsToMostRecentMessage = true
+        self.collectionView.infiniteScrollingView.stopAnimating()
+        self.collectionView.collectionViewLayout.springinessEnabled = false
+        self.collectionView.infiniteScrollingView.isHidden = true
         
-            XMPPMessageArchivingManagement().continueRetriveChatHistory(fromBareJid: (self.recipient?.jidStr)!, afterDate: (self.messages[0] as! JSQMessage).date)
-                    
-        
-            automaticallyScrollsToMostRecentMessage = true
-            self.collectionView.infiniteScrollingView.stopAnimating()
-            self.collectionView.collectionViewLayout.springinessEnabled = false
-            self.collectionView.infiniteScrollingView.isHidden = true
-        
-            if ((messages.count - initialCount) >= 20) {
-            initialCount = messages.count
+        if ((messages.count - initialCount) >= 20) {
+            
             self.collectionView.infiniteScrollingView.isHidden = false
             self.collectionView.addInfiniteScrolling( actionHandler: { () -> Void in
                 self.loadMore() }, direction: UInt(SVInfiniteScrollingDirectionTop))
-            automaticallyScrollsToMostRecentMessage = true
+//  automaticallyScrollsToMostRecentMessage = true
             
-            }
-    
+        }
+        
     }
-   
+    
     
     // Mark: Memory Management
     override func didReceiveMemoryWarning() {

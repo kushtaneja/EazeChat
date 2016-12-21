@@ -14,34 +14,34 @@ fileprivate var messagesPerView: Int = 20
 class XMPPMessageArchivingManagement {
     
     func retrieveMessageArchive(withFields fields: [Any]) {
-    
+        
         let iq = XMPPIQ.init(type: "set")
         iq?.addAttribute(withName: "id", stringValue: XMPPStream.generateUUID())
-            let queryID = XMPPStream.generateUUID()
-            let queryElement = DDXMLElement(name: "query", xmlns: "urn:xmpp:mam:1")
-            queryElement?.addAttribute(withName: "queryid", stringValue: queryID!)
-      
-                let xElement = DDXMLElement(name: "x", xmlns: "jabber:x:data")
-                xElement?.addAttribute(withName: "type", stringValue: "submit")
-            xElement?.addChild(XMPPMessageArchiveManagement.field(withVar: "FORM_TYPE", type: "hidden", andValue: "urn:xmpp:mam:1"))
-            for field in fields {
+        let queryID = XMPPStream.generateUUID()
+        let queryElement = DDXMLElement(name: "query", xmlns: "urn:xmpp:mam:1")
+        queryElement?.addAttribute(withName: "queryid", stringValue: queryID!)
+        
+        let xElement = DDXMLElement(name: "x", xmlns: "jabber:x:data")
+        xElement?.addAttribute(withName: "type", stringValue: "submit")
+        xElement?.addChild(XMPPMessageArchiveManagement.field(withVar: "FORM_TYPE", type: "hidden", andValue: "urn:xmpp:mam:1"))
+        for field in fields {
             xElement?.addChild(field as! DDXMLElement)
-            }
+        }
         
+        let set = DDXMLElement(name: "set", xmlns: "http://jabber.org/protocol/rsm")
+        let max = DDXMLElement(name: "max")
+        max.stringValue = "20"
+        set?.addChild(max)
         
-            let set = DDXMLElement(name: "set", xmlns: "http://jabber.org/protocol/rsm")
-            let max = DDXMLElement(name: "max")
-            max.stringValue = "20"
-           set?.addChild(max)
-            queryElement?.addChild(xElement!)
-           queryElement?.addChild(set!)
-            iq?.addChild(queryElement!)
+        queryElement?.addChild(xElement!)
+        queryElement?.addChild(set!)
+        iq?.addChild(queryElement!)
         
-       // XMPPIDTracker().add(iq, target: self, selector:Selector("handleMessageArchiveIQ"), timeout: 60)
+        // XMPPIDTracker().add(iq, target: self, selector:Selector("handleMessageArchiveIQ"), timeout: 60)
         debugPrint("ARCHIVE \(iq!) SENT")
         
         EazeChat.sharedInstance.xmppStream?.send(iq)
-    
+        
     }
     
     
@@ -68,124 +68,156 @@ class XMPPMessageArchivingManagement {
         if let dateFromString = date.dateFromISO8601 {
             value = dateFromString.iso8601
         }
-      
-        let field3 = field(withVar: "end", andValue: value!)
         
-        let fields = [field1,field3]
-    
+        let field3 = field(withVar: "end", andValue: value!)
+        let fields = [field1]
+        
         retrieveMessageArchive(withFields: fields)
     }
-   
-    public func continueRetriveChatHistory(fromBareJid jid:String, afterDate date: Date){
-
+    
+    public func continueRetriveChatHistory(fromBareJid jid:String){
+        
         let field1 = field(withVar: "with", andValue: String(jid))
-        
-        
+/*
         var value: String?
         let daTe = date.iso8601
         if let dateFromString = daTe.dateFromISO8601 {
             value = dateFromString.iso8601
         }
-        let field3 = field(withVar: "end", andValue: value!)
+        let field3 = field(withVar: "start", andValue: value!)
+        */
+        let fields = [field1]
         
-        let fields = [field1,field3]
+        AfterPaginationQuerry(withFields: fields)
         
-        retrieveMessageArchive(withFields: fields)
-
-    
+        
     }
     
-    
-    
-    
-    }
-    extension XMPPMessageArchivingManagement: XMPPStreamDelegate {
-        /*
-        public func xmppStream(_ sender: XMPPStream!, didReceive message: XMPPMessage!) {
-            
-            var results = message.elements(forXmlns: "urn:xmpp:mam:1")
-            
-            for result in results! {
-                let result = result as! DDXMLElement
-                debugPrint("Message Recieved*** \(result)")
-                
-                var forwarded = result.hasForwardedStanza()
-                var queryID = result.attribute(forName: "queryid")?.stringValue
-                if forwarded {
-                    
-                }
-            }
-            
-            
-            
-*/
-
-
-
-
-
-
-
-
-
-
-        }
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    /*
-    func retrieveMessageArchiveFromQuerryId(_ queeryId:String, iqId: String){
-     
-        let iq = XMPPIQ.init(type: "get")
-        iq?.addAttribute(withName: "id", stringValue: iqId)
+    func AfterPaginationQuerry(withFields fields: [Any]) {
+        
+        let iq = XMPPIQ.init(type: "set")
+        let idID = XMPPStream.generateUUID()
+        iq?.addAttribute(withName: "id", stringValue: idID!)
+      //  UserDefaults.standard.set(idID!, forKey: "iqID")
+        let queryID = XMPPStream.generateUUID()
         let queryElement = DDXMLElement(name: "query", xmlns: "urn:xmpp:mam:1")
-//        queryElement?.addAttribute(withName: "with", stringValue: "kush_1_93@chat.eazespot.com")
-//       queryElement?.addAttribute(withName: "start", stringValue: "2016-12-03T00:00:00Z")
+        queryElement?.addAttribute(withName: "queryid", stringValue: queryID!)
+        
+        let xElement = DDXMLElement(name: "x", xmlns: "jabber:x:data")
+        xElement?.addAttribute(withName: "type", stringValue: "submit")
+        xElement?.addChild(XMPPMessageArchiveManagement.field(withVar: "FORM_TYPE", type: "hidden", andValue: "urn:xmpp:mam:1"))
+        for field in fields {
+            xElement?.addChild(field as! DDXMLElement)
+        }
+        
         let set = DDXMLElement(name: "set", xmlns: "http://jabber.org/protocol/rsm")
         let max = DDXMLElement(name: "max")
-        max.stringValue = "100"
+        max.stringValue = "20"
+        let after = DDXMLElement(name: "after")
+        let UID = UserDefaults.standard.value(forKey: "lastUID") as! String
+        after.stringValue = UID
         set?.addChild(max)
+        set?.addChild(after)
+        
+        queryElement?.addChild(xElement!)
         queryElement?.addChild(set!)
-       
         iq?.addChild(queryElement!)
-        EazeChat.sharedInstance.xmppStream?.send(iq)
-        debugPrint("Message IQ SENT")
-    
-    
-    }
 
-*/
+        EazeChat.sharedInstance.xmppStream?.send(iq)
+        debugPrint("AFTER ARCHIVE \(iq!) SENT")
+    }
+    
+    
+    
+    
+}
+extension XMPPMessageArchivingManagement: XMPPStreamDelegate {
+    /*
+     public func xmppStream(_ sender: XMPPStream!, didReceive message: XMPPMessage!) {
+     
+     var results = message.elements(forXmlns: "urn:xmpp:mam:1")
+     
+     for result in results! {
+     let result = result as! DDXMLElement
+     debugPrint("Message Recieved*** \(result)")
+     
+     var forwarded = result.hasForwardedStanza()
+     var queryID = result.attribute(forName: "queryid")?.stringValue
+     if forwarded {
+     
+     }
+     }
+     
+     
+     
+     */
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+ func retrieveMessageArchiveFromQuerryId(_ queeryId:String, iqId: String){
+ 
+ let iq = XMPPIQ.init(type: "get")
+ iq?.addAttribute(withName: "id", stringValue: iqId)
+ let queryElement = DDXMLElement(name: "query", xmlns: "urn:xmpp:mam:1")
+ //        queryElement?.addAttribute(withName: "with", stringValue: "kush_1_93@chat.eazespot.com")
+ //       queryElement?.addAttribute(withName: "start", stringValue: "2016-12-03T00:00:00Z")
+ let set = DDXMLElement(name: "set", xmlns: "http://jabber.org/protocol/rsm")
+ let max = DDXMLElement(name: "max")
+ max.stringValue = "100"
+ set?.addChild(max)
+ queryElement?.addChild(set!)
+ 
+ iq?.addChild(queryElement!)
+ EazeChat.sharedInstance.xmppStream?.send(iq)
+ debugPrint("Message IQ SENT")
+ 
+ 
+ }
+ 
+ */
 
 
