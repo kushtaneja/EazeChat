@@ -13,6 +13,13 @@
 		4326AF291E07F1730043188E /* TextFieldsEffects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4326AF271E07F1730043188E /* TextFieldsEffects.swift */; };
 		4326AF2A1E07F1730043188E /* HoshiTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4326AF281E07F1730043188E /* HoshiTextField.swift */; };
 		4345F88B1DFFF1BE005FC03C /* XMPPMessageArchivingManagement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4345F88A1DFFF1BE005FC03C /* XMPPMessageArchivingManagement.swift */; };
+		434AEF441E0AC110003E2A12 /* CustomCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = 434AEF431E0AC110003E2A12 /* CustomCells.swift */; };
+		434AEF4B1E0AC254003E2A12 /* MessageViewOutgoing.xib in Resources */ = {isa = PBXBuildFile; fileRef = 434AEF491E0AC254003E2A12 /* MessageViewOutgoing.xib */; };
+		434AEF4C1E0AC254003E2A12 /* MessageViewIncoming.xib in Resources */ = {isa = PBXBuildFile; fileRef = 434AEF4A1E0AC254003E2A12 /* MessageViewIncoming.xib */; };
+		434AEF4E1E0ADEA7003E2A12 /* BubbleSizeCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 434AEF4D1E0ADEA7003E2A12 /* BubbleSizeCalculator.swift */; };
+		434AEF501E0AE4AF003E2A12 /* Custom media message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 434AEF4F1E0AE4AF003E2A12 /* Custom media message.swift */; };
+		434AEF521E0AF01B003E2A12 /* ChatScreenHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 434AEF511E0AF01B003E2A12 /* ChatScreenHeaderView.xib */; };
+		434AEF541E0AF093003E2A12 /* ChatScreenHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 434AEF531E0AF093003E2A12 /* ChatScreenHeaderView.swift */; };
 		435E8B381DF029B5003D3F63 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 435E8B371DF029B5003D3F63 /* AppDelegate.swift */; };
 		435E8B3D1DF029B5003D3F63 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 435E8B3B1DF029B5003D3F63 /* Main.storyboard */; };
 		435E8B401DF029B5003D3F63 /* Eazespot.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 435E8B3E1DF029B5003D3F63 /* Eazespot.xcdatamodeld */; };
@@ -84,6 +91,13 @@
 		4326AF271E07F1730043188E /* TextFieldsEffects.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextFieldsEffects.swift; sourceTree = "<group>"; };
 		4326AF281E07F1730043188E /* HoshiTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HoshiTextField.swift; sourceTree = "<group>"; };
 		4345F88A1DFFF1BE005FC03C /* XMPPMessageArchivingManagement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XMPPMessageArchivingManagement.swift; sourceTree = "<group>"; };
+		434AEF431E0AC110003E2A12 /* CustomCells.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomCells.swift; sourceTree = "<group>"; };
+		434AEF491E0AC254003E2A12 /* MessageViewOutgoing.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MessageViewOutgoing.xib; sourceTree = "<group>"; };
+		434AEF4A1E0AC254003E2A12 /* MessageViewIncoming.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MessageViewIncoming.xib; sourceTree = "<group>"; };
+		434AEF4D1E0ADEA7003E2A12 /* BubbleSizeCalculator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BubbleSizeCalculator.swift; sourceTree = "<group>"; };
+		434AEF4F1E0AE4AF003E2A12 /* Custom media message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Custom media message.swift"; sourceTree = "<group>"; };
+		434AEF511E0AF01B003E2A12 /* ChatScreenHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChatScreenHeaderView.xib; sourceTree = "<group>"; };
+		434AEF531E0AF093003E2A12 /* ChatScreenHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatScreenHeaderView.swift; sourceTree = "<group>"; };
 		435E8B341DF029B5003D3F63 /* Eazespot.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Eazespot.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		435E8B371DF029B5003D3F63 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		435E8B3C1DF029B5003D3F63 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -213,6 +227,20 @@
 			name = TextFieldsEffects;
 			sourceTree = "<group>";
 		};
+		434AEF421E0AC0F1003E2A12 /* JSQ */ = {
+			isa = PBXGroup;
+			children = (
+				434AEF491E0AC254003E2A12 /* MessageViewOutgoing.xib */,
+				434AEF4A1E0AC254003E2A12 /* MessageViewIncoming.xib */,
+				434AEF511E0AF01B003E2A12 /* ChatScreenHeaderView.xib */,
+				434AEF531E0AF093003E2A12 /* ChatScreenHeaderView.swift */,
+				434AEF431E0AC110003E2A12 /* CustomCells.swift */,
+				434AEF4D1E0ADEA7003E2A12 /* BubbleSizeCalculator.swift */,
+				434AEF4F1E0AE4AF003E2A12 /* Custom media message.swift */,
+			);
+			name = JSQ;
+			sourceTree = "<group>";
+		};
 		435E8B2B1DF029B4003D3F63 = {
 			isa = PBXGroup;
 			children = (
@@ -311,6 +339,7 @@
 		435E8B7A1DF0331B003D3F63 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				434AEF421E0AC0F1003E2A12 /* JSQ */,
 				43AA9E1D1DFAAD6400C1876E /* XMPPServices */,
 				43AA9E1C1DFAAD4C00C1876E /* Classes */,
 				435E8B7D1DF033ED003D3F63 /* LoginAndSignUp */,
@@ -592,9 +621,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				434AEF4C1E0AC254003E2A12 /* MessageViewIncoming.xib in Resources */,
 				435E8B451DF029B5003D3F63 /* LaunchScreen.storyboard in Resources */,
+				434AEF4B1E0AC254003E2A12 /* MessageViewOutgoing.xib in Resources */,
 				435E8B421DF029B5003D3F63 /* Assets.xcassets in Resources */,
 				435E8B3D1DF029B5003D3F63 /* Main.storyboard in Resources */,
+				434AEF521E0AF01B003E2A12 /* ChatScreenHeaderView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -678,6 +710,7 @@
 				435E8B891DF04868003D3F63 /* DeviceSizes.swift in Sources */,
 				43AA9E291DFAAEA200C1876E /* EazeMessage.swift in Sources */,
 				43AA9E311DFB5C5900C1876E /* ChatRoomViewController.swift in Sources */,
+				434AEF441E0AC110003E2A12 /* CustomCells.swift in Sources */,
 				4320D1A71DF5A342002EDC2C /* ColorCode.swift in Sources */,
 				435E8B771DF03238003D3F63 /* Reachability.swift in Sources */,
 				43AA9E1F1DFAADC500C1876E /* EazeChat.swift in Sources */,
@@ -685,12 +718,15 @@
 				43AA9E2B1DFAAEBA00C1876E /* EazeRoom.swift in Sources */,
 				435E8B911DF0560B003D3F63 /* ActivityIndicator.swift in Sources */,
 				435E8B791DF03238003D3F63 /* Urls.swift in Sources */,
+				434AEF4E1E0ADEA7003E2A12 /* BubbleSizeCalculator.swift in Sources */,
 				4320D1A61DF5A342002EDC2C /* ColorCodeExtensions.swift in Sources */,
+				434AEF541E0AF093003E2A12 /* ChatScreenHeaderView.swift in Sources */,
 				435E8B8D1DF05509003D3F63 /* Utils.swift in Sources */,
 				435E8B401DF029B5003D3F63 /* Eazespot.xcdatamodeld in Sources */,
 				435E8B941DF057F5003D3F63 /* CAPSPageMenu.swift in Sources */,
 				43D5498F1DF99A2E00138473 /* LoggedinUserProfile.swift in Sources */,
 				43E2B8241DF1872B00F791B5 /* Extensions.swift in Sources */,
+				434AEF501E0AE4AF003E2A12 /* Custom media message.swift in Sources */,
 				43AA9E251DFAAE8200C1876E /* EazeLastActivity.swift in Sources */,
 				4326AF2A1E07F1730043188E /* HoshiTextField.swift in Sources */,
 				43AA9E231DFAAE5F00C1876E /* EazeRoster.swift in Sources */,

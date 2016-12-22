@@ -76,6 +76,39 @@ public class EazeRoster: NSObject, NSFetchedResultsControllerDelegate {
         return fetchedResultsControllerVar!
         
     }
+    public func filteredUsersFetchedResultsController(frorName name: String?) -> NSFetchedResultsController<NSFetchRequestResult>? {
+        let moc = EazeRoster.sharedInstance.managedObjectContext_roster() as NSManagedObjectContext?
+        var fetchedResultsControllerVar: NSFetchedResultsController<NSFetchRequestResult>?
+        if fetchedResultsControllerVar == nil {
+            
+            let entity = NSEntityDescription.entity(forEntityName: "XMPPUserCoreDataStorageObject", in: moc!)
+            let sd1 = NSSortDescriptor(key: "sectionNum", ascending: true)
+            let sd2 = NSSortDescriptor(key: "displayName", ascending: true)
+            let sortDescriptors = [sd1, sd2]
+            let fetchRequest = NSFetchRequest<NSFetchRequestResult>()
+            fetchRequest.entity = entity
+            fetchRequest.predicate = NSPredicate(format: "displayName CONTAINS[cd] %@", name!)
+            fetchRequest.sortDescriptors = sortDescriptors
+            fetchRequest.fetchBatchSize = 20
+            
+            
+            fetchedResultsControllerVar = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: moc!, sectionNameKeyPath: "sectionNum", cacheName: nil)
+            fetchedResultsControllerVar?.delegate = self
+            
+            do {
+                try fetchedResultsControllerVar!.performFetch()
+            } catch let error as NSError {
+                print("Error: \(error.localizedDescription)")
+                abort()
+            }
+        }
+        
+        //        delegate?.EazeRosterContentChanged()
+        
+        return fetchedResultsControllerVar!
+        
+    }
+    
     public class func userFromRosterAtIndexPath(indexPath: IndexPath) -> XMPPUserCoreDataStorageObject {
         return sharedInstance.fetchedResultsController()!.object(at: indexPath) as! XMPPUserCoreDataStorageObject
     }
