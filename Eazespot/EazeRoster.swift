@@ -27,12 +27,12 @@ public class EazeRoster: NSObject, NSFetchedResultsControllerDelegate {
     }
     
     public class var buddyList: NSFetchedResultsController<NSFetchRequestResult> {
-//        get {
-//            if sharedInstance.fetchedResultsControllerVar != nil {
-//                return sharedInstance.fetchedResultsControllerVar!
-//            }
+        get {
+            if sharedInstance.fetchedResultsControllerVar != nil {
+                return sharedInstance.fetchedResultsControllerVar!
+            }
             return sharedInstance.fetchedResultsController()!
-//        }
+       }
     }
     
     // MARK: Core Data
@@ -47,7 +47,7 @@ public class EazeRoster: NSObject, NSFetchedResultsControllerDelegate {
     
     public func fetchedResultsController() -> NSFetchedResultsController<NSFetchRequestResult>? {
         let moc = EazeRoster.sharedInstance.managedObjectContext_roster() as NSManagedObjectContext?
-        var fetchedResultsControllerVar: NSFetchedResultsController<NSFetchRequestResult>?
+      //  var fetchedResultsControllerVar: NSFetchedResultsController<NSFetchRequestResult>?
         if fetchedResultsControllerVar == nil {
             
             let entity = NSEntityDescription.entity(forEntityName: "XMPPUserCoreDataStorageObject", in: moc!)
@@ -78,7 +78,7 @@ public class EazeRoster: NSObject, NSFetchedResultsControllerDelegate {
     }
     public func filteredUsersFetchedResultsController(frorName name: String?) -> NSFetchedResultsController<NSFetchRequestResult>? {
         let moc = EazeRoster.sharedInstance.managedObjectContext_roster() as NSManagedObjectContext?
-        var fetchedResultsControllerVar: NSFetchedResultsController<NSFetchRequestResult>?
+       /// var fetchedResultsControllerVar: NSFetchedResultsController<NSFetchRequestResult>?
         if fetchedResultsControllerVar == nil {
             
             let entity = NSEntityDescription.entity(forEntityName: "XMPPUserCoreDataStorageObject", in: moc!)
