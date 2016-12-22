@@ -25,7 +25,7 @@ class NewPrivateChatTableViewController: UITableViewController,EazeRosterDelegat
     let searchController = UISearchController(searchResultsController: nil)
     var delegate:ContactPickerDelegate?
     var xmppUserCoreDataStorageObject = XMPPRosterCoreDataStorage()
-    var filteredUsers = [XMPPUserCoreDataStorageObject]()
+    var buddyList: NSFetchedResultsController<NSFetchRequestResult>?
     var filderedBuddyList : NSFetchedResultsController<NSFetchRequestResult>?
     class var sharedInstance : NewPrivateChatTableViewController {
         struct NewPrivateChatSingleton {
@@ -36,10 +36,11 @@ class NewPrivateChatTableViewController: UITableViewController,EazeRosterDelegat
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         EazeRoster.sharedInstance.delegate = self
+        buddyList = EazeRoster.buddyList
         self.tableView.tableFooterView = UIView(frame: CGRect.zero)
         ActivityIndicator.shared.showProgressView(uiView: self.view)
+        
         presentRecipients()
         
         
@@ -51,6 +52,7 @@ class NewPrivateChatTableViewController: UITableViewController,EazeRosterDelegat
         
         searchController.searchResultsUpdater = self
         searchController.dimsBackgroundDuringPresentation = false
+        
         tableView.tableHeaderView = searchController.searchBar
 
        
@@ -60,6 +62,8 @@ class NewPrivateChatTableViewController: UITableViewController,EazeRosterDelegat
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         EazeRoster.sharedInstance.delegate = self
+        buddyList = EazeRoster.buddyList
+        
         ActivityIndicator.shared.showProgressView(uiView: self.view)
         presentRecipients()
         
@@ -81,7 +85,7 @@ class NewPrivateChatTableViewController: UITableViewController,EazeRosterDelegat
        if (searchController.isActive && searchController.searchBar.text != "") {
             return (filderedBuddyList!.sections?.count)!
         } else {
-            return (EazeRoster.buddyList.sections?.count)!
+            return (buddyList!.sections?.count)!
         }
     }
     
@@ -91,7 +95,7 @@ class NewPrivateChatTableViewController: UITableViewController,EazeRosterDelegat
            sections = filderedBuddyList?.sections
         }
        else {
-        sections =  EazeRoster.buddyList.sections
+        sections =  buddyList?.sections
         }
         if section < sections!.count {
             let sectionInfo: AnyObject = sections![section] as AnyObject
@@ -108,7 +112,7 @@ class NewPrivateChatTableViewController: UITableViewController,EazeRosterDelegat
            sections = filderedBuddyList?.sections
         }
         else {
-         sections =  EazeRoster.buddyList.sections
+         sections =  buddyList?.sections
         
         }
         if section < sections!.count {
@@ -140,13 +144,12 @@ class NewPrivateChatTableViewController: UITableViewController,EazeRosterDelegat
         
         if (searchController.isActive && searchController.searchBar.text != "")
         {
-           // let user = filteredUsers[indexPath.row]
             let user = filderedBuddyList?.object(at: indexPath) as! XMPPUserCoreDataStorageObject
             cell.titleLabel?.text = user.displayName
         }
         else {
          
-          let User = EazeRoster.buddyList.object(at: indexPath) as! XMPPUserCoreDataStorageObject
+          let User = buddyList?.object(at: indexPath) as! XMPPUserCoreDataStorageObject
             
             cell.titleLabel?.text = User.displayName
         }
@@ -189,6 +192,12 @@ class NewPrivateChatTableViewController: UITableViewController,EazeRosterDelegat
 
     }
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        
+        /*
+         
+        
+<<<<<<< HEAD
         let chatRoomNavigationScreen = UIStoryboard.ChatRoomNavigationScreen()
         if let controller = chatRoomNavigationScreen.topViewController as? ChatRoomViewController{
             let user = EazeRoster.userFromRosterAtIndexPath(indexPath: indexPath)
@@ -210,6 +219,41 @@ class NewPrivateChatTableViewController: UITableViewController,EazeRosterDelegat
             })
             */
             
+=======
+            
+            */
+        
+        
+        
+        if (searchController.isActive && searchController.searchBar.text != "")
+            {   let chatRoomNavigationScreen = UIStoryboard.ChatRoomNavigationScreen()
+                
+                if let controller = chatRoomNavigationScreen.topViewController as? ChatRoomViewController{
+                    let user = filderedBuddyList?.object(at: indexPath) as! XMPPUserCoreDataStorageObject
+                    controller.recipient = user
+                    self.searchController.isActive = false
+                    self.navigationController?.pushViewController(controller, animated: true)
+                    
+              //  present(controller, animated: true, completion: nil)
+                
+                }
+
+        } else {
+            
+                let chatRoomNavigationScreen = UIStoryboard.ChatRoomNavigationScreen()
+                
+                if let controller = chatRoomNavigationScreen.topViewController as? ChatRoomViewController{
+                    let User = buddyList?.object(at: indexPath) as! XMPPUserCoreDataStorageObject
+                    controller.recipient = User
+                    //let ChatFriendListNavigationScreen = UIStoryboard.ChatFriendListPageMenuNavigationScreen()
+                   //present(ChatFriendListNavigationScreen, animated: false, completion:{
+                      //  ChatFriendListNavigationScreen.pushViewController(controller, animated: true)
+                    //})
+                    
+                    
+                    self.navigationController?.pushViewController(controller, animated: true)
+
+                }
         }
         
     }
@@ -219,40 +263,6 @@ class NewPrivateChatTableViewController: UITableViewController,EazeRosterDelegat
         self.dismiss(animated: true, completion: nil)
     }
     
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
     
     // MARK: EazeRoster Delegates
     
@@ -262,32 +272,27 @@ class NewPrivateChatTableViewController: UITableViewController,EazeRosterDelegat
 
         ActivityIndicator.shared.showProgressView(uiView: self.view)
         tableView.reloadData()
+        ActivityIndicator.shared.hideProgressView()
+
     }
     
     //MARK: presentRecipients
     func presentRecipients(){
-        
-        Utils().delay(1.0, closure: {
+          self.tableView.reloadData()
+          self.navigationItem.title = "Select a recipient"
+         ActivityIndicator.shared.hideProgressView()
     
-                if EazeChat.sharedInstance.isConnected() {
-                    self.tableView.reloadData()
-                    self.navigationItem.title = "Select a recipient"
-                    ActivityIndicator.shared.hideProgressView()
-            }
-            
-        })
     }
     
     
     func filterContentForSearchText(searchText: String, scope: String = "All") {
         
-        //filteredUsers = filter(EazeRoster.buddyList.fetchedObjects as! [XMPPUserCoreDataStorageObject],searchText: searchText)
-        filderedBuddyList = filter(EazeRoster.buddyList, searchText: searchText)
+        filderedBuddyList = filter(searchText: searchText)
         
         self.tableView.reloadData()
     }
    
-    func filter(_ controller: NSFetchedResultsController<NSFetchRequestResult>, searchText: String)->NSFetchedResultsController<NSFetchRequestResult>{
+    func filter(searchText: String)->NSFetchedResultsController<NSFetchRequestResult>{
         
         return EazeRoster.sharedInstance.filteredUsersFetchedResultsController(frorName: searchText.lowercased())!
     }
