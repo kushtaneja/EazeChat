@@ -14,7 +14,8 @@ import XMPPFramework
 class AppDelegate: UIResponder, UIApplicationDelegate{
 
     var window: UIWindow?
-    let ChatFriendListPageMenuNavigationScreen = UIStoryboard.ChatFriendListPageMenuNavigationScreen()
+    //let ChatFriendListPageMenuNavigationScreen = UIStoryboard.ChatFriendListPageMenuNavigationScreen()
+    let swRevealViewControllerScreen = UIStoryboard.swRevealViewControllerScreen()
     let loginScreen = UIStoryboard.loginScreen()
 
     
@@ -23,6 +24,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
         // Override point for customization after applicatio launch.
        
         checkLoginStatus()
+        
+        
+        UITabBar.appearance().tintColor = ColorCode().appThemeColor
+        
         return true
     }
 
@@ -84,7 +89,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
                 EazeChat.start(delegate: nil)
                 EazeChat.setupArchiving(archiving: true)
                 
-                self.window?.rootViewController = ChatFriendListPageMenuNavigationScreen
+                //self.window?.rootViewController = ChatFriendListPageMenuNavigationScreen
+                self.window?.rootViewController = swRevealViewControllerScreen
                 
             }
         }

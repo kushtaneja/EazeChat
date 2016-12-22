@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		431D4B421DFC893B00FD3702 /* ContactTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 431D4B411DFC893B00FD3702 /* ContactTableViewCell.swift */; };
-		4320D1A31DF5A203002EDC2C /* ChatFriendListPageMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4320D1A21DF5A203002EDC2C /* ChatFriendListPageMenuViewController.swift */; };
 		4320D1A61DF5A342002EDC2C /* ColorCodeExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4320D1A41DF5A342002EDC2C /* ColorCodeExtensions.swift */; };
 		4320D1A71DF5A342002EDC2C /* ColorCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4320D1A51DF5A342002EDC2C /* ColorCode.swift */; };
 		4326AF291E07F1730043188E /* TextFieldsEffects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4326AF271E07F1730043188E /* TextFieldsEffects.swift */; };
@@ -60,6 +59,11 @@
 		43E2B8281DF19A1E00F791B5 /* UserChatCredentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43E2B8271DF19A1E00F791B5 /* UserChatCredentials.swift */; };
 		6F0B5B4B1E093B220035A2C6 /* ResetPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F0B5B4A1E093B220035A2C6 /* ResetPasswordViewController.swift */; };
 		6F0B5B4D1E093D460035A2C6 /* ForgotPasswordService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F0B5B4C1E093D460035A2C6 /* ForgotPasswordService.swift */; };
+		6F9CBF341E0A447B0039A5EA /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F9CBF331E0A447B0039A5EA /* SWRevealViewController.m */; };
+		6F9CBF381E0A4D1F0039A5EA /* MailHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F9CBF371E0A4D1F0039A5EA /* MailHomeViewController.swift */; };
+		6F9CBF3A1E0A4D2E0039A5EA /* ChatHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F9CBF391E0A4D2E0039A5EA /* ChatHomeViewController.swift */; };
+		6F9CBF3D1E0ABBFF0039A5EA /* SideMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F9CBF3C1E0ABBFF0039A5EA /* SideMenuViewController.swift */; };
+		6F9CBF401E0ABDF30039A5EA /* JSSAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F9CBF3F1E0ABDF30039A5EA /* JSSAlertView.swift */; };
 		F1222B7B61BF1130AB346C08 /* Pods_Eazespot.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 949A8CB5748D9837E3008E2F /* Pods_Eazespot.framework */; };
 /* End PBXBuildFile section */
 
@@ -82,7 +86,6 @@
 
 /* Begin PBXFileReference section */
 		431D4B411DFC893B00FD3702 /* ContactTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactTableViewCell.swift; sourceTree = "<group>"; };
-		4320D1A21DF5A203002EDC2C /* ChatFriendListPageMenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatFriendListPageMenuViewController.swift; sourceTree = "<group>"; };
 		4320D1A41DF5A342002EDC2C /* ColorCodeExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorCodeExtensions.swift; sourceTree = "<group>"; };
 		4320D1A51DF5A342002EDC2C /* ColorCode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorCode.swift; sourceTree = "<group>"; };
 		4326AF271E07F1730043188E /* TextFieldsEffects.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextFieldsEffects.swift; sourceTree = "<group>"; };
@@ -141,6 +144,13 @@
 		4B6C78EFF868E31505E7641E /* Pods-Eazespot.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Eazespot.release.xcconfig"; path = "Pods/Target Support Files/Pods-Eazespot/Pods-Eazespot.release.xcconfig"; sourceTree = "<group>"; };
 		6F0B5B4A1E093B220035A2C6 /* ResetPasswordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResetPasswordViewController.swift; sourceTree = "<group>"; };
 		6F0B5B4C1E093D460035A2C6 /* ForgotPasswordService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForgotPasswordService.swift; sourceTree = "<group>"; };
+		6F9CBF311E0A447A0039A5EA /* Eazespot-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Eazespot-Bridging-Header.h"; sourceTree = "<group>"; };
+		6F9CBF321E0A447B0039A5EA /* SWRevealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWRevealViewController.h; sourceTree = "<group>"; };
+		6F9CBF331E0A447B0039A5EA /* SWRevealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWRevealViewController.m; sourceTree = "<group>"; };
+		6F9CBF371E0A4D1F0039A5EA /* MailHomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MailHomeViewController.swift; sourceTree = "<group>"; };
+		6F9CBF391E0A4D2E0039A5EA /* ChatHomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatHomeViewController.swift; sourceTree = "<group>"; };
+		6F9CBF3C1E0ABBFF0039A5EA /* SideMenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SideMenuViewController.swift; sourceTree = "<group>"; };
+		6F9CBF3F1E0ABDF30039A5EA /* JSSAlertView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSSAlertView.swift; sourceTree = "<group>"; };
 		949A8CB5748D9837E3008E2F /* Pods_Eazespot.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Eazespot.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE8A18A85531C075AA3E097E /* Pods-Eazespot.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Eazespot.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Eazespot/Pods-Eazespot.debug.xcconfig"; sourceTree = "<group>"; };
 		F4C39BAB0BFA6E846A2599C3 /* Pods_EazespotTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_EazespotTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -299,6 +309,8 @@
 		435E8B691DF02B0E003D3F63 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				6F9CBF3B1E0ABBE70039A5EA /* SideMenu */,
+				6F9CBF361E0A4CFC0039A5EA /* Mail */,
 				43E2B81F1DF1602B00F791B5 /* Chat */,
 				435E8B8B1DF054BD003D3F63 /* LoginAndSignUp */,
 			);
@@ -356,6 +368,9 @@
 		435E8B811DF047BE003D3F63 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				6F9CBF3E1E0ABDE60039A5EA /* JSSAlertView */,
+				6F9CBF351E0A449A0039A5EA /* BridgingHeader */,
+				6F9CBF301E0A44690039A5EA /* SWRevealViewController */,
 				4326AF261E07F15C0043188E /* TextFieldsEffects */,
 				4320D1A81DF5A34A002EDC2C /* ColorCode */,
 				43E2B8221DF1871C00F791B5 /* Extensions */,
@@ -424,11 +439,11 @@
 		43E2B81F1DF1602B00F791B5 /* Chat */ = {
 			isa = PBXGroup;
 			children = (
-				4320D1A21DF5A203002EDC2C /* ChatFriendListPageMenuViewController.swift */,
 				43AA9E2E1DFB53D100C1876E /* PrivateChatTableViewController.swift */,
 				43D549881DF9468600138473 /* NewPrivateChatTableViewController.swift */,
 				431D4B431DFC89D200FD3702 /* Cells */,
 				431D4B441DFC89DD00FD3702 /* Rooms */,
+				6F9CBF391E0A4D2E0039A5EA /* ChatHomeViewController.swift */,
 			);
 			name = Chat;
 			sourceTree = "<group>";
@@ -439,6 +454,47 @@
 				43E2B8231DF1872B00F791B5 /* Extensions.swift */,
 			);
 			name = Extensions;
+			sourceTree = "<group>";
+		};
+		6F9CBF301E0A44690039A5EA /* SWRevealViewController */ = {
+			isa = PBXGroup;
+			children = (
+				6F9CBF321E0A447B0039A5EA /* SWRevealViewController.h */,
+				6F9CBF331E0A447B0039A5EA /* SWRevealViewController.m */,
+			);
+			name = SWRevealViewController;
+			sourceTree = "<group>";
+		};
+		6F9CBF351E0A449A0039A5EA /* BridgingHeader */ = {
+			isa = PBXGroup;
+			children = (
+				6F9CBF311E0A447A0039A5EA /* Eazespot-Bridging-Header.h */,
+			);
+			name = BridgingHeader;
+			sourceTree = "<group>";
+		};
+		6F9CBF361E0A4CFC0039A5EA /* Mail */ = {
+			isa = PBXGroup;
+			children = (
+				6F9CBF371E0A4D1F0039A5EA /* MailHomeViewController.swift */,
+			);
+			name = Mail;
+			sourceTree = "<group>";
+		};
+		6F9CBF3B1E0ABBE70039A5EA /* SideMenu */ = {
+			isa = PBXGroup;
+			children = (
+				6F9CBF3C1E0ABBFF0039A5EA /* SideMenuViewController.swift */,
+			);
+			name = SideMenu;
+			sourceTree = "<group>";
+		};
+		6F9CBF3E1E0ABDE60039A5EA /* JSSAlertView */ = {
+			isa = PBXGroup;
+			children = (
+				6F9CBF3F1E0ABDF30039A5EA /* JSSAlertView.swift */,
+			);
+			name = JSSAlertView;
 			sourceTree = "<group>";
 		};
 		D74F4520931CD4B7BAA224F9 /* Frameworks */ = {
@@ -523,6 +579,7 @@
 					435E8B331DF029B4003D3F63 = {
 						CreatedOnToolsVersion = 8.1;
 						DevelopmentTeam = 2B4X6X3467;
+						LastSwiftMigration = 0820;
 						ProvisioningStyle = Automatic;
 					};
 					435E8B4A1DF029B5003D3F63 = {
@@ -646,6 +703,7 @@
 				435E8B761DF03238003D3F63 /* Network.swift in Sources */,
 				4345F88B1DFFF1BE005FC03C /* XMPPMessageArchivingManagement.swift in Sources */,
 				43E2B81E1DF15F1000F791B5 /* TeamSelectionViewController.swift in Sources */,
+				6F9CBF3D1E0ABBFF0039A5EA /* SideMenuViewController.swift in Sources */,
 				4326AF291E07F1730043188E /* TextFieldsEffects.swift in Sources */,
 				43D549891DF9468600138473 /* NewPrivateChatTableViewController.swift in Sources */,
 				6F0B5B4D1E093D460035A2C6 /* ForgotPasswordService.swift in Sources */,
@@ -670,21 +728,24 @@
 				43E2B8241DF1872B00F791B5 /* Extensions.swift in Sources */,
 				434AEF501E0AE4AF003E2A12 /* Custom media message.swift in Sources */,
 				43AA9E251DFAAE8200C1876E /* EazeLastActivity.swift in Sources */,
-				4320D1A31DF5A203002EDC2C /* ChatFriendListPageMenuViewController.swift in Sources */,
 				4326AF2A1E07F1730043188E /* HoshiTextField.swift in Sources */,
 				43AA9E231DFAAE5F00C1876E /* EazeRoster.swift in Sources */,
 				43C5539C1E0165AE00A06201 /* LoginViewController.swift in Sources */,
 				6F0B5B4B1E093B220035A2C6 /* ResetPasswordViewController.swift in Sources */,
 				431D4B421DFC893B00FD3702 /* ContactTableViewCell.swift in Sources */,
+				6F9CBF381E0A4D1F0039A5EA /* MailHomeViewController.swift in Sources */,
 				43AA9E271DFAAE9600C1876E /* EazePresence.swift in Sources */,
 				43D5498D1DF9949100138473 /* ProfileService.swift in Sources */,
 				43AA9E2D1DFAB04900C1876E /* kXMPP.swift in Sources */,
 				43E2B8261DF1927700F791B5 /* Company.swift in Sources */,
+				6F9CBF3A1E0A4D2E0039A5EA /* ChatHomeViewController.swift in Sources */,
 				43AA9E2F1DFB53D100C1876E /* PrivateChatTableViewController.swift in Sources */,
+				6F9CBF341E0A447B0039A5EA /* SWRevealViewController.m in Sources */,
 				435E8B381DF029B5003D3F63 /* AppDelegate.swift in Sources */,
 				435E8B8F1DF055D6003D3F63 /* Toast.swift in Sources */,
 				435E8B781DF03238003D3F63 /* SwiftyJSON.swift in Sources */,
 				43D549871DF9466200138473 /* PrivateChatTableViewCell.swift in Sources */,
+				6F9CBF401E0ABDF30039A5EA /* JSSAlertView.swift in Sources */,
 				43AA9E211DFAAE5400C1876E /* EazeChats.swift in Sources */,
 				435E8B7C1DF03338003D3F63 /* LoginService.swift in Sources */,
 			);
@@ -839,7 +900,8 @@
 			baseConfigurationReference = DE8A18A85531C075AA3E097E /* Pods-Eazespot.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Abhishek Negi (42R8X8NT5P)";
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Akshay Luthra (JEEF6Z66M2)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = 2B4X6X3467;
 				INFOPLIST_FILE = Eazespot/Info.plist;
@@ -847,7 +909,10 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.eazespot.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Eazespot/Eazespot-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -856,7 +921,8 @@
 			baseConfigurationReference = 4B6C78EFF868E31505E7641E /* Pods-Eazespot.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Abhishek Negi (42R8X8NT5P)";
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Akshay Luthra (JEEF6Z66M2)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = 2B4X6X3467;
 				INFOPLIST_FILE = Eazespot/Info.plist;
@@ -864,7 +930,9 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.eazespot.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Eazespot/Eazespot-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

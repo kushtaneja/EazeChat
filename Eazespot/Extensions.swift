@@ -36,10 +36,19 @@ extension UIStoryboard {
         return (eazeSpotMainStoryboard().instantiateViewController(withIdentifier: "ChatRoomNavigationController") as? UINavigationController)!
     }
     
-    class func NewChatNavigationScreen() -> UINavigationController {
+    class func newChatNavigationScreen() -> UINavigationController {
         return (eazeSpotMainStoryboard().instantiateViewController(withIdentifier: "NewChatNavigationViewController") as? UINavigationController)!
     }
 
+    
+    class func swRevealViewControllerScreen() -> SWRevealViewController {
+        return (eazeSpotMainStoryboard().instantiateViewController(withIdentifier: "SWRevealViewController") as? SWRevealViewController)!
+    }
+    
+    
+    class func chatHomeNavigationScreen() -> UINavigationController {
+        return (eazeSpotMainStoryboard().instantiateViewController(withIdentifier: "ChatHomeNavigationController") as? UINavigationController)!
+    }
 
 }
 

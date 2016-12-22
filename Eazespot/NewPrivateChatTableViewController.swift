@@ -194,6 +194,36 @@ class NewPrivateChatTableViewController: UITableViewController,EazeRosterDelegat
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         
+        /*
+         
+        
+<<<<<<< HEAD
+        let chatRoomNavigationScreen = UIStoryboard.ChatRoomNavigationScreen()
+        if let controller = chatRoomNavigationScreen.topViewController as? ChatRoomViewController{
+            let user = EazeRoster.userFromRosterAtIndexPath(indexPath: indexPath)
+            controller.recipient = user
+            
+            
+            self.navigationController?.pushViewController(controller, animated: true)
+            
+            /*
+            self.dismiss(animated: true, completion: {
+                
+                Utils().delay(2.0, closure: {
+                    let chatHomeNavigationScreen = UIStoryboard.chatHomeNavigationScreen()
+                    chatHomeNavigationScreen.pushViewController(controller, animated: true)
+                })
+                
+                
+                
+            })
+            */
+            
+=======
+            
+            */
+        
+        
         
         if (searchController.isActive && searchController.searchBar.text != "")
             {   let chatRoomNavigationScreen = UIStoryboard.ChatRoomNavigationScreen()
@@ -210,15 +240,22 @@ class NewPrivateChatTableViewController: UITableViewController,EazeRosterDelegat
 
         } else {
             
+            if (searchController.isActive && searchController.searchBar.text == "") {
+            self.searchController.isActive = false
+            
+            }
                 let chatRoomNavigationScreen = UIStoryboard.ChatRoomNavigationScreen()
                 
                 if let controller = chatRoomNavigationScreen.topViewController as? ChatRoomViewController{
                     let User = buddyList?.object(at: indexPath) as! XMPPUserCoreDataStorageObject
                     controller.recipient = User
-                    let ChatFriendListNavigationScreen = UIStoryboard.ChatFriendListPageMenuNavigationScreen()
-                    present(ChatFriendListNavigationScreen, animated: false, completion:{
-                        ChatFriendListNavigationScreen.pushViewController(controller, animated: true)
-                    })
+                    //let ChatFriendListNavigationScreen = UIStoryboard.ChatFriendListPageMenuNavigationScreen()
+                   //present(ChatFriendListNavigationScreen, animated: false, completion:{
+                      //  ChatFriendListNavigationScreen.pushViewController(controller, animated: true)
+                    //})
+                    
+                    
+                    self.navigationController?.pushViewController(controller, animated: true)
 
                 }
         }

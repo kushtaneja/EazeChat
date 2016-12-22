@@ -9,6 +9,7 @@
 import UIKit
 import XMPPFramework
 import JSQMessagesViewController
+
 import SVPullToRefresh
 
 
@@ -71,8 +72,6 @@ class ChatRoomViewController: JSQMessagesViewController,EazeMessageDelegate,Cont
         
         self.collectionView!.collectionViewLayout.springinessEnabled = false
         self.inputToolbar!.contentView!.leftBarButtonItem!.isHidden = false
-        
-        
         
     }
     
@@ -621,7 +620,7 @@ class ChatRoomViewController: JSQMessagesViewController,EazeMessageDelegate,Cont
     
     func loadMore() {
         
-        debugPrint("Load earlier messages triggered by scroll! : \(messages[0])")
+       // debugPrint("Load earlier messages triggered by scroll! : \(messages[0])")
         
         initialCount = messages.count
         

@@ -78,7 +78,7 @@ public class EazeRoster: NSObject, NSFetchedResultsControllerDelegate {
     }
     public func filteredUsersFetchedResultsController(frorName name: String?) -> NSFetchedResultsController<NSFetchRequestResult>? {
         let moc = EazeRoster.sharedInstance.managedObjectContext_roster() as NSManagedObjectContext?
-       var fetchedResultsControllerVar: NSFetchedResultsController<NSFetchRequestResult>?
+        var fetchedResultsControllerVar: NSFetchedResultsController<NSFetchRequestResult>?
         if fetchedResultsControllerVar == nil {
             
             let entity = NSEntityDescription.entity(forEntityName: "XMPPUserCoreDataStorageObject", in: moc!)

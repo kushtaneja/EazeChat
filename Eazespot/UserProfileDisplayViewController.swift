@@ -35,9 +35,11 @@ class UserProfileDisplayViewController: UIViewController {
     }
     
     @IBAction func doneButtonTapped(_ sender: UIBarButtonItem) {
-        let ChatFriendListPageMenuNavigationScreen = UIStoryboard.ChatFriendListPageMenuNavigationScreen()
-       
-        present(ChatFriendListPageMenuNavigationScreen, animated: true, completion: nil)
+        //let ChatFriendListPageMenuNavigationScreen = UIStoryboard.ChatFriendListPageMenuNavigationScreen()
+        //present(ChatFriendListPageMenuNavigationScreen, animated: true, completion: nil)
+        
+        let swRevealViewControllerScreen = UIStoryboard.swRevealViewControllerScreen()
+        present(swRevealViewControllerScreen, animated: true, completion: nil)
     }
     
 }
