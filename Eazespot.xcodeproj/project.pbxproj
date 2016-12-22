@@ -55,6 +55,8 @@
 		6F9CBF341E0A447B0039A5EA /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F9CBF331E0A447B0039A5EA /* SWRevealViewController.m */; };
 		6F9CBF381E0A4D1F0039A5EA /* MailHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F9CBF371E0A4D1F0039A5EA /* MailHomeViewController.swift */; };
 		6F9CBF3A1E0A4D2E0039A5EA /* ChatHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F9CBF391E0A4D2E0039A5EA /* ChatHomeViewController.swift */; };
+		6F9CBF3D1E0ABBFF0039A5EA /* SideMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F9CBF3C1E0ABBFF0039A5EA /* SideMenuViewController.swift */; };
+		6F9CBF401E0ABDF30039A5EA /* JSSAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F9CBF3F1E0ABDF30039A5EA /* JSSAlertView.swift */; };
 		F1222B7B61BF1130AB346C08 /* Pods_Eazespot.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 949A8CB5748D9837E3008E2F /* Pods_Eazespot.framework */; };
 /* End PBXBuildFile section */
 
@@ -133,6 +135,8 @@
 		6F9CBF331E0A447B0039A5EA /* SWRevealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWRevealViewController.m; sourceTree = "<group>"; };
 		6F9CBF371E0A4D1F0039A5EA /* MailHomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MailHomeViewController.swift; sourceTree = "<group>"; };
 		6F9CBF391E0A4D2E0039A5EA /* ChatHomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatHomeViewController.swift; sourceTree = "<group>"; };
+		6F9CBF3C1E0ABBFF0039A5EA /* SideMenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SideMenuViewController.swift; sourceTree = "<group>"; };
+		6F9CBF3F1E0ABDF30039A5EA /* JSSAlertView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSSAlertView.swift; sourceTree = "<group>"; };
 		949A8CB5748D9837E3008E2F /* Pods_Eazespot.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Eazespot.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE8A18A85531C075AA3E097E /* Pods-Eazespot.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Eazespot.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Eazespot/Pods-Eazespot.debug.xcconfig"; sourceTree = "<group>"; };
 		F4C39BAB0BFA6E846A2599C3 /* Pods_EazespotTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_EazespotTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -277,6 +281,7 @@
 		435E8B691DF02B0E003D3F63 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				6F9CBF3B1E0ABBE70039A5EA /* SideMenu */,
 				6F9CBF361E0A4CFC0039A5EA /* Mail */,
 				43E2B81F1DF1602B00F791B5 /* Chat */,
 				435E8B8B1DF054BD003D3F63 /* LoginAndSignUp */,
@@ -334,6 +339,7 @@
 		435E8B811DF047BE003D3F63 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				6F9CBF3E1E0ABDE60039A5EA /* JSSAlertView */,
 				6F9CBF351E0A449A0039A5EA /* BridgingHeader */,
 				6F9CBF301E0A44690039A5EA /* SWRevealViewController */,
 				4326AF261E07F15C0043188E /* TextFieldsEffects */,
@@ -444,6 +450,22 @@
 				6F9CBF371E0A4D1F0039A5EA /* MailHomeViewController.swift */,
 			);
 			name = Mail;
+			sourceTree = "<group>";
+		};
+		6F9CBF3B1E0ABBE70039A5EA /* SideMenu */ = {
+			isa = PBXGroup;
+			children = (
+				6F9CBF3C1E0ABBFF0039A5EA /* SideMenuViewController.swift */,
+			);
+			name = SideMenu;
+			sourceTree = "<group>";
+		};
+		6F9CBF3E1E0ABDE60039A5EA /* JSSAlertView */ = {
+			isa = PBXGroup;
+			children = (
+				6F9CBF3F1E0ABDF30039A5EA /* JSSAlertView.swift */,
+			);
+			name = JSSAlertView;
 			sourceTree = "<group>";
 		};
 		D74F4520931CD4B7BAA224F9 /* Frameworks */ = {
@@ -649,6 +671,7 @@
 				435E8B761DF03238003D3F63 /* Network.swift in Sources */,
 				4345F88B1DFFF1BE005FC03C /* XMPPMessageArchivingManagement.swift in Sources */,
 				43E2B81E1DF15F1000F791B5 /* TeamSelectionViewController.swift in Sources */,
+				6F9CBF3D1E0ABBFF0039A5EA /* SideMenuViewController.swift in Sources */,
 				4326AF291E07F1730043188E /* TextFieldsEffects.swift in Sources */,
 				43D549891DF9468600138473 /* NewPrivateChatTableViewController.swift in Sources */,
 				6F0B5B4D1E093D460035A2C6 /* ForgotPasswordService.swift in Sources */,
@@ -686,6 +709,7 @@
 				435E8B8F1DF055D6003D3F63 /* Toast.swift in Sources */,
 				435E8B781DF03238003D3F63 /* SwiftyJSON.swift in Sources */,
 				43D549871DF9466200138473 /* PrivateChatTableViewCell.swift in Sources */,
+				6F9CBF401E0ABDF30039A5EA /* JSSAlertView.swift in Sources */,
 				43AA9E211DFAAE5400C1876E /* EazeChats.swift in Sources */,
 				435E8B7C1DF03338003D3F63 /* LoginService.swift in Sources */,
 			);
